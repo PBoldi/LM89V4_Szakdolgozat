@@ -138,8 +138,8 @@ class UserConnection(models.Model):
         db_table= 'UserConnections'
     
     connection_type = models.ForeignKey(ConnectionType, db_column='ConnectionTypeID', on_delete=models.CASCADE)
-    user1 = models.ForeignKey(User, db_column='UserID', on_delete=models.CASCADE)
-    user2 = models.ForeignKey(User, db_column='UserID', on_delete=models.CASCADE)
+    user1 = models.ForeignKey(User, db_column='User1ID', on_delete=models.CASCADE, related_name='user1')
+    user2 = models.ForeignKey(User, db_column='User2ID', on_delete=models.CASCADE, related_name='user2')
 
 
 class UserSport(models.Model):
