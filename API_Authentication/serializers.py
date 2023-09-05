@@ -1,6 +1,7 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework.serializers import ModelSerializer, ReadOnlyField, SerializerMethodField
 
 from .models import User
+
 
 class UserSerializerC(ModelSerializer):
     class Meta:
@@ -11,6 +12,7 @@ class UserSerializerC(ModelSerializer):
         user = User.objects.create_user(validated_data['email'], password=validated_data['password'])
         return user
     
+
 class UserSerializerL(ModelSerializer):
     profile_picture = SerializerMethodField()
     
@@ -20,3 +22,17 @@ class UserSerializerL(ModelSerializer):
 
     def get_profile_picture(self, instance):
         return f'{"http://localhost:8000/media/{instance.profile_picture}"}' if instance.profile_picture else None
+    
+
+class UserSerializerRUD(ModelSerializer):
+    full_name = ReadOnlyField()
+    profile_picture = SerializerMethodField()
+
+    class Meta:
+        exclude = ('last_login', 'password')
+        model = User
+        read_only_fields = ('is_active', 'is_admin')
+
+    def get_profile_picture(self, instance):
+        return f'{"http://localhost:8000/media/{instance.profile_picture}"}' if instance.profile_picture else None
+    
