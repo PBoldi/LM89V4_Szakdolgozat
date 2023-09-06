@@ -4,13 +4,14 @@ import { ThemeProvider } from "@mui/material/styles";
 
 import About from "./routes/About";
 import Login from "./routes/authentication/Login";
+import Registration from "./routes/authentication/Registration";
 
 import AuthenticationLayout from "./layouts/AuthenticationLayout";
 import RootLayout from "./layouts/RootLayout";
 
 import theme from "./utilities/theme";
 
-import { loginAction } from "./utilities/actions";
+import { loginAction, registrationAction } from "./utilities/actions";
 
 import { rootLayoutLoader } from "./utilities/loaders";
 
@@ -23,7 +24,14 @@ const router = createBrowserRouter([
       {
         path: "authentication",
         element: <AuthenticationLayout />,
-        children: [{ path: "login", element: <Login />, action: loginAction }],
+        children: [
+          { path: "login", element: <Login />, action: loginAction },
+          {
+            path: "registration",
+            element: <Registration />,
+            action: registrationAction,
+          },
+        ],
       },
     ],
   },

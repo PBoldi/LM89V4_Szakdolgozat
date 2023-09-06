@@ -2,6 +2,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2";
 import LoginIcon from "@mui/icons-material/Login";
 import Paper from "@mui/material/Paper";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
@@ -29,6 +30,13 @@ export default function AuthenticationLayout() {
                   label={"Bejelentkezés"}
                   to={"login"}
                   value={"login"}
+                />
+                <Tab
+                  component={Link}
+                  icon={<PersonAddIcon />}
+                  label={"Regisztráció"}
+                  to={"registration"}
+                  value={"registration"}
                 />
               </Tabs>
             </Grid>

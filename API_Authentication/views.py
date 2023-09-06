@@ -1,6 +1,6 @@
 from rest_framework import generics, status
 from rest_framework.permissions import SAFE_METHODS
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from .models import *
@@ -18,7 +18,7 @@ class AuthenticatedUser(generics.GenericAPIView):
         
 
 class UsersLC(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
     queryset = User.objects.all()
     
     def get_serializer_class(self):
