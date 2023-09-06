@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Suspense } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
 
-function App() {
-  const [count, setCount] = useState(0)
+import About from "./routes/About";
+import Login from "./routes/authentication/Login";
 
+import AuthenticationLayout from "./layouts/AuthenticationLayout";
+import RootLayout from "./layouts/RootLayout";
+
+import theme from "./utilities/theme";
+
+import { loginAction } from "./utilities/actions";
+
+import { rootLayoutLoader } from "./utilities/loaders";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    loader: rootLayoutLoader,
+    children: [
+      {
+        path: "authentication",
+        element: <AuthenticationLayout />,
+        children: [{ path: "login", element: <Login />, action: loginAction }],
+      },
+    ],
+  },
+]);
+
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Suspense fallback={<p>Loading translations...</p>}>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </Suspense>
+  );
 }
-
-export default App

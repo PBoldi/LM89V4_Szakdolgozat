@@ -5,6 +5,7 @@ const baseURL = "http://localhost:8000";
 const timeoutMs = 30000;
 
 const protectedInstance = axios.create({ baseURL, timeout: timeoutMs });
+const unprotectedInstance = axios.create({ baseURL, timeout: timeoutMs });
 
 protectedInstance.interceptors.request.use(
   (config) => {
@@ -47,3 +48,6 @@ export const login = (data) => unprotectedInstance.post("/auth/token/", data);
 
 export const registration = (data) =>
   unprotectedInstance.post("/auth/users/", data);
+
+export const getUserByAccessToken = () =>
+  protectedInstance.get("/auth/users/authenticated/");
