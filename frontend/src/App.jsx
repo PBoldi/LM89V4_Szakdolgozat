@@ -11,7 +11,11 @@ import RootLayout from "./layouts/RootLayout";
 
 import theme from "./utilities/theme";
 
-import { loginAction, registrationAction } from "./utilities/actions";
+import {
+  loginAction,
+  logOutAction,
+  registrationAction,
+} from "./utilities/actions";
 
 import { rootLayoutLoader } from "./utilities/loaders";
 
@@ -33,6 +37,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      { path: "logout", action: logOutAction },
     ],
   },
 ]);

@@ -17,6 +17,12 @@ export async function loginAction({ request }) {
   }
 }
 
+export function logOutAction() {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  return redirect("/");
+}
+
 export async function registrationAction({ request }) {
   try {
     const formData = await request.formData();

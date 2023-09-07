@@ -1,5 +1,5 @@
-import { Fragment } from "react";
-import { useNavigate } from "react-router-dom";
+import { Fragment, useMemo } from "react";
+import { useNavigate, useSubmit } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
@@ -8,9 +8,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import IconButton from "@mui/material/IconButton";
 
-export default function Navbar(user) {
+export default function Navbar({ user }) {
   const navigate = useNavigate();
-  console.log(user);
+  const submit = useSubmit();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -18,7 +18,7 @@ export default function Navbar(user) {
         <Toolbar>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { md: "flex", xs: "none" } }}>
-            {!user ? (
+            {!user?.id ? (
               <Fragment>
                 <IconButton
                   color={"inherit"}
@@ -42,7 +42,9 @@ export default function Navbar(user) {
             ) : (
               <IconButton
                 color={"inherit"}
-                onClick={() => navigate("/authentication/logout")}
+                onClick={() =>
+                  submit(null, { action: "/logout", method: "post" })
+                }
                 size={"small"}
                 sx={{ mr: 2 }}
               >
