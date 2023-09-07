@@ -1,6 +1,10 @@
-import Grid from "@mui/material/Unstable_Grid2";
 import { Outlet, useLoaderData } from "react-router-dom";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function RootLayout() {
   const user = useLoaderData();
@@ -15,12 +19,32 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <Grid container xs={12}>
-      <Grid xs={12}>{/* navbar */}</Grid>
-      <Grid xs={12}>
-        <Outlet context={{ user }} />
-      </Grid>
-      <Grid xs={12}>{/* footer */}</Grid>
-    </Grid>
+    <Fragment>
+      <CssBaseline />
+      <Navbar user={user} />
+      <Container
+        maxWidth={"lg"}
+        style={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+          minHeight: "100vh",
+        }}
+      >
+        <div
+          style={{
+            alignItems: "center",
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+            overflowY: "auto",
+          }}
+        >
+          <Outlet context={{ user }} />
+        </div>
+      </Container>
+      <Footer />
+    </Fragment>
   );
 }
