@@ -2,11 +2,14 @@ import { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 
-import About from "./routes/About";
+import AthleteProfile from "./routes/protected-authentication/profile-choose/AthleteProfile";
+import TrainerProfile from "./routes/protected-authentication/profile-choose/TrainerProfile";
 import Login from "./routes/authentication/Login";
 import Registration from "./routes/authentication/Registration";
 
 import AuthenticationLayout from "./layouts/AuthenticationLayout";
+import ProtectedAuthenticationLayout from "./layouts/ProtectedAuthenticationLayout";
+import ProfileChooseLayout from "./layouts/ProfileChooseLayout";
 import RootLayout from "./layouts/RootLayout";
 
 import theme from "./utilities/theme";
@@ -34,6 +37,22 @@ const router = createBrowserRouter([
             path: "registration",
             element: <Registration />,
             action: registrationAction,
+          },
+        ],
+      },
+      {
+        element: <ProtectedAuthenticationLayout />,
+        children: [
+          {
+            path: "profile-choose",
+            element: <ProfileChooseLayout />,
+            children: [
+              { path: "athlete-profile", element: <AthleteProfile /> },
+              {
+                path: "trainer-profile",
+                element: <TrainerProfile />,
+              },
+            ],
           },
         ],
       },
