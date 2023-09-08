@@ -3,6 +3,12 @@ from rest_framework.serializers import ModelSerializer, ReadOnlyField, Serialize
 from .models import *
 
 
+class PersonQuestionSerializer(ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = PersonQuestion
+
+
 class SportSerializer(ModelSerializer):
     class Meta:
         fields = '__all__'

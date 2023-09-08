@@ -17,6 +17,18 @@ class AuthenticatedUser(generics.GenericAPIView):
         return Response(self.serializer_class(self.get_object()).data, status=status.HTTP_200_OK)
         
 
+class PersonQuestionLC(generics.ListCreateAPIView):
+    permission_classes = [AllowAny]
+    queryset = PersonQuestion.objects.all()
+    serializer_class = PersonQuestionSerializer
+
+
+class PersonQuestionRUD(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [AllowAny]
+    queryset = PersonQuestion.objects.all()
+    serializer_class = PersonQuestionSerializer
+
+
 class SportsLC(generics.ListCreateAPIView):
     permission_classes = [AllowAny]
     queryset = Sport.objects.all()
