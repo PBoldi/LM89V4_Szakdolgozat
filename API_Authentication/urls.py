@@ -6,6 +6,8 @@ from .views import *
 
 
 urlpatterns = [
+    path('sports/', SportsLC.as_view()),
+    path('sports/<int:pk>', SportsRUD.as_view()),
     path('token/', TokenObtainPairView.as_view()),                      #
     path('token/refresh/', TokenRefreshView.as_view()),                 # 
     path('users/', UsersLC.as_view()),                                  #

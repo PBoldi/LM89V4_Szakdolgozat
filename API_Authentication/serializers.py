@@ -1,6 +1,12 @@
 from rest_framework.serializers import ModelSerializer, ReadOnlyField, SerializerMethodField
 
-from .models import User
+from .models import *
+
+
+class SportSerializer(ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = Sport
 
 
 class UserSerializerC(ModelSerializer):
