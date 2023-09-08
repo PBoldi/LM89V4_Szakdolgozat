@@ -49,6 +49,8 @@ class UserSerializerL(ModelSerializer):
     
 
 class UserSerializerRUD(ModelSerializer):
+    athlete_profile = AthleteProfileSerializer()
+    trainer_profile = TrainerProfileSerializer()
     full_name = ReadOnlyField()
     profile_picture = SerializerMethodField()
 
