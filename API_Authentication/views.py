@@ -41,6 +41,12 @@ class SportsRUD(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SportSerializer
 
 
+class TrainerProfileLC(generics.ListCreateAPIView):
+    permission_classes = [AllowAny]
+    queryset = TrainerProfile.objects.all()
+    serializer_class = TrainerProfileSerializer
+
+
 class UsersLC(generics.ListCreateAPIView):
     permission_classes = [AllowAny]
     queryset = User.objects.all()

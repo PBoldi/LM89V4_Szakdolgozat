@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 
-import { login, registration } from "./api";
+import { login, registration, trainerProfileCreate } from "./api";
 
 export async function loginAction({ request }) {
   try {
@@ -31,6 +31,20 @@ export async function registrationAction({ request }) {
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400)
       return error?.response?.data;
+    throw error;
+  }
+}
+
+export async function trainerProfileCreateAction({ request }) {
+  try {
+    const formData = await request.formData();
+    await trainerProfileCreate(formData);
+    return redirect("/");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
     throw error;
   }
 }

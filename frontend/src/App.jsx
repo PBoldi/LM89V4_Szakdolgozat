@@ -18,6 +18,7 @@ import {
   loginAction,
   logOutAction,
   registrationAction,
+  trainerProfileCreateAction,
 } from "./utilities/actions";
 
 import { rootLayoutLoader } from "./utilities/loaders";
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
               {
                 path: "trainer-profile",
                 element: <TrainerProfile />,
+                action: trainerProfileCreateAction,
               },
             ],
           },

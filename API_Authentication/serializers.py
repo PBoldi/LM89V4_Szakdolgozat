@@ -1,3 +1,4 @@
+from django.db import transaction
 from rest_framework.serializers import ModelSerializer, ReadOnlyField, SerializerMethodField
 
 from .models import *
@@ -13,6 +14,14 @@ class TrainerProfileSerializer(ModelSerializer):
     class Meta:
         fields = '__all__'
         model = TrainerProfile
+
+    def create(self, validated_data):
+        with transaction.atomic():
+            trainer_profile = TrainerProfile.objects.create(**validated_data)
+            user = User.objects.get(id=self.context['request'].user.id)
+            user.trainer_profile = trainer_profile
+            user.save()
+            return trainer_profile
 
 
 class PersonQuestionSerializer(ModelSerializer):

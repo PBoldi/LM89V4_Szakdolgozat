@@ -49,5 +49,8 @@ export const login = (data) => unprotectedInstance.post("/auth/token/", data);
 export const registration = (data) =>
   unprotectedInstance.post("/auth/users/", data);
 
+export const trainerProfileCreate = (data) =>
+  protectedInstance.post("/auth/trainer-profile/", data);
+
 export const getUserByAccessToken = () =>
   protectedInstance.get("/auth/users/authenticated/");
