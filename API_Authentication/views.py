@@ -7,6 +7,12 @@ from .models import *
 from .serializers import *
 
 
+class AthleteProfileLC(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = AthleteProfile.objects.all()
+    serializer_class = AthleteProfileSerializer
+
+
 class AuthenticatedUser(generics.GenericAPIView):
     serializer_class = UserSerializerRUD
 
@@ -42,7 +48,7 @@ class SportsRUD(generics.RetrieveUpdateDestroyAPIView):
 
 
 class TrainerProfileLC(generics.ListCreateAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = TrainerProfile.objects.all()
     serializer_class = TrainerProfileSerializer
 

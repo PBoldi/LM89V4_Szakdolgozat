@@ -44,6 +44,9 @@ const refreshAuthLogic = (failedRequest) =>
 
 createAuthRefreshInterceptor(protectedInstance, refreshAuthLogic);
 
+export const athleteProfileCreate = (data) =>
+  protectedInstance.post("/auth/athlete-profile/", data);
+
 export const login = (data) => unprotectedInstance.post("/auth/token/", data);
 
 export const registration = (data) =>

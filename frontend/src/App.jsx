@@ -15,6 +15,7 @@ import RootLayout from "./layouts/RootLayout";
 import theme from "./utilities/theme";
 
 import {
+  athleteProfileCreateAction,
   loginAction,
   logOutAction,
   registrationAction,
@@ -48,7 +49,11 @@ const router = createBrowserRouter([
             path: "profile-choose",
             element: <ProfileChooseLayout />,
             children: [
-              { path: "athlete-profile", element: <AthleteProfile /> },
+              {
+                path: "athlete-profile",
+                element: <AthleteProfile />,
+                action: athleteProfileCreateAction,
+              },
               {
                 path: "trainer-profile",
                 element: <TrainerProfile />,

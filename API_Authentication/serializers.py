@@ -9,6 +9,14 @@ class AthleteProfileSerializer(ModelSerializer):
         fields = '__all__'
         model = AthleteProfile
 
+    def create(self, validated_data):
+        with transaction.atomic():
+            athlete_profile = AthleteProfile.objects.create(**validated_data)
+            user = User.objects.get(id=self.context['request'].user.id)
+            user.athlete_profile = athlete_profile
+            user.save()
+            return athlete_profile
+
 
 class TrainerProfileSerializer(ModelSerializer):
     class Meta:
