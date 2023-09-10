@@ -1,4 +1,10 @@
-import { Link, Outlet, useOutletContext, useLocation } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useOutletContext,
+  useLocation,
+} from "react-router-dom";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import Grid from "@mui/material/Unstable_Grid2";
 import Paper from "@mui/material/Paper";
@@ -11,7 +17,9 @@ export default function ProfileChoose() {
 
   const nestedPath = pathname?.split("/")?.[2];
 
-  return (
+  return Boolean(user?.athlete_profile || user?.trainer_profile) ? (
+    <Navigate replace to={"/"} />
+  ) : (
     <Grid
       alignItems={"center"}
       container

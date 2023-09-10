@@ -17,7 +17,7 @@ export default function ProtectedAuthenticationLayout() {
       <Fragment>
         <Outlet context={{ user }} />
         {!pathname?.includes("/profile-choose") ? (
-          <Navigate replace to={"/profile-choose"} />
+          <Navigate replace to={"/profile-choose/athlete-profile"} />
         ) : null}
       </Fragment>
     )
