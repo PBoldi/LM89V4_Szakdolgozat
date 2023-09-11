@@ -82,15 +82,21 @@ export default function TrainerProfile() {
               sx={{ pl: 1 }}
             />
           </Grid>{" "}
-          <Grid xs={4}>
-            <FormControl>
-              <OutlinedInput
-                inputProps={{ accept: "image/png, image/jpeg" }}
-                name={"certificate"}
-                onChange={handleChange}
-                type={"file"}
-              />
-            </FormControl>
+          <Grid xs={6}>
+            <FormControlLabel
+              control={
+                <OutlinedInput
+                  inputProps={{ accept: "image/png, image/jpeg" }}
+                  label={"Tanusítvány"}
+                  name={"certificate"}
+                  onChange={handleChange}
+                  sx={{ mr: 2 }}
+                  type={"file"}
+                />
+              }
+              label={"Tanusítvány"}
+              sx={{ pl: 2 }}
+            />
           </Grid>
         </Grid>
         <Grid paddingY={1} xs={12}>
