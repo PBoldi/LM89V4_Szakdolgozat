@@ -6,7 +6,9 @@ import AthleteProfile from "./routes/protected-authentication/profile-choose/Ath
 import TrainerProfile from "./routes/protected-authentication/profile-choose/TrainerProfile";
 import Login from "./routes/authentication/Login";
 import Registration from "./routes/authentication/Registration";
+import SearchTrainer from "./routes/protected-authentication/athlete/SearchTrainer";
 
+import AthleteLayout from "./layouts/AthleteLayout";
 import AuthenticationLayout from "./layouts/AuthenticationLayout";
 import ProtectedAuthenticationLayout from "./layouts/ProtectedAuthenticationLayout";
 import ProfileChooseLayout from "./layouts/ProfileChooseLayout";
@@ -58,6 +60,14 @@ const router = createBrowserRouter([
                 path: "trainer-profile",
                 element: <TrainerProfile />,
                 action: trainerProfileCreateAction,
+              },
+            ],
+            path: "athlete",
+            element: <AthleteLayout />,
+            children: [
+              {
+                path: "search-trainer",
+                element: <SearchTrainer />,
               },
             ],
           },
