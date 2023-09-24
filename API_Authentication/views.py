@@ -50,7 +50,9 @@ class SportsRUD(generics.RetrieveUpdateDestroyAPIView):
 class TrainerProfileLC(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = TrainerProfile.objects.all()
-    serializer_class = TrainerProfileSerializer
+
+    def get_serializer_class(self):
+        return TrainerProfileSerializerL if self.request.method in SAFE_METHODS else TrainerProfileSerializer
 
 
 class UsersLC(generics.ListCreateAPIView):

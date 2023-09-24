@@ -24,7 +24,7 @@ import {
   trainerProfileCreateAction,
 } from "./utilities/actions";
 
-import { rootLayoutLoader } from "./utilities/loaders";
+import { rootLayoutLoader, searchTrainersLoader } from "./utilities/loaders";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +68,7 @@ const router = createBrowserRouter([
               {
                 path: "search-trainer",
                 element: <SearchTrainer />,
+                loader: searchTrainersLoader,
               },
             ],
           },

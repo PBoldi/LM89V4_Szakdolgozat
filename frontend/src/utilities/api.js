@@ -47,6 +47,11 @@ createAuthRefreshInterceptor(protectedInstance, refreshAuthLogic);
 export const athleteProfileCreate = (data) =>
   protectedInstance.post("/auth/athlete-profile/", data);
 
+export const getTrainers = () => protectedInstance.get("/auth/trainer-profile");
+
+export const getUserByAccessToken = () =>
+  protectedInstance.get("/auth/users/authenticated/");
+
 export const login = (data) => unprotectedInstance.post("/auth/token/", data);
 
 export const registration = (data) =>
@@ -54,6 +59,3 @@ export const registration = (data) =>
 
 export const trainerProfileCreate = (data) =>
   protectedInstance.post("/auth/trainer-profile/", data);
-
-export const getUserByAccessToken = () =>
-  protectedInstance.get("/auth/users/authenticated/");
