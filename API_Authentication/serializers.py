@@ -66,6 +66,7 @@ class UserSerializerL(ModelSerializer):
     
 
 class TrainerProfileSerializerL(ModelSerializer):
+    user_set = UserSerializerL(many=True)
     class Meta:
         fields = '__all__'
         model = TrainerProfile
