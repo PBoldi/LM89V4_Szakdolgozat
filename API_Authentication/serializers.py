@@ -65,6 +65,13 @@ class UserSerializerL(ModelSerializer):
         return f'{"http://localhost:8000/media/{instance.profile_picture}"}' if instance.profile_picture else None
     
 
+class AthleteProfileSerializerL(ModelSerializer):
+    user_set = UserSerializerL(many=True)
+    class Meta:
+        fields = '__all__'
+        model = AthleteProfile
+
+
 class TrainerProfileSerializerL(ModelSerializer):
     user_set = UserSerializerL(many=True)
     class Meta:

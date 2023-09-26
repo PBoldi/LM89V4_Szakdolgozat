@@ -12,6 +12,9 @@ class AthleteProfileLC(generics.ListCreateAPIView):
     queryset = AthleteProfile.objects.all()
     serializer_class = AthleteProfileSerializer
 
+    def get_serializer_class(self):
+        return AthleteProfileSerializerL if self.request.method in SAFE_METHODS else AthleteProfileSerializer
+
 
 class AuthenticatedUser(generics.GenericAPIView):
     serializer_class = UserSerializerRUD

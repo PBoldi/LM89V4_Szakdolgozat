@@ -6,6 +6,7 @@ import AthleteProfile from "./routes/protected-authentication/profile-choose/Ath
 import TrainerProfile from "./routes/protected-authentication/profile-choose/TrainerProfile";
 import Login from "./routes/authentication/Login";
 import Registration from "./routes/authentication/Registration";
+import SearchAthlete from "./routes/protected-authentication/athlete/SearchAthlete";
 import SearchTrainer from "./routes/protected-authentication/athlete/SearchTrainer";
 
 import AthleteLayout from "./layouts/AthleteLayout";
@@ -24,7 +25,11 @@ import {
   trainerProfileCreateAction,
 } from "./utilities/actions";
 
-import { rootLayoutLoader, searchTrainersLoader } from "./utilities/loaders";
+import {
+  rootLayoutLoader,
+  searchAthletesLoader,
+  searchTrainersLoader,
+} from "./utilities/loaders";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +74,11 @@ const router = createBrowserRouter([
                 path: "search-trainer",
                 element: <SearchTrainer />,
                 loader: searchTrainersLoader,
+              },
+              {
+                path: "search-athlete",
+                element: <SearchAthlete />,
+                loader: searchAthletesLoader,
               },
             ],
           },

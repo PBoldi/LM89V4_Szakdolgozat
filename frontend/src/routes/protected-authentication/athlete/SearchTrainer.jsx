@@ -18,9 +18,12 @@ export default function SearchTrainer() {
         <Card key={trainer?.id} sx={{ maxWidth: 345 }}>
           <CardHeader
             title={
-              trainer?.user_set[0]?.first_name +
-              " " +
+              trainer?.user_set[0]?.first_name &&
               trainer?.user_set[0]?.last_name
+                ? trainer?.user_set[0]?.first_name +
+                  " " +
+                  trainer?.user_set[0]?.last_name
+                : trainer?.user_set[0]?.email
             }
             subheader={
               trainer?.user_set[0]?.birth_date
