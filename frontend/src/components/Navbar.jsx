@@ -4,13 +4,14 @@ import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
 import ListItemText from "@mui/material/ListItemText";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function Navbar({ user }) {
   const navigate = useNavigate();
@@ -51,6 +52,28 @@ export default function Navbar({ user }) {
               </Fragment>
             ) : (
               <Fragment>
+                {user?.athlete_profile ? (
+                  <Fragment>
+                    <IconButton
+                      color={"inherit"}
+                      onClick={() => navigate("/athlete/search-trainer")}
+                      size={"small"}
+                      sx={{ mr: 2 }}
+                    >
+                      <SearchIcon />
+                      Edző keresés
+                    </IconButton>
+                    <IconButton
+                      color={"inherit"}
+                      onClick={() => navigate("/athlete/search-athlete")}
+                      size={"small"}
+                      sx={{ mr: 2 }}
+                    >
+                      <SearchIcon />
+                      Edzőtárs keresés
+                    </IconButton>
+                  </Fragment>
+                ) : null}
                 <IconButton
                   onClick={(event) => setAnchorElUser(event.currentTarget)}
                   sx={{ p: 0 }}
