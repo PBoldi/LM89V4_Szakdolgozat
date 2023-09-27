@@ -49,6 +49,8 @@ export const athleteProfileCreate = (data) =>
 
 export const getAthletes = () => protectedInstance.get("/auth/athlete-profile");
 
+export const getSports = () => protectedInstance.get("/auth/sports");
+
 export const getTrainers = () => protectedInstance.get("/auth/trainer-profile");
 
 export const getUserByAccessToken = () =>

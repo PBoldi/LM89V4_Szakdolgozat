@@ -1,4 +1,9 @@
-import { getAthletes, getTrainers, getUserByAccessToken } from "./api";
+import {
+  getAthletes,
+  getSports,
+  getTrainers,
+  getUserByAccessToken,
+} from "./api";
 
 export async function rootLayoutLoader() {
   try {
@@ -23,6 +28,16 @@ export async function searchAthletesLoader() {
 export async function searchTrainersLoader() {
   try {
     const response = await getTrainers();
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function sportsLoader() {
+  try {
+    const response = await getSports();
     return response?.data;
   } catch (error) {
     console.log(error);
