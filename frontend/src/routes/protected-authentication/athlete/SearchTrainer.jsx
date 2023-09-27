@@ -10,7 +10,6 @@ import { Fragment } from "react";
 
 export default function SearchTrainer() {
   const trainers = useLoaderData();
-  console.log(trainers);
 
   return (
     <Fragment>

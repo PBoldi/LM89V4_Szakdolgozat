@@ -9,6 +9,7 @@ import Registration from "./routes/authentication/Registration";
 import SearchAthlete from "./routes/protected-authentication/athlete/SearchAthlete";
 import SearchTrainer from "./routes/protected-authentication/athlete/SearchTrainer";
 import Sports from "./routes/protected-admin/Sports";
+import SportCreate from "./routes/protected-admin/SportCreate";
 
 import AthleteLayout from "./layouts/AthleteLayout";
 import AuthenticationLayout from "./layouts/AuthenticationLayout";
@@ -21,6 +22,7 @@ import theme from "./utilities/theme";
 
 import {
   athleteProfileCreateAction,
+  createSportAction,
   loginAction,
   logOutAction,
   registrationAction,
@@ -87,7 +89,18 @@ const router = createBrowserRouter([
             path: "admin",
             element: <ProtectedAdminLayout />,
             children: [
-              { path: "sports", element: <Sports />, loader: sportsLoader },
+              {
+                path: "sports",
+                element: <Sports />,
+                loader: sportsLoader,
+                children: [
+                  {
+                    path: "create",
+                    element: <SportCreate />,
+                    action: createSportAction,
+                  },
+                ],
+              },
             ],
           },
         ],

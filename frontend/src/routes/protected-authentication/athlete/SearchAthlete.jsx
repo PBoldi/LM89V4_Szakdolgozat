@@ -8,8 +8,6 @@ import { Fragment } from "react";
 export default function SearchTrainer() {
   const athletes = useLoaderData();
 
-  console.log(athletes);
-
   return (
     <Fragment>
       {athletes?.map((athlete) => (

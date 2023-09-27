@@ -1,20 +1,27 @@
 import { Fragment } from "react";
-import { useLoaderData } from "react-router-dom";
-import Avatar from "@mui/material/Avatar";
+import { Link, Outlet, useLoaderData } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 
-export default function SearchTrainer() {
+export default function Sports() {
   const sports = useLoaderData();
 
   return (
     <Fragment>
       <List sx={{ width: "50%" }}>
+        <ListItemButton component={Link} to={"create"}>
+          <ListItemIcon>
+            <AddIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Új sport felvétele"} />
+        </ListItemButton>
         {sports?.map((sport) => (
           <ListItem
             key={sport?.id}
@@ -24,15 +31,14 @@ export default function SearchTrainer() {
               </IconButton>
             }
           >
-            <ListItemAvatar>
-              <Avatar>
-                <SportsSoccerIcon />
-              </Avatar>
-            </ListItemAvatar>
+            <ListItemIcon>
+              <SportsSoccerIcon />
+            </ListItemIcon>
             <ListItemText primary={sport?.name} />
           </ListItem>
         ))}
       </List>
+      <Outlet />
     </Fragment>
   );
 }

@@ -1,5 +1,5 @@
-import { Fragment, Link, useState } from "react";
-import { useNavigate, useSubmit } from "react-router-dom";
+import { Fragment, useState } from "react";
+import { Link, useNavigate, useSubmit } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AppBar from "@mui/material/AppBar";
@@ -165,9 +165,9 @@ export default function Navbar({ user }) {
                     </div>
                   ) : null}
                   <MenuItem
-                    onClick={() => {
-                      submit(null, { action: "/logout", method: "post" });
-                    }}
+                    onClick={() =>
+                      submit(null, { action: "/logout", method: "post" })
+                    }
                   >
                     <IconButton color={"inherit"} size={"small"} sx={{ mr: 2 }}>
                       <LogoutIcon />
