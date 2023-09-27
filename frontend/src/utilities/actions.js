@@ -37,6 +37,7 @@ export async function loginAction({ request }) {
 }
 
 export function logOutAction() {
+  console.log("ad");
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   return redirect("/");

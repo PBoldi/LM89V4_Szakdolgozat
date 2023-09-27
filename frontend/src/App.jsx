@@ -12,6 +12,7 @@ import SearchTrainer from "./routes/protected-authentication/athlete/SearchTrain
 import AthleteLayout from "./layouts/AthleteLayout";
 import AuthenticationLayout from "./layouts/AuthenticationLayout";
 import ProtectedAuthenticationLayout from "./layouts/ProtectedAuthenticationLayout";
+import ProtectedAdminLayout from "./layouts/ProtectedAdminLayout";
 import ProfileChooseLayout from "./layouts/ProfileChooseLayout";
 import RootLayout from "./layouts/RootLayout";
 
@@ -81,6 +82,9 @@ const router = createBrowserRouter([
                 loader: searchAthletesLoader,
               },
             ],
+            path: "admin",
+            element: <ProtectedAdminLayout />,
+            children: [{}],
           },
         ],
       },

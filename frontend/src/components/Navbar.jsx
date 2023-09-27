@@ -128,7 +128,7 @@ export default function Navbar({ user }) {
                     </MenuItem>
                   ) : null}
                   {user?.is_admin ? (
-                    <Fragment>
+                    <div>
                       <MenuItem
                         onClick={(event) => {
                           event.stopPropagation();
@@ -162,17 +162,14 @@ export default function Navbar({ user }) {
                           </ListItemText>
                         </MenuItem>
                       </Collapse>
-                    </Fragment>
+                    </div>
                   ) : null}
-                  <MenuItem component={Link} to={"/logout"}>
-                    <IconButton
-                      color={"inherit"}
-                      onClick={() =>
-                        submit(null, { action: "/logout", method: "post" })
-                      }
-                      size={"small"}
-                      sx={{ mr: 2 }}
-                    >
+                  <MenuItem
+                    onClick={() => {
+                      submit(null, { action: "/logout", method: "post" });
+                    }}
+                  >
+                    <IconButton color={"inherit"} size={"small"} sx={{ mr: 2 }}>
                       <LogoutIcon />
                       Kilépés
                     </IconButton>
