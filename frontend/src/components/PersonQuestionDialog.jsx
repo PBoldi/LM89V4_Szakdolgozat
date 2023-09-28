@@ -22,16 +22,24 @@ export default function PersonQuestionDialog({ personQuestion }) {
 
   return (
     <Dialog onClose={() => navigate("/admin/person-questions")} open>
-      <DialogTitle>{"Kérdések"}</DialogTitle>
+      <DialogTitle>
+        {pathname?.includes("delete")
+          ? "Kérdés törlése"
+          : pathname?.includes("edit")
+          ? "Kérdés szerkesztése"
+          : "Kérdés létrehozása"}
+      </DialogTitle>
       <Form action={pathname} method={"post"}>
         <DialogContent>
           <TextField
+            disabled={pathname?.includes("delete")}
             label={"A kérdés / állítás"}
             name={"question"}
             onChange={(event) => setQuestion(event.target.value)}
             value={question}
           />
           <TextField
+            disabled={pathname?.includes("delete")}
             inputProps={{ min: 1, max: 5 }}
             label={"A kérdés / állítás súlya"}
             name={"weight"}
