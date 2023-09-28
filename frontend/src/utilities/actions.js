@@ -2,6 +2,7 @@ import { redirect } from "react-router-dom";
 
 import {
   athleteProfileCreate,
+  createPersonQuestion,
   createSport,
   login,
   registration,
@@ -13,6 +14,20 @@ export async function athleteProfileCreateAction({ request }) {
     const formData = await request.formData();
     await athleteProfileCreate(formData);
     return redirect("/");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
+export async function createPersonQuestionAction({ request }) {
+  try {
+    const formData = await request.formData();
+    await createPersonQuestion(formData);
+    return redirect("/admin/person-questions");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);

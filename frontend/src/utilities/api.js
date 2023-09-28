@@ -47,6 +47,9 @@ createAuthRefreshInterceptor(protectedInstance, refreshAuthLogic);
 export const athleteProfileCreate = (data) =>
   protectedInstance.post("/auth/athlete-profile/", data);
 
+export const createPersonQuestion = (data) =>
+  protectedInstance.post("/auth/person-questions/", data);
+
 export const createSport = (data) =>
   protectedInstance.post("/auth/sports/", data);
 

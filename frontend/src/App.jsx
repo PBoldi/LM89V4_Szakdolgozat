@@ -5,6 +5,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import AthleteProfile from "./routes/protected-authentication/profile-choose/AthleteProfile";
 import TrainerProfile from "./routes/protected-authentication/profile-choose/TrainerProfile";
 import Login from "./routes/authentication/Login";
+import PersonQuestionCreate from "./routes/protected-admin/PersonQuestionCreate";
+import PersonQuestions from "./routes/protected-admin/PersonQuestions";
 import Registration from "./routes/authentication/Registration";
 import SearchAthlete from "./routes/protected-authentication/athlete/SearchAthlete";
 import SearchTrainer from "./routes/protected-authentication/athlete/SearchTrainer";
@@ -22,6 +24,7 @@ import theme from "./utilities/theme";
 
 import {
   athleteProfileCreateAction,
+  createPersonQuestionAction,
   createSportAction,
   loginAction,
   logOutAction,
@@ -36,7 +39,6 @@ import {
   searchTrainersLoader,
   sportsLoader,
 } from "./utilities/loaders";
-import PersonQuestions from "./routes/protected-admin/PersonQuestions";
 
 const router = createBrowserRouter([
   {
@@ -107,6 +109,13 @@ const router = createBrowserRouter([
                 path: "person-questions",
                 element: <PersonQuestions />,
                 loader: personQuestionLoader,
+                children: [
+                  {
+                    path: "create",
+                    element: <PersonQuestionCreate />,
+                    action: createPersonQuestionAction,
+                  },
+                ],
               },
             ],
           },
