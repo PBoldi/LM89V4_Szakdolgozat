@@ -26,7 +26,12 @@ export default function Sports() {
           <ListItem
             key={sport?.id}
             secondaryAction={
-              <IconButton edge={"end"} aria-label={"delete"}>
+              <IconButton
+                aria-label={"delete"}
+                component={Link}
+                edge={"end"}
+                to={`${sport?.id}/delete`}
+              >
                 <DeleteIcon />
               </IconButton>
             }

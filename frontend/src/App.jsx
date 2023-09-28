@@ -12,8 +12,9 @@ import PersonQuestions from "./routes/protected-admin/PersonQuestions";
 import Registration from "./routes/authentication/Registration";
 import SearchAthlete from "./routes/protected-authentication/athlete/SearchAthlete";
 import SearchTrainer from "./routes/protected-authentication/athlete/SearchTrainer";
-import Sports from "./routes/protected-admin/Sports";
 import SportCreate from "./routes/protected-admin/SportCreate";
+import SportDelete from "./routes/protected-admin/SportDelete";
+import Sports from "./routes/protected-admin/Sports";
 
 import AthleteLayout from "./layouts/AthleteLayout";
 import AuthenticationLayout from "./layouts/AuthenticationLayout";
@@ -29,6 +30,7 @@ import {
   createPersonQuestionAction,
   createSportAction,
   deletePersonQuestionAction,
+  deleteSportAction,
   editPersonQuestionAction,
   loginAction,
   logOutAction,
@@ -42,6 +44,7 @@ import {
   rootLayoutLoader,
   searchAthletesLoader,
   searchTrainersLoader,
+  sportLoader,
   sportsLoader,
 } from "./utilities/loaders";
 
@@ -107,6 +110,12 @@ const router = createBrowserRouter([
                     path: "create",
                     element: <SportCreate />,
                     action: createSportAction,
+                  },
+                  {
+                    path: ":id/delete",
+                    element: <SportDelete />,
+                    loader: sportLoader,
+                    action: deleteSportAction,
                   },
                 ],
               },

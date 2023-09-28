@@ -2,6 +2,7 @@ import {
   getAthletes,
   getPersonQuestion,
   getPersonQuestions,
+  getSport,
   getSports,
   getTrainers,
   getUserByAccessToken,
@@ -50,6 +51,16 @@ export async function searchAthletesLoader() {
 export async function searchTrainersLoader() {
   try {
     const response = await getTrainers();
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function sportLoader({ params }) {
+  try {
+    const response = await getSport(params?.id);
     return response?.data;
   } catch (error) {
     console.log(error);
