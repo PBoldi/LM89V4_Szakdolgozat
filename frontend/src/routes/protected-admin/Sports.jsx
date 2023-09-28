@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Link, Outlet, useLoaderData } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -26,14 +27,25 @@ export default function Sports() {
           <ListItem
             key={sport?.id}
             secondaryAction={
-              <IconButton
-                aria-label={"delete"}
-                component={Link}
-                edge={"end"}
-                to={`${sport?.id}/delete`}
-              >
-                <DeleteIcon />
-              </IconButton>
+              <Fragment>
+                <IconButton
+                  aria-label={"edit"}
+                  component={Link}
+                  edge={"end"}
+                  sx={{ mr: 1 }}
+                  to={`${sport?.id}/edit`}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  aria-label={"delete"}
+                  component={Link}
+                  edge={"end"}
+                  to={`${sport?.id}/delete`}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Fragment>
             }
           >
             <ListItemIcon>

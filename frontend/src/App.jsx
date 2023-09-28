@@ -14,6 +14,7 @@ import SearchAthlete from "./routes/protected-authentication/athlete/SearchAthle
 import SearchTrainer from "./routes/protected-authentication/athlete/SearchTrainer";
 import SportCreate from "./routes/protected-admin/SportCreate";
 import SportDelete from "./routes/protected-admin/SportDelete";
+import SportEdit from "./routes/protected-admin/SportEdit";
 import Sports from "./routes/protected-admin/Sports";
 
 import AthleteLayout from "./layouts/AthleteLayout";
@@ -32,6 +33,7 @@ import {
   deletePersonQuestionAction,
   deleteSportAction,
   editPersonQuestionAction,
+  editSportAction,
   loginAction,
   logOutAction,
   registrationAction,
@@ -116,6 +118,12 @@ const router = createBrowserRouter([
                     element: <SportDelete />,
                     loader: sportLoader,
                     action: deleteSportAction,
+                  },
+                  {
+                    path: ":id/edit",
+                    element: <SportEdit />,
+                    loader: sportLoader,
+                    action: editSportAction,
                   },
                 ],
               },

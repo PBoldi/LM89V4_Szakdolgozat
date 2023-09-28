@@ -21,10 +21,17 @@ export default function SportDialog({ sport }) {
 
   return (
     <Dialog onClose={() => navigate("/admin/sports")} open>
-      <DialogTitle>{"Sport"}</DialogTitle>
+      <DialogTitle>
+        {pathname?.includes("delete")
+          ? "Sport törlése"
+          : pathname?.includes("edit")
+          ? "Sport szerkesztése"
+          : "Sport létrehozása"}
+      </DialogTitle>
       <Form action={pathname} method={"post"}>
         <DialogContent>
           <TextField
+            disabled={pathname?.includes("delete")}
             label={"Sport megnevezése"}
             name={"name"}
             onChange={(event) => setName(event.target.value)}

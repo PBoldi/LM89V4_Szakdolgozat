@@ -7,6 +7,7 @@ import {
   deletePersonQuestion,
   deleteSport,
   editPersonQuestion,
+  editSport,
   login,
   registration,
   trainerProfileCreate,
@@ -86,6 +87,21 @@ export async function editPersonQuestionAction({ params, request }) {
 
     await editPersonQuestion(formData, params?.id);
     return redirect("/admin/person-questions");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
+export async function editSportAction({ params, request }) {
+  try {
+    const formData = await request.formData();
+
+    await editSport(formData, params?.id);
+    return redirect("/admin/sports");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);
