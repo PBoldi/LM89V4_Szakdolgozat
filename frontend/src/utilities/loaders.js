@@ -1,9 +1,20 @@
 import {
   getAthletes,
+  getPersonQuestions,
   getSports,
   getTrainers,
   getUserByAccessToken,
 } from "./api";
+
+export async function personQuestionLoader() {
+  try {
+    const response = await getPersonQuestions();
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
 
 export async function rootLayoutLoader() {
   try {

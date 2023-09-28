@@ -30,11 +30,13 @@ import {
 } from "./utilities/actions";
 
 import {
+  personQuestionLoader,
   rootLayoutLoader,
   searchAthletesLoader,
   searchTrainersLoader,
   sportsLoader,
 } from "./utilities/loaders";
+import PersonQuestions from "./routes/protected-admin/PersonQuestions";
 
 const router = createBrowserRouter([
   {
@@ -100,6 +102,11 @@ const router = createBrowserRouter([
                     action: createSportAction,
                   },
                 ],
+              },
+              {
+                path: "person-questions",
+                element: <PersonQuestions />,
+                loader: personQuestionLoader,
               },
             ],
           },

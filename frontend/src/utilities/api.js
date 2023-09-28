@@ -52,7 +52,10 @@ export const createSport = (data) =>
 
 export const getAthletes = () => protectedInstance.get("/auth/athlete-profile");
 
-export const getSports = () => protectedInstance.get("/auth/sports");
+export const getPersonQuestions = () =>
+  protectedInstance.get("/auth/person-questions/");
+
+export const getSports = () => protectedInstance.get("/auth/sports/");
 
 export const getTrainers = () => protectedInstance.get("/auth/trainer-profile");
 
