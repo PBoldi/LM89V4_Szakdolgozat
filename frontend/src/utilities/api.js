@@ -53,7 +53,13 @@ export const createPersonQuestion = (data) =>
 export const createSport = (data) =>
   protectedInstance.post("/auth/sports/", data);
 
+export const deletePersonQuestion = (id) =>
+  protectedInstance.delete(`/auth/person-questions/${id}`);
+
 export const getAthletes = () => protectedInstance.get("/auth/athlete-profile");
+
+export const getPersonQuestion = (id) =>
+  protectedInstance.get(`/auth/person-questions/${id}`);
 
 export const getPersonQuestions = () =>
   protectedInstance.get("/auth/person-questions/");

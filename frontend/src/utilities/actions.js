@@ -4,6 +4,7 @@ import {
   athleteProfileCreate,
   createPersonQuestion,
   createSport,
+  deletePersonQuestion,
   login,
   registration,
   trainerProfileCreate,
@@ -42,6 +43,19 @@ export async function createSportAction({ request }) {
     const formData = await request.formData();
     await createSport(formData);
     return redirect("/admin/sports");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
+export async function deletePersonQuestionAction({ params }) {
+  try {
+    await deletePersonQuestion(params?.id);
+    return redirect("/admin/person-questions");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);

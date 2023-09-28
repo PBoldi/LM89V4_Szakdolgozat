@@ -26,7 +26,12 @@ export default function PersonQuestions() {
           <ListItem
             key={personQuestion?.id}
             secondaryAction={
-              <IconButton edge={"end"} aria-label={"delete"}>
+              <IconButton
+                aria-label={"delete"}
+                component={Link}
+                edge={"end"}
+                to={`${personQuestion?.id}/delete`}
+              >
                 <DeleteIcon />
               </IconButton>
             }

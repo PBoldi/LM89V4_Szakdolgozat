@@ -6,6 +6,7 @@ import AthleteProfile from "./routes/protected-authentication/profile-choose/Ath
 import TrainerProfile from "./routes/protected-authentication/profile-choose/TrainerProfile";
 import Login from "./routes/authentication/Login";
 import PersonQuestionCreate from "./routes/protected-admin/PersonQuestionCreate";
+import PersonQuestionDelete from "./routes/protected-admin/PersonQuestionDelete";
 import PersonQuestions from "./routes/protected-admin/PersonQuestions";
 import Registration from "./routes/authentication/Registration";
 import SearchAthlete from "./routes/protected-authentication/athlete/SearchAthlete";
@@ -26,6 +27,7 @@ import {
   athleteProfileCreateAction,
   createPersonQuestionAction,
   createSportAction,
+  deletePersonQuestionAction,
   loginAction,
   logOutAction,
   registrationAction,
@@ -34,6 +36,7 @@ import {
 
 import {
   personQuestionLoader,
+  personQuestionsLoader,
   rootLayoutLoader,
   searchAthletesLoader,
   searchTrainersLoader,
@@ -108,12 +111,18 @@ const router = createBrowserRouter([
               {
                 path: "person-questions",
                 element: <PersonQuestions />,
-                loader: personQuestionLoader,
+                loader: personQuestionsLoader,
                 children: [
                   {
                     path: "create",
                     element: <PersonQuestionCreate />,
                     action: createPersonQuestionAction,
+                  },
+                  {
+                    path: ":id/delete",
+                    element: <PersonQuestionDelete />,
+                    loader: personQuestionLoader,
+                    action: deletePersonQuestionAction,
                   },
                 ],
               },

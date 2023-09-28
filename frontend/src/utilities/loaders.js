@@ -1,12 +1,23 @@
 import {
   getAthletes,
+  getPersonQuestion,
   getPersonQuestions,
   getSports,
   getTrainers,
   getUserByAccessToken,
 } from "./api";
 
-export async function personQuestionLoader() {
+export async function personQuestionLoader({ params }) {
+  try {
+    const response = await getPersonQuestion(params?.id);
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function personQuestionsLoader() {
   try {
     const response = await getPersonQuestions();
     return response?.data;
