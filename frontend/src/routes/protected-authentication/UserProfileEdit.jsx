@@ -70,7 +70,7 @@ export default function UserProfileEdit() {
           <FormControl>
             <OutlinedInput
               inputProps={{ accept: "image/png, image/jpeg" }}
-              name={"image"}
+              name={"profile_picture"}
               onChange={handleChange}
               type={"file"}
             />

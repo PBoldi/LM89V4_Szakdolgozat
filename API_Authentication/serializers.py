@@ -91,5 +91,10 @@ class UserSerializerRUD(ModelSerializer):
         read_only_fields = ('is_active', 'is_admin')
 
     def get_profile_picture(self, instance):
-        return f'{"http://localhost:8000/media/{instance.profile_picture}"}' if instance.profile_picture else None
+        return f'{"http://localhost:8000/media/"}{instance.profile_picture}' if instance.profile_picture else None
+    
+class UserSerializerU(ModelSerializer):
+    class Meta:
+        model = User
+        fields= '__all__'
     
