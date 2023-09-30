@@ -8,6 +8,7 @@ import {
   deleteSport,
   editPersonQuestion,
   editSport,
+  editUserProfile,
   login,
   registration,
   trainerProfileCreate,
@@ -150,6 +151,21 @@ export async function trainerProfileCreateAction({ request }) {
     const formData = await request.formData();
     await trainerProfileCreate(formData);
     return redirect("/");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
+export async function editUserProfileAction({ request }) {
+  try {
+    const formData = await request.formData();
+
+    await editUserProfile(formData, formData.get("id"));
+    return redirect("/user-profile");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);

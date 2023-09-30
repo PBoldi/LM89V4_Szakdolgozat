@@ -4,6 +4,7 @@ import { ThemeProvider } from "@mui/material/styles";
 
 import AthleteProfile from "./routes/protected-authentication/profile-choose/AthleteProfile";
 import TrainerProfile from "./routes/protected-authentication/profile-choose/TrainerProfile";
+import UserProfileEdit from "./routes/protected-authentication/UserProfileEdit";
 import Login from "./routes/authentication/Login";
 import PersonQuestionCreate from "./routes/protected-admin/PersonQuestionCreate";
 import PersonQuestionDelete from "./routes/protected-admin/PersonQuestionDelete";
@@ -34,6 +35,7 @@ import {
   deleteSportAction,
   editPersonQuestionAction,
   editSportAction,
+  editUserProfileAction,
   loginAction,
   logOutAction,
   registrationAction,
@@ -86,6 +88,8 @@ const router = createBrowserRouter([
                 action: trainerProfileCreateAction,
               },
             ],
+          },
+          {
             path: "athlete",
             element: <AthleteLayout />,
             children: [
@@ -100,6 +104,14 @@ const router = createBrowserRouter([
                 loader: searchAthletesLoader,
               },
             ],
+          },
+          {
+            path: "user-profile",
+            element: <UserProfileEdit />,
+            action: editUserProfileAction,
+          },
+
+          {
             path: "admin",
             element: <ProtectedAdminLayout />,
             children: [

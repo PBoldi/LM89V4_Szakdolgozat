@@ -1,7 +1,9 @@
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Outlet, useLoaderData } from "react-router-dom";
 import { Fragment, useEffect } from "react";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -19,7 +21,7 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <Fragment>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <CssBaseline />
       <Navbar user={user} />
       <Container
@@ -45,6 +47,6 @@ export default function RootLayout() {
         </div>
       </Container>
       <Footer />
-    </Fragment>
+    </LocalizationProvider>
   );
 }

@@ -65,6 +65,9 @@ export const editPersonQuestion = (data, id) =>
 export const editSport = (data, id) =>
   protectedInstance.put(`/auth/sports/${id}`, data);
 
+export const editUserProfile = (data, id) =>
+  protectedInstance.patch(`/auth/users/${id}`, data);
+
 export const getAthletes = () => protectedInstance.get("/auth/athlete-profile");
 
 export const getPersonQuestion = (id) =>
