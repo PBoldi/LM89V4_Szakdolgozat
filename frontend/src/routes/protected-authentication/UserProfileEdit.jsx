@@ -44,8 +44,6 @@ export default function UserProfileEdit() {
     setProfilePicture(file);
   }
 
-  console.log(profilePicture);
-
   return (
     <Grid container disableEqualOverflow justifyContent={"center"} p={1}>
       <Grid md={6} xs={12}>

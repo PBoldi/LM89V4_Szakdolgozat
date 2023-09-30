@@ -17,6 +17,7 @@ import SportCreate from "./routes/protected-admin/SportCreate";
 import SportDelete from "./routes/protected-admin/SportDelete";
 import SportEdit from "./routes/protected-admin/SportEdit";
 import Sports from "./routes/protected-admin/Sports";
+import TrainerProfileEdit from "./routes/protected-authentication/trainer/TrainerProfileEdit";
 
 import AthleteLayout from "./layouts/AthleteLayout";
 import AuthenticationLayout from "./layouts/AuthenticationLayout";
@@ -24,6 +25,7 @@ import ProtectedAuthenticationLayout from "./layouts/ProtectedAuthenticationLayo
 import ProtectedAdminLayout from "./layouts/ProtectedAdminLayout";
 import ProfileChooseLayout from "./layouts/ProfileChooseLayout";
 import RootLayout from "./layouts/RootLayout";
+import TrainerLayout from "./layouts/TrainerLayout";
 
 import theme from "./utilities/theme";
 
@@ -35,6 +37,7 @@ import {
   deleteSportAction,
   editPersonQuestionAction,
   editSportAction,
+  editTrainerProfileAction,
   editUserProfileAction,
   loginAction,
   logOutAction,
@@ -50,6 +53,7 @@ import {
   searchTrainersLoader,
   sportLoader,
   sportsLoader,
+  trainerProfileLoader,
 } from "./utilities/loaders";
 
 const router = createBrowserRouter([
@@ -102,6 +106,18 @@ const router = createBrowserRouter([
                 path: "search-athlete",
                 element: <SearchAthlete />,
                 loader: searchAthletesLoader,
+              },
+            ],
+          },
+          {
+            path: "trainer",
+            element: <TrainerLayout />,
+            children: [
+              {
+                path: ":id/trainer-profile",
+                element: <TrainerProfileEdit />,
+                action: editTrainerProfileAction,
+                loader: trainerProfileLoader,
               },
             ],
           },

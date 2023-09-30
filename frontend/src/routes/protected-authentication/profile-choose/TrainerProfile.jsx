@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
-import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Unstable_Grid2";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -81,7 +80,7 @@ export default function TrainerProfile() {
               label={"Étrendet is tudok készíteni (dietetikus vagyok)"}
               sx={{ pl: 1 }}
             />
-          </Grid>{" "}
+          </Grid>
           <Grid xs={6}>
             <FormControlLabel
               control={

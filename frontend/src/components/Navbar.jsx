@@ -112,7 +112,10 @@ export default function Navbar({ user }) {
                     <ListItemText primary={"Profil"} />
                   </MenuItem>
                   {user?.trainer_profile ? (
-                    <MenuItem component={Link} to={"/trainer-profile"}>
+                    <MenuItem
+                      component={Link}
+                      to={`/trainer/${user?.trainer_profile?.id}/trainer-profile`}
+                    >
                       <ListItemIcon>
                         <SportsIcon />
                       </ListItemIcon>

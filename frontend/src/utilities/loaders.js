@@ -4,6 +4,7 @@ import {
   getPersonQuestions,
   getSport,
   getSports,
+  getTrainer,
   getTrainers,
   getUserByAccessToken,
 } from "./api";
@@ -71,6 +72,16 @@ export async function sportLoader({ params }) {
 export async function sportsLoader() {
   try {
     const response = await getSports();
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function trainerProfileLoader({ params }) {
+  try {
+    const response = await getTrainer(params?.id);
     return response?.data;
   } catch (error) {
     console.log(error);

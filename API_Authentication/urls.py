@@ -14,6 +14,7 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view()),                      
     path('token/refresh/', TokenRefreshView.as_view()),                 
     path('trainer-profile/', TrainerProfileLC.as_view()),
+    path('trainer-profile/<int:pk>', TrainerProfileRUD.as_view()),
     path('users/', UsersLC.as_view()),                                  
     path('users/<int:pk>', UsersRUD.as_view()),                         
     path('users/authenticated/', AuthenticatedUser.as_view()),                         
