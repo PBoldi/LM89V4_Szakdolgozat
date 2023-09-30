@@ -123,7 +123,10 @@ export default function Navbar({ user }) {
                     </MenuItem>
                   ) : null}
                   {user?.athlete_profile ? (
-                    <MenuItem component={Link} to={"/athlete-profile"}>
+                    <MenuItem
+                      component={Link}
+                      to={`/athlete/${user?.athlete_profile?.id}/athlete-profile`}
+                    >
                       <ListItemIcon>
                         <FitnessCenterIcon />
                       </ListItemIcon>

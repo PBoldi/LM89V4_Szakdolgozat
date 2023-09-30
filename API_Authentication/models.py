@@ -8,6 +8,7 @@ class AthleteProfile(models.Model):
     class Meta:
         db_table = 'AthleteProfile'
 
+    biography = models.CharField(blank=True, db_column='Biography', max_length=1000)
 
 class TrainerProfile(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)

@@ -47,22 +47,24 @@ export default function UserProfileEdit() {
               sx={{ p: 2 }}
             />
           </Grid>
-          <TextField
-            inputProps={{ maxLength: 1000 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position={"end"}>
-                  {biography.length}/1000
-                </InputAdornment>
-              ),
-            }}
-            label={"Magamról"}
-            multiline
-            name={"biography"}
-            onChange={(event) => setBiography(event.target.value)}
-            placeholder={"Magamról"}
-            value={biography}
-          />
+          <Grid xs={12}>
+            <TextField
+              inputProps={{ maxLength: 1000 }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position={"end"}>
+                    {biography.length}/1000
+                  </InputAdornment>
+                ),
+              }}
+              label={"Magamról"}
+              multiline
+              name={"biography"}
+              onChange={(event) => setBiography(event.target.value)}
+              placeholder={"Magamról"}
+              value={biography}
+            />
+          </Grid>
           <Grid xs={12}>
             <TextField
               inputProps={{ min: 0 }}

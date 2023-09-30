@@ -10,10 +10,15 @@ from .serializers import *
 class AthleteProfileLC(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = AthleteProfile.objects.all()
-    serializer_class = AthleteProfileSerializer
 
     def get_serializer_class(self):
         return AthleteProfileSerializerL if self.request.method in SAFE_METHODS else AthleteProfileSerializer
+    
+
+class AthleteProfileRUD(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = AthleteProfile.objects.all()
+    serializer_class = AthleteProfileSerializer
 
 
 class AuthenticatedUser(generics.GenericAPIView):

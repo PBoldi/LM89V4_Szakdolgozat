@@ -45,7 +45,7 @@ export default function UserProfileEdit() {
   }
 
   return (
-    <Grid container disableEqualOverflow justifyContent={"center"} p={1}>
+    <Grid container justifyContent={"center"}>
       <Grid md={6} xs={12}>
         <Form action={pathname} encType={"multipart/form-data"} method={"post"}>
           {!isNaN(Date.parse(birthDate)) ? (

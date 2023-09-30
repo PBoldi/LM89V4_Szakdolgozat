@@ -6,6 +6,7 @@ import {
   createSport,
   deletePersonQuestion,
   deleteSport,
+  editAthleteProfile,
   editPersonQuestion,
   editSport,
   editTrainerProfile,
@@ -74,6 +75,21 @@ export async function deleteSportAction({ params }) {
   try {
     await deleteSport(params?.id);
     return redirect("/admin/sports");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
+export async function editAthleteProfileAction({ params, request }) {
+  try {
+    const formData = await request.formData();
+
+    await editAthleteProfile(formData, params?.id);
+    return redirect("/");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);

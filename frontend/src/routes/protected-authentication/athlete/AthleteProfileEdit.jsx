@@ -1,19 +1,20 @@
 import { useState } from "react";
-import { Form, useNavigation } from "react-router-dom";
+import { Form, useLoaderData, useLocation } from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2";
 import InputAdornment from "@mui/material/InputAdornment";
 import LoadingButton from "@mui/lab/LoadingButton";
 import TextField from "@mui/material/TextField";
 
-export default function AthleteProfile() {
-  const navigation = useNavigation();
+export default function UserProfileEdit() {
+  const { pathname } = useLocation();
+  const athleteProfile = useLoaderData();
 
-  const [biography, setBiography] = useState("");
+  const [biography, setBiography] = useState(athleteProfile?.biography ?? "");
 
   return (
-    <Grid xs={12}>
-      <Form method={"post"}>
-        <Grid xs={12}>
+    <Grid container>
+      <Grid xs={12}>
+        <Form action={pathname} encType={"multipart/form-data"} method={"post"}>
           <TextField
             inputProps={{ maxLength: 1000 }}
             InputProps={{
@@ -30,15 +31,15 @@ export default function AthleteProfile() {
             placeholder={"Magamról"}
             value={biography}
           />
-        </Grid>
-        <Grid paddingY={1} xs={12}>
-          <LoadingButton
-            loading={["loading", "submitting"].includes(navigation.state)}
-          >
-            {"Sportoló profil készítése"}
-          </LoadingButton>
-        </Grid>
-      </Form>
+          <Grid paddingY={1} xs={12}>
+            <LoadingButton
+              loading={["loading", "submitting"].includes(navigation.state)}
+            >
+              {"Mentés"}
+            </LoadingButton>
+          </Grid>
+        </Form>
+      </Grid>
     </Grid>
   );
 }

@@ -3,8 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 
 import AthleteProfile from "./routes/protected-authentication/profile-choose/AthleteProfile";
-import TrainerProfile from "./routes/protected-authentication/profile-choose/TrainerProfile";
-import UserProfileEdit from "./routes/protected-authentication/UserProfileEdit";
+import AthleteProfileEdit from "./routes/protected-authentication/athlete/AthleteProfileEdit";
 import Login from "./routes/authentication/Login";
 import PersonQuestionCreate from "./routes/protected-admin/PersonQuestionCreate";
 import PersonQuestionDelete from "./routes/protected-admin/PersonQuestionDelete";
@@ -17,7 +16,9 @@ import SportCreate from "./routes/protected-admin/SportCreate";
 import SportDelete from "./routes/protected-admin/SportDelete";
 import SportEdit from "./routes/protected-admin/SportEdit";
 import Sports from "./routes/protected-admin/Sports";
+import TrainerProfile from "./routes/protected-authentication/profile-choose/TrainerProfile";
 import TrainerProfileEdit from "./routes/protected-authentication/trainer/TrainerProfileEdit";
+import UserProfileEdit from "./routes/protected-authentication/UserProfileEdit";
 
 import AthleteLayout from "./layouts/AthleteLayout";
 import AuthenticationLayout from "./layouts/AuthenticationLayout";
@@ -35,6 +36,7 @@ import {
   createSportAction,
   deletePersonQuestionAction,
   deleteSportAction,
+  editAthleteProfileAction,
   editPersonQuestionAction,
   editSportAction,
   editTrainerProfileAction,
@@ -46,6 +48,7 @@ import {
 } from "./utilities/actions";
 
 import {
+  athleteProfileLoader,
   personQuestionLoader,
   personQuestionsLoader,
   rootLayoutLoader,
@@ -97,6 +100,12 @@ const router = createBrowserRouter([
             path: "athlete",
             element: <AthleteLayout />,
             children: [
+              {
+                path: ":id/athlete-profile",
+                element: <AthleteProfileEdit />,
+                action: editAthleteProfileAction,
+                loader: athleteProfileLoader,
+              },
               {
                 path: "search-trainer",
                 element: <SearchTrainer />,

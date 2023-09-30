@@ -59,6 +59,9 @@ export const deletePersonQuestion = (id) =>
 export const deleteSport = (id) =>
   protectedInstance.delete(`/auth/sports/${id}`);
 
+export const editAthleteProfile = (data, id) =>
+  protectedInstance.put(`/auth/athlete-profile/${id}`, data);
+
 export const editPersonQuestion = (data, id) =>
   protectedInstance.put(`/auth/person-questions/${id}`, data);
 
@@ -70,6 +73,9 @@ export const editTrainerProfile = (data, id) =>
 
 export const editUserProfile = (data, id) =>
   protectedInstance.patch(`/auth/users/${id}`, data);
+
+export const getAthlete = (id) =>
+  protectedInstance.get(`/auth/athlete-profile/${id}`);
 
 export const getAthletes = () => protectedInstance.get("/auth/athlete-profile");
 

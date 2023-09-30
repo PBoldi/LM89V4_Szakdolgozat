@@ -1,4 +1,5 @@
 import {
+  getAthlete,
   getAthletes,
   getPersonQuestion,
   getPersonQuestions,
@@ -8,6 +9,16 @@ import {
   getTrainers,
   getUserByAccessToken,
 } from "./api";
+
+export async function athleteProfileLoader({ params }) {
+  try {
+    const response = await getAthlete(params?.id);
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
 
 export async function personQuestionLoader({ params }) {
   try {
