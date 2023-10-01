@@ -14,6 +14,7 @@ import {
   login,
   registration,
   trainerProfileCreate,
+  userAthleteConnection,
 } from "./api";
 
 export async function athleteProfileCreateAction({ request }) {
@@ -198,6 +199,21 @@ export async function editUserProfileAction({ request }) {
 
     await editUserProfile(formData, formData.get("id"));
     return redirect("/user-profile");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
+export async function userAthleteConnectionAction({ request }) {
+  try {
+    const formData = await request.formData();
+
+    await userAthleteConnection(formData);
+    return redirect("/athlete/search-athlete");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);

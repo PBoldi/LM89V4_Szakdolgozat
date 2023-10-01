@@ -104,3 +104,6 @@ export const registration = (data) =>
 
 export const trainerProfileCreate = (data) =>
   protectedInstance.post("/auth/trainer-profile/", data);
+
+export const userAthleteConnection = (data) =>
+  protectedInstance.post(`/auth/user-athlete-connection/`, data);

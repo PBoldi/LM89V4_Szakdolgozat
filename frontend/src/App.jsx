@@ -45,6 +45,7 @@ import {
   logOutAction,
   registrationAction,
   trainerProfileCreateAction,
+  userAthleteConnectionAction,
 } from "./utilities/actions";
 
 import {
@@ -114,6 +115,7 @@ const router = createBrowserRouter([
               {
                 path: "search-athlete",
                 element: <SearchAthlete />,
+                action: userAthleteConnectionAction,
                 loader: searchAthletesLoader,
               },
             ],

@@ -11,6 +11,10 @@ class AthleteProfileLC(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = AthleteProfile.objects.all()
 
+    def get_queryset(self):
+        return  AthleteProfile.objects.exclude(
+            pk__in=UserAthleteConnection.objects.filter(user=self.request.user).values_list('athlete_profile')).exclude(pk=self.request.user.athlete_profile.id)
+
     def get_serializer_class(self):
         return AthleteProfileSerializerL if self.request.method in SAFE_METHODS else AthleteProfileSerializer
     
@@ -68,6 +72,11 @@ class TrainerProfileRUD(generics.RetrieveUpdateDestroyAPIView):
     queryset = TrainerProfile.objects.all()
     serializer_class = TrainerProfileSerializer
 
+
+class UserAthleteConnectionC(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = UserAthleteConnection.objects.all()
+    serializer_class = UserAthleteConnectionSerializer
 
 class UsersLC(generics.ListCreateAPIView):
     permission_classes = [AllowAny]
