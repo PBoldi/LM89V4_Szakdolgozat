@@ -26,7 +26,7 @@ export default function SearchTrainer() {
   return (
     <Fragment>
       {athletes?.map((athlete) => (
-        <Card key={athlete?.id} sx={{ height: 350, width: 350, m: 1 }}>
+        <Card key={athlete?.id} sx={{ minHeight: 350, width: 350, m: 1 }}>
           <CardHeader
             title={
               athlete?.user_set[0]?.first_name &&
@@ -52,7 +52,7 @@ export default function SearchTrainer() {
             <Typography>
               {athlete?.user_set[0]?.sex ? "Férfi" : "Nő"}
             </Typography>
-            <Typography>{athlete?.user_set[0]?.biography}</Typography>
+            <Typography>{athlete?.biography}</Typography>
           </CardContent>
 
           <CardActions disableSpacing>
