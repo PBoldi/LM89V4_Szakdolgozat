@@ -15,6 +15,7 @@ import {
   registration,
   trainerProfileCreate,
   userAthleteConnection,
+  userTrainerConnection,
 } from "./api";
 
 export async function athleteProfileCreateAction({ request }) {
@@ -214,6 +215,21 @@ export async function userAthleteConnectionAction({ request }) {
 
     await userAthleteConnection(formData);
     return redirect("/athlete/search-athlete");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
+export async function userTrainerConnectionAction({ request }) {
+  try {
+    const formData = await request.formData();
+
+    await userTrainerConnection(formData);
+    return redirect("/athlete/search-trainer");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);

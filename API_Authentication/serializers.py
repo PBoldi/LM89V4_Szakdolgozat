@@ -85,6 +85,12 @@ class UserAthleteConnectionSerializer(ModelSerializer):
         model = UserAthleteConnection
 
 
+class UserTrainerConnectionSerializer(ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = UserTrainerConnection        
+
+
 class UserSerializerRUD(ModelSerializer):
     athlete_profile = AthleteProfileSerializer()
     trainer_profile = TrainerProfileSerializer()
