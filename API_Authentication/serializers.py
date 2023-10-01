@@ -62,7 +62,7 @@ class UserSerializerL(ModelSerializer):
         model = User
 
     def get_profile_picture(self, instance):
-        return f'{"http://localhost:8000/media/{instance.profile_picture}"}' if instance.profile_picture else None
+        return f'{"http://localhost:8000/media/"}{instance.profile_picture}' if instance.profile_picture else None
     
 
 class AthleteProfileSerializerL(ModelSerializer):
