@@ -80,14 +80,6 @@ class AthleteQuestionTest(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True,db_column='TimeStamp')
 
 
-class ConnectionType(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)
-
-    class Meta:
-        db_table = 'ConnectionType'
-    
-    connection_type = models.CharField(db_column='ConnectionType', max_length=255)
-
 
 class PersonQuestion(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
@@ -132,15 +124,28 @@ class TrainerRating(models.Model):
     rating = models.PositiveIntegerField(db_column='Rating', default=0)
 
 
-class UserConnection(models.Model):
+class UserAthleteConnection(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
 
     class Meta:
-        db_table= 'UserConnections'
+        db_table= 'UserAthleteConnections'
     
-    connection_type = models.ForeignKey(ConnectionType, db_column='ConnectionTypeID', on_delete=models.CASCADE)
-    user1 = models.ForeignKey(User, db_column='User1ID', on_delete=models.CASCADE, related_name='user1')
-    user2 = models.ForeignKey(User, db_column='User2ID', on_delete=models.CASCADE, related_name='user2')
+    connect = models.BooleanField(db_column='Connect')
+
+    athlete_profile = models.ForeignKey(AthleteProfile, db_column='AthleteProfile', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, db_column='User', on_delete=models.CASCADE)
+
+
+class UserTrainerConnection(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True)
+
+    class Meta:
+        db_table= 'UserTrainerConnections'
+    
+    connect = models.BooleanField(db_column='Connect')
+
+    trainer_profile = models.ForeignKey(TrainerProfile, db_column='TrainerProfile', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, db_column='User', on_delete=models.CASCADE)
 
 
 class UserSport(models.Model):
