@@ -12,8 +12,14 @@ import {
 
 export async function athleteProfileLoader({ params }) {
   try {
-    const response = await getAthlete(params?.id);
-    return response?.data;
+    const [promiseAthlete, promiseSports] = await Promise.all([
+      getAthlete(params?.id),
+      getSports(),
+    ]);
+    return {
+      athleteProfile: promiseAthlete?.data,
+      sports: promiseSports?.data,
+    };
   } catch (error) {
     console.log(error);
     return null;

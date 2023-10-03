@@ -99,4 +99,5 @@ class UsersRUD(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     
     def get_serializer_class(self):
-        return UserSerializerU if self.request.method in ['PATCH', 'PUT'] else UserSerializerRUD 
+        return UserSerializerU if self.request.method in ['PATCH', 'PUT'] else UserSerializerRUD
+    
