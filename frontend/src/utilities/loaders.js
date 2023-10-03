@@ -98,8 +98,13 @@ export async function sportsLoader() {
 
 export async function trainerProfileLoader({ params }) {
   try {
-    const response = await getTrainer(params?.id);
-    return response?.data;
+    const [promiseTrainerProfile, promiseSports, promiseUserSports] =
+      await Promise.all([getTrainer(params?.id), getSports(), getUserSports()]);
+    return {
+      trainerProfile: promiseTrainerProfile?.data,
+      sports: promiseSports?.data,
+      userSports: promiseUserSports?.data,
+    };
   } catch (error) {
     console.log(error);
     return null;
