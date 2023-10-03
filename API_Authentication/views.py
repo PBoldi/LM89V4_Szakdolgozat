@@ -100,4 +100,19 @@ class UsersRUD(generics.RetrieveUpdateAPIView):
     
     def get_serializer_class(self):
         return UserSerializerU if self.request.method in ['PATCH', 'PUT'] else UserSerializerRUD
+
+
+class UserSportsLC(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSportsSerializer
+
+    def get_queryset(self):
+        return UserSport.objects.filter(user=self.request.user)
     
+
+class UserSportsD(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSportsSerializer
+
+    def get_queryset(self):
+        return UserSport.objects.filter(user=self.request.user)

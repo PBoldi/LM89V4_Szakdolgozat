@@ -18,6 +18,8 @@ urlpatterns = [
     path('trainer-profile/<int:pk>', TrainerProfileRUD.as_view()),
     path('user-athlete-connection/', UserAthleteConnectionC.as_view()),
     path('user-trainer-connection/', UserTrainerConnectionC.as_view()),
+    path('user-sports/', UserSportsLC.as_view()),
+    path('user-sports/<int:pk>', UserSportsD.as_view()),
     path('users/', UsersLC.as_view()),                                  
     path('users/<int:pk>', UsersRUD.as_view()),                         
     path('users/authenticated/', AuthenticatedUser.as_view()),                         

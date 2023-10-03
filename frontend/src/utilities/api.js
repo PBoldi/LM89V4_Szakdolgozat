@@ -59,6 +59,9 @@ export const deletePersonQuestion = (id) =>
 export const deleteSport = (id) =>
   protectedInstance.delete(`/auth/sports/${id}`);
 
+export const deleteUserSport = (id) =>
+  protectedInstance.delete(`/auth/user-sports/${id}`);
+
 export const editAthleteProfile = (data, id) =>
   protectedInstance.put(`/auth/athlete-profile/${id}`, data);
 
@@ -97,6 +100,8 @@ export const getTrainers = () => protectedInstance.get("/auth/trainer-profile");
 export const getUserByAccessToken = () =>
   protectedInstance.get("/auth/users/authenticated/");
 
+export const getUserSports = () => protectedInstance.get("/auth/user-sports/");
+
 export const login = (data) => unprotectedInstance.post("/auth/token/", data);
 
 export const registration = (data) =>
@@ -107,6 +112,9 @@ export const trainerProfileCreate = (data) =>
 
 export const userAthleteConnection = (data) =>
   protectedInstance.post(`/auth/user-athlete-connection/`, data);
+
+export const userSportCreate = (data) =>
+  protectedInstance.post("/auth/user-sports/", data);
 
 export const userTrainerConnection = (data) =>
   protectedInstance.post(`/auth/user-trainer-connection/`, data);

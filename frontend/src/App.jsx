@@ -36,6 +36,7 @@ import {
   createSportAction,
   deletePersonQuestionAction,
   deleteSportAction,
+  deleteUserSportAction,
   editAthleteProfileAction,
   editPersonQuestionAction,
   editSportAction,
@@ -46,6 +47,7 @@ import {
   registrationAction,
   trainerProfileCreateAction,
   userAthleteConnectionAction,
+  userSportCreateAction,
   userTrainerConnectionAction,
 } from "./utilities/actions";
 
@@ -139,7 +141,8 @@ const router = createBrowserRouter([
             element: <UserProfileEdit />,
             action: editUserProfileAction,
           },
-
+          { path: "user-sport/create", action: userSportCreateAction },
+          { path: "user-sport/delete", action: deleteUserSportAction },
           {
             path: "admin",
             element: <ProtectedAdminLayout />,

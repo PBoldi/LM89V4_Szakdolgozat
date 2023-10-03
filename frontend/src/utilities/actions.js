@@ -6,6 +6,7 @@ import {
   createSport,
   deletePersonQuestion,
   deleteSport,
+  deleteUserSport,
   editAthleteProfile,
   editPersonQuestion,
   editSport,
@@ -15,6 +16,7 @@ import {
   registration,
   trainerProfileCreate,
   userAthleteConnection,
+  userSportCreate,
   userTrainerConnection,
 } from "./api";
 
@@ -77,6 +79,21 @@ export async function deleteSportAction({ params }) {
   try {
     await deleteSport(params?.id);
     return redirect("/admin/sports");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
+export async function deleteUserSportAction({ request }) {
+  try {
+    const formData = await request.formData();
+
+    await deleteUserSport(formData.get("id"));
+    return redirect(formData.get("pathname"));
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);
@@ -162,7 +179,6 @@ export async function loginAction({ request }) {
 }
 
 export function logOutAction() {
-  console.log("ad");
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   return redirect("/");
@@ -215,6 +231,21 @@ export async function userAthleteConnectionAction({ request }) {
 
     await userAthleteConnection(formData);
     return redirect("/athlete/search-athlete");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
+export async function userSportCreateAction({ request }) {
+  try {
+    const formData = await request.formData();
+
+    await userSportCreate(formData);
+    return redirect(formData.get("pathname"));
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);

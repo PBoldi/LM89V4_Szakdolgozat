@@ -8,17 +8,17 @@ import {
   getTrainer,
   getTrainers,
   getUserByAccessToken,
+  getUserSports,
 } from "./api";
 
 export async function athleteProfileLoader({ params }) {
   try {
-    const [promiseAthlete, promiseSports] = await Promise.all([
-      getAthlete(params?.id),
-      getSports(),
-    ]);
+    const [promiseAthlete, promiseSports, promiseUserSports] =
+      await Promise.all([getAthlete(params?.id), getSports(), getUserSports()]);
     return {
       athleteProfile: promiseAthlete?.data,
       sports: promiseSports?.data,
+      userSports: promiseUserSports?.data,
     };
   } catch (error) {
     console.log(error);

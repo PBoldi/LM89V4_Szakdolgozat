@@ -14,7 +14,7 @@ import UserSportCreateOrDeleteDialog from "../../../components/UserSportCreateOr
 
 export default function AthleteProfileEdit() {
   const { pathname } = useLocation();
-  const { athleteProfile, sports } = useLoaderData();
+  const { athleteProfile, sports, userSports } = useLoaderData();
   const { user } = useOutletContext();
 
   const [biography, setBiography] = useState(athleteProfile?.biography ?? "");
@@ -27,6 +27,7 @@ export default function AthleteProfileEdit() {
         setOpen={setOpen}
         sports={sports}
         user={user}
+        userSports={userSports}
       />
       <Grid container>
         <Form action={pathname} encType={"multipart/form-data"} method={"post"}>

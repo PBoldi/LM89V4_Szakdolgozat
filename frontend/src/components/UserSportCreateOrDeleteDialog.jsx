@@ -1,10 +1,4 @@
-import { useState } from "react";
-import {
-  Form,
-  useLocation,
-  useNavigate,
-  useNavigation,
-} from "react-router-dom";
+import { Form, useLocation, useSubmit } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Dialog from "@mui/material/Dialog";
@@ -12,9 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import LoadingButton from "@mui/lab/LoadingButton";
 import { FixedSizeList } from "react-window";
 
 export default function UserSportCreateOrDeleteDialog({
@@ -22,8 +14,24 @@ export default function UserSportCreateOrDeleteDialog({
   setOpen,
   sports,
   user,
+  userSports,
 }) {
   const { pathname } = useLocation();
+  const submit = useSubmit();
+
+  function handleSubmit(isCreate, sportId, userSportId) {
+    if (isCreate) {
+      submit(
+        { pathname: pathname, sport: sportId, user: user?.id },
+        { action: "/user-sport/create", method: "post" }
+      );
+    } else {
+      submit(
+        { pathname: pathname, id: userSportId },
+        { action: "/user-sport/delete", method: "post" }
+      );
+    }
+  }
 
   return (
     <Dialog onClose={() => setOpen(false)} open={open}>
@@ -42,7 +50,26 @@ export default function UserSportCreateOrDeleteDialog({
               <ListItem
                 disablePadding
                 key={sports[index]?.id}
-                secondaryAction={<Checkbox></Checkbox>}
+                secondaryAction={
+                  <Checkbox
+                    checked={
+                      userSports?.find(
+                        (userSport) => userSport?.sport === sports[index]?.id
+                      )
+                        ? true
+                        : false
+                    }
+                    onClick={(event) =>
+                      handleSubmit(
+                        event.target.checked,
+                        sports[index]?.id,
+                        userSports?.find(
+                          (userSport) => userSport?.sport === sports[index]?.id
+                        )?.id
+                      )
+                    }
+                  />
+                }
                 style={style}
               >
                 <ListItemText primary={sports[index]?.name} />
