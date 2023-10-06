@@ -45,6 +45,8 @@ import {
   editUserProfileAction,
   loginAction,
   logOutAction,
+  personQuestionWeighingCreateAction,
+  personQuestionWeighingEditAction,
   registrationAction,
   trainerProfileCreateAction,
   userAthleteConnectionAction,
@@ -116,6 +118,14 @@ const router = createBrowserRouter([
                     path: "person-question-weighings",
                     element: <PersonQuestionWeighing />,
                     loader: personQuestionsWeighingLoader,
+                  },
+                  {
+                    path: "person-question-weighings/create",
+                    action: personQuestionWeighingCreateAction,
+                  },
+                  {
+                    path: "person-question-weighings/edit",
+                    action: personQuestionWeighingEditAction,
                   },
                 ],
               },

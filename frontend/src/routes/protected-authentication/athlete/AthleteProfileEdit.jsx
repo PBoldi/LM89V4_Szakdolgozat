@@ -69,7 +69,7 @@ export default function AthleteProfileEdit() {
           </Grid>
         </Form>
       </Grid>
-      <Outlet />
+      <Outlet context={{ user }} />
     </Fragment>
   );
 }

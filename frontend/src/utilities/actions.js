@@ -3,12 +3,14 @@ import { redirect } from "react-router-dom";
 import {
   athleteProfileCreate,
   createPersonQuestion,
+  createPersonQuestionWeighing,
   createSport,
   deletePersonQuestion,
   deleteSport,
   deleteUserSport,
   editAthleteProfile,
   editPersonQuestion,
+  editPersonQuestionWeighing,
   editSport,
   editTrainerProfile,
   editUserProfile,
@@ -182,6 +184,34 @@ export function logOutAction() {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   return redirect("/");
+}
+
+export async function personQuestionWeighingCreateAction({ request }) {
+  try {
+    const formData = await request.formData();
+
+    await createPersonQuestionWeighing(formData);
+
+    return redirect(formData.get("pathname"));
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400)
+      return error?.response?.data;
+    throw error;
+  }
+}
+
+export async function personQuestionWeighingEditAction({ request }) {
+  try {
+    const formData = await request.formData();
+
+    await editPersonQuestionWeighing(formData, formData.get("person_question"));
+
+    return redirect(formData.get("pathname"));
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400)
+      return error?.response?.data;
+    throw error;
+  }
 }
 
 export async function registrationAction({ request }) {

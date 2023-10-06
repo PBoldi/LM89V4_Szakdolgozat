@@ -71,6 +71,9 @@ export const editAthleteProfile = (data, id) =>
 export const editPersonQuestion = (data, id) =>
   protectedInstance.put(`/auth/person-questions/${id}`, data);
 
+export const editPersonQuestionWeighing = (data, id) =>
+  protectedInstance.put(`/auth/person-question-weighing/${id}`, data);
+
 export const editSport = (data, id) =>
   protectedInstance.put(`/auth/sports/${id}`, data);
 
@@ -92,7 +95,7 @@ export const getPersonQuestions = () =>
   protectedInstance.get("/auth/person-questions/");
 
 export const getPersonQuestionWeighings = () =>
-  protectedInstance.get("/auth/person-questions/");
+  protectedInstance.get("/auth/person-question-weighing/");
 
 export const getSport = (id) => protectedInstance.get(`/auth/sports/${id}`);
 

@@ -4,6 +4,8 @@ import {
   useLocation,
   useLoaderData,
   useNavigate,
+  useOutletContext,
+  useSubmit,
 } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -20,8 +22,32 @@ import { FixedSizeList } from "react-window";
 export default function PersonQuestionWeighing() {
   const { personQuestions, personQuestionWeighings } = useLoaderData();
   const { pathname } = useLocation();
+  const { user } = useOutletContext();
   const { id } = useParams();
   const navigate = useNavigate();
+  const submit = useSubmit();
+
+  function handleSliderChange(
+    weight,
+    personQuestionId,
+    personQuestionWeighingId
+  ) {
+    submit(
+      {
+        athlete_profile: user?.athlete_profile?.id,
+        person_question: personQuestionId,
+        weight: weight,
+        pathname: pathname,
+        personQuestionWeighingId: personQuestionWeighingId,
+      },
+      {
+        action: personQuestionWeighingId
+          ? `/athlete/${id}/athlete-profile/person-question-weighings/edit`
+          : `/athlete/${id}/athlete-profile/person-question-weighings/create`,
+        method: "post",
+      }
+    );
+  }
 
   return (
     <Dialog
@@ -50,10 +76,27 @@ export default function PersonQuestionWeighing() {
                   <Grid xs={12}>
                     <Slider
                       aria-label="Small steps"
-                      defaultValue={1}
+                      defaultValue={
+                        personQuestionWeighings?.find(
+                          (personQuestionWeighing) =>
+                            personQuestionWeighing?.person_question ===
+                            personQuestions[index]?.id
+                        )?.weight
+                      }
                       marks
                       max={5}
                       min={1}
+                      onChangeCommitted={(_, value) =>
+                        handleSliderChange(
+                          value,
+                          personQuestions[index]?.id,
+                          personQuestionWeighings?.find(
+                            (personQuestionWeighing) =>
+                              personQuestionWeighing?.person_question ===
+                              personQuestions[index]?.id
+                          )?.id
+                        )
+                      }
                       step={1}
                     />
                   </Grid>

@@ -48,6 +48,15 @@ class PersonQuestionWeighingLC(generics.ListCreateAPIView):
 
     def get_queryset(self):
         return PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athlete_profile)
+    
+
+class PersonQuestionWeighingU(generics.UpdateAPIView):
+    permission_classes = [AllowAny]
+    queryset = PersonQuestionWeighing.objects.all()
+    serializer_class = PersonQuestionWeighingSerializer
+
+    def get_queryset(self):
+        return PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athlete_profile)
 
 
 class PersonQuestionRUD(generics.RetrieveUpdateDestroyAPIView):
