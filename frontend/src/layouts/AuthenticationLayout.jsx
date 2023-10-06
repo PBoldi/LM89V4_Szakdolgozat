@@ -12,38 +12,34 @@ export default function AuthenticationLayout() {
   const nestedPath = pathname?.split("/")?.[2];
 
   return (
-    <Grid
-      alignItems={"center"}
-      container
-      justifyContent={"center"}
-      p={1}
-      xs={12}
-    >
-      <Paper>
-        <Grid p={1} xs={12}>
-          {["login", "registration"].includes(nestedPath) ? (
-            <Grid mb={1} xs={12}>
-              <Tabs value={nestedPath}>
-                <Tab
-                  component={Link}
-                  icon={<LoginIcon />}
-                  label={"Bejelentkezés"}
-                  to={"login"}
-                  value={"login"}
-                />
-                <Tab
-                  component={Link}
-                  icon={<PersonAddIcon />}
-                  label={"Regisztráció"}
-                  to={"registration"}
-                  value={"registration"}
-                />
-              </Tabs>
-            </Grid>
-          ) : null}
-          <Outlet />
-        </Grid>
-      </Paper>
+    <Grid container justifyContent={"center"} p={1} xs={12}>
+      <Grid xs={12} md={8}>
+        <Paper elevation={10} sx={{ height: 300 }}>
+          <Grid p={1} xs={12}>
+            {["login", "registration"].includes(nestedPath) ? (
+              <Grid mb={1} xs={12}>
+                <Tabs value={nestedPath}>
+                  <Tab
+                    component={Link}
+                    icon={<LoginIcon />}
+                    label={"Bejelentkezés"}
+                    to={"login"}
+                    value={"login"}
+                  />
+                  <Tab
+                    component={Link}
+                    icon={<PersonAddIcon />}
+                    label={"Regisztráció"}
+                    to={"registration"}
+                    value={"registration"}
+                  />
+                </Tabs>
+              </Grid>
+            ) : null}
+            <Outlet />
+          </Grid>
+        </Paper>
+      </Grid>
     </Grid>
   );
 }
