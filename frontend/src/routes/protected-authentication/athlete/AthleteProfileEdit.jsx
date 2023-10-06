@@ -32,9 +32,9 @@ export default function AthleteProfileEdit() {
         user={user}
         userSports={userSports}
       />
-      <Grid container>
-        <Form action={pathname} encType={"multipart/form-data"} method={"post"}>
-          <Grid paddingY={1} xs={12}>
+      <Form action={pathname} encType={"multipart/form-data"} method={"post"}>
+        <Grid container spacing={2} xs={12}>
+          <Grid xs={12}>
             <TextField
               inputProps={{ maxLength: 1000 }}
               InputProps={{
@@ -52,11 +52,16 @@ export default function AthleteProfileEdit() {
               value={biography}
             />
           </Grid>
-          <Grid paddingY={1} xs={12}>
-            <Button onClick={() => setOpen(true)}>{"Sport felvétele"}</Button>
+          <Grid paddingY={1} xs={6}>
+            <Button color={"secondary"} onClick={() => setOpen(true)}>
+              {"Sport felvétele"}
+            </Button>
           </Grid>
-          <Grid paddingY={1} xs={12}>
-            <Button onClick={() => navigate("person-question-weighings")}>
+          <Grid paddingY={1} xs={6}>
+            <Button
+              color={"secondary"}
+              onClick={() => navigate("person-question-weighings")}
+            >
               {"Kérdések kitöltése"}
             </Button>
           </Grid>
@@ -67,8 +72,8 @@ export default function AthleteProfileEdit() {
               {"Mentés"}
             </LoadingButton>
           </Grid>
-        </Form>
-      </Grid>
+        </Grid>
+      </Form>
       <Outlet context={{ user }} />
     </Fragment>
   );
