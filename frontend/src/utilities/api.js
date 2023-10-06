@@ -50,6 +50,9 @@ export const athleteProfileCreate = (data) =>
 export const createPersonQuestion = (data) =>
   protectedInstance.post("/auth/person-questions/", data);
 
+export const createPersonQuestionWeighing = (data) =>
+  protectedInstance.post("/auth/person-question-weighing/", data);
+
 export const createSport = (data) =>
   protectedInstance.post("/auth/sports/", data);
 
@@ -86,6 +89,9 @@ export const getPersonQuestion = (id) =>
   protectedInstance.get(`/auth/person-questions/${id}`);
 
 export const getPersonQuestions = () =>
+  protectedInstance.get("/auth/person-questions/");
+
+export const getPersonQuestionWeighings = () =>
   protectedInstance.get("/auth/person-questions/");
 
 export const getSport = (id) => protectedInstance.get(`/auth/sports/${id}`);

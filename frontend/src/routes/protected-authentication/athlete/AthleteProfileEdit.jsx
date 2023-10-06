@@ -1,8 +1,10 @@
 import { Fragment, useState } from "react";
 import {
   Form,
+  Outlet,
   useLoaderData,
   useLocation,
+  useNavigate,
   useOutletContext,
 } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -13,6 +15,7 @@ import TextField from "@mui/material/TextField";
 import UserSportCreateOrDeleteDialog from "../../../components/UserSportCreateOrDeleteDialog";
 
 export default function AthleteProfileEdit() {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { athleteProfile, sports, userSports } = useLoaderData();
   const { user } = useOutletContext();
@@ -53,6 +56,11 @@ export default function AthleteProfileEdit() {
             <Button onClick={() => setOpen(true)}>{"Sport felvétele"}</Button>
           </Grid>
           <Grid paddingY={1} xs={12}>
+            <Button onClick={() => navigate("person-question-weighings")}>
+              {"Kérdések kitöltése"}
+            </Button>
+          </Grid>
+          <Grid paddingY={1} xs={12}>
             <LoadingButton
               loading={["loading", "submitting"].includes(navigation.state)}
             >
@@ -61,6 +69,7 @@ export default function AthleteProfileEdit() {
           </Grid>
         </Form>
       </Grid>
+      <Outlet />
     </Fragment>
   );
 }

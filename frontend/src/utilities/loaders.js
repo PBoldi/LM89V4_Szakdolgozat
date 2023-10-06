@@ -3,6 +3,7 @@ import {
   getAthletes,
   getPersonQuestion,
   getPersonQuestions,
+  getPersonQuestionWeighings,
   getSport,
   getSports,
   getTrainer,
@@ -30,6 +31,20 @@ export async function personQuestionLoader({ params }) {
   try {
     const response = await getPersonQuestion(params?.id);
     return response?.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function personQuestionsWeighingLoader() {
+  try {
+    const [promisePersonQuestions, promisePersonQuestionWeighings] =
+      await Promise.all([getPersonQuestions(), getPersonQuestionWeighings()]);
+    return {
+      personQuestions: promisePersonQuestions?.data,
+      personQuestionWeighings: promisePersonQuestionWeighings?.data,
+    };
   } catch (error) {
     console.log(error);
     return null;

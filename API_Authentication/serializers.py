@@ -38,6 +38,12 @@ class PersonQuestionSerializer(ModelSerializer):
         model = PersonQuestion
 
 
+class PersonQuestionWeighingSerializer(ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = PersonQuestionWeighing
+
+
 class SportSerializer(ModelSerializer):
     class Meta:
         fields = '__all__'

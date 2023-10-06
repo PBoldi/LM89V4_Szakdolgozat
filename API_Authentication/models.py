@@ -70,17 +70,6 @@ class User(AbstractBaseUser):
         return self.email
     
 
-class AthleteQuestionTest(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)
-
-    class Meta:
-        db_table = 'AthleteQuestionTest'
-
-    athlete_profile = models.ForeignKey(AthleteProfile, db_column='AthleteProfileID', on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True,db_column='TimeStamp')
-
-
-
 class PersonQuestion(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
 
@@ -97,7 +86,7 @@ class PersonQuestionWeighing(models.Model):
     class Meta:
         db_table = 'PersonQuestionWeighings'
 
-    athlete_question_test = models.ForeignKey(AthleteQuestionTest, db_column='AthleteQuestionTestID', on_delete=models.CASCADE)
+    athlete_profile = models.ForeignKey(AthleteProfile, db_column='AthleteProfileID', on_delete=models.CASCADE)
     person_question = models.ForeignKey(PersonQuestion, db_column='PersonQuestionID', on_delete=models.CASCADE)
     
     weight = models.PositiveIntegerField(db_column='Weight', default=0)

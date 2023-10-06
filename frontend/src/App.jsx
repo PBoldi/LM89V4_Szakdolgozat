@@ -9,6 +9,7 @@ import PersonQuestionCreate from "./routes/protected-admin/PersonQuestionCreate"
 import PersonQuestionDelete from "./routes/protected-admin/PersonQuestionDelete";
 import PersonQuestionEdit from "./routes/protected-admin/PersonQuestionEdit";
 import PersonQuestions from "./routes/protected-admin/PersonQuestions";
+import PersonQuestionWeighing from "./routes/protected-authentication/athlete/PersonQuestionWeighing";
 import Registration from "./routes/authentication/Registration";
 import SearchAthlete from "./routes/protected-authentication/athlete/SearchAthlete";
 import SearchTrainer from "./routes/protected-authentication/athlete/SearchTrainer";
@@ -55,6 +56,7 @@ import {
   athleteProfileLoader,
   personQuestionLoader,
   personQuestionsLoader,
+  personQuestionsWeighingLoader,
   rootLayoutLoader,
   searchAthletesLoader,
   searchTrainersLoader,
@@ -109,7 +111,15 @@ const router = createBrowserRouter([
                 element: <AthleteProfileEdit />,
                 action: editAthleteProfileAction,
                 loader: athleteProfileLoader,
+                children: [
+                  {
+                    path: "person-question-weighings",
+                    element: <PersonQuestionWeighing />,
+                    loader: personQuestionsWeighingLoader,
+                  },
+                ],
               },
+
               {
                 path: "search-athlete",
                 element: <SearchAthlete />,

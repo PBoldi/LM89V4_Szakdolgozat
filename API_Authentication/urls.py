@@ -10,6 +10,7 @@ urlpatterns = [
     path('athlete-profile/<int:pk>', AthleteProfileRUD.as_view()),
     path('person-questions/', PersonQuestionLC.as_view()),
     path('person-questions/<int:pk>', PersonQuestionRUD.as_view()),
+    path('person-question-weighing/', PersonQuestionWeighingLC.as_view()),
     path('sports/', SportsLC.as_view()),
     path('sports/<int:pk>', SportsRUD.as_view()),
     path('token/', TokenObtainPairView.as_view()),                      
