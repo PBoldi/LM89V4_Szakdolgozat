@@ -10,6 +10,10 @@ class AthleteProfile(models.Model):
 
     biography = models.CharField(blank=True, db_column='Biography', max_length=1000)
 
+    def __str__(self):
+        return str(self.id)
+
+
 class TrainerProfile(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
 
@@ -79,6 +83,9 @@ class PersonQuestion(models.Model):
     question = models.CharField(db_column='Question', max_length=1000)
     weight = models.PositiveIntegerField(db_column='Weight', default=0)
 
+    def __str__(self):
+        return str(self.id)
+
 
 class PersonQuestionWeighing(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
@@ -90,6 +97,9 @@ class PersonQuestionWeighing(models.Model):
     person_question = models.ForeignKey(PersonQuestion, db_column='PersonQuestionID', on_delete=models.CASCADE)
     
     weight = models.PositiveIntegerField(db_column='Weight', default=0)
+
+    def __str__(self):
+        return str(self.id)
 
 
 class Sport(models.Model):

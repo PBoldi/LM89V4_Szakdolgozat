@@ -3,16 +3,26 @@ from rest_framework.permissions import SAFE_METHODS
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from django_pandas.io import read_frame
+import pandas as pd
+
 from .models import *
 from .serializers import *
 
+def get_recommended_users(user):
+    athlete_profiles_df = read_frame(AthleteProfile.objects.all())
+    user_with_athlete_profile_df=pd.DataFrame.from_records(User.objects.exclude(athlete_profile=None).values('id', 'athlete_profile__id'))
+    person_question_weighing_df = pd.DataFrame.from_records(PersonQuestionWeighing.objects.all().values('id', 'athlete_profile__id', 'weight'))
+    merged_df = user_with_athlete_profile_df.merge(person_question_weighing_df, left_on="athlete_profile__id", right_on="athlete_profile__id").merge(athlete_profiles_df, left_on="athlete_profile__id", right_on="id")
 
 class AthleteProfileLC(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = AthleteProfile.objects.all()
 
     def get_queryset(self):
-        return  AthleteProfile.objects.exclude(
+        get_recommended_users(self.request.user)
+
+        return AthleteProfile.objects.exclude(
             pk__in=UserAthleteConnection.objects.filter(user=self.request.user).values_list('athlete_profile')).exclude(pk=self.request.user.athlete_profile.id)
 
     def get_serializer_class(self):
