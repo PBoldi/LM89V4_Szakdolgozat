@@ -5,15 +5,28 @@ from rest_framework.response import Response
 
 from django_pandas.io import read_frame
 import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import linear_kernel
 
 from .models import *
 from .serializers import *
 
+
 def get_recommended_users(user):
     athlete_profiles_df = read_frame(AthleteProfile.objects.all())
-    user_with_athlete_profile_df=pd.DataFrame.from_records(User.objects.exclude(athlete_profile=None).values('id', 'athlete_profile__id'))
-    person_question_weighing_df = pd.DataFrame.from_records(PersonQuestionWeighing.objects.all().values('id', 'athlete_profile__id', 'weight'))
-    merged_df = user_with_athlete_profile_df.merge(person_question_weighing_df, left_on="athlete_profile__id", right_on="athlete_profile__id").merge(athlete_profiles_df, left_on="athlete_profile__id", right_on="id")
+    # user_sports_df = pd.DataFrame.from_records(UserSport.objects.all().values('sport__id', 'user__id'))
+    # user_with_athlete_profile_df = pd.DataFrame.from_records(User.objects.exclude(athlete_profile=None).values('id', 'athlete_profile__id'))
+    person_question_weighing_df = pd.DataFrame.from_records(PersonQuestionWeighing.objects.all().values('id', 'athlete_profile__id', 'weight', 'person_question__id'))
+    merged_df = athlete_profiles_df.merge(person_question_weighing_df, left_on="id", right_on="athlete_profile__id")
+
+    merged_pivot_df = merged_df.pivot(index="id_x", columns="person_question__id", values="weight").fillna(0)
+
+    similarity_table = linear_kernel(merged_pivot_df, merged_pivot_df)
+
+    # users_merged_with_sports_df = user_sports_df.merge(user_with_athlete_profile_df, left_on='user__id', right_on='id')
+    # merged_df = users_merged_with_sports_df.merge(person_question_weighing_df, left_on="athlete_profile__id", right_on="athlete_profile__id").merge(athlete_profiles_df, left_on="athlete_profile__id", right_on="id")
+
+
 
 class AthleteProfileLC(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
