@@ -204,7 +204,10 @@ export async function personQuestionWeighingEditAction({ request }) {
   try {
     const formData = await request.formData();
 
-    await editPersonQuestionWeighing(formData, formData.get("person_question"));
+    await editPersonQuestionWeighing(
+      formData,
+      formData.get("personQuestionWeighingId")
+    );
 
     return redirect(formData.get("pathname"));
   } catch (error) {
