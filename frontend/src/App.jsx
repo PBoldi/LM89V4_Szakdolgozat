@@ -17,6 +17,7 @@ import SportCreate from "./routes/protected-admin/SportCreate";
 import SportDelete from "./routes/protected-admin/SportDelete";
 import SportEdit from "./routes/protected-admin/SportEdit";
 import Sports from "./routes/protected-admin/Sports";
+import TestFunctions from "./routes/protected-admin/TestFunctions";
 import TrainerProfile from "./routes/protected-authentication/profile-choose/TrainerProfile";
 import TrainerProfileEdit from "./routes/protected-authentication/trainer/TrainerProfileEdit";
 import UserProfileEdit from "./routes/protected-authentication/UserProfileEdit";
@@ -214,6 +215,10 @@ const router = createBrowserRouter([
                     action: editPersonQuestionAction,
                   },
                 ],
+              },
+              {
+                path: "test-functions",
+                element: <TestFunctions />,
               },
             ],
           },

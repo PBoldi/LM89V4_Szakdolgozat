@@ -20,7 +20,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
-import SearchIcon from "@mui/icons-material/Search";
+import SpeedIcon from "@mui/icons-material/Speed";
 import SportsIcon from "@mui/icons-material/Sports";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import Toolbar from "@mui/material/Toolbar";
@@ -163,6 +163,14 @@ export default function Navbar({ user }) {
                           <ListItemIcon>
                             <QuestionMarkIcon sx={{ mr: 1 }} />
                             {"Kérdések a felhasználókhoz"}
+                          </ListItemIcon>
+                        </ListItemText>
+                      </MenuItem>{" "}
+                      <MenuItem component={Link} to={"/admin/test-functions"}>
+                        <ListItemText inset>
+                          <ListItemIcon>
+                            <SpeedIcon sx={{ mr: 1 }} />
+                            {"Teszt funkciók"}
                           </ListItemIcon>
                         </ListItemText>
                       </MenuItem>
