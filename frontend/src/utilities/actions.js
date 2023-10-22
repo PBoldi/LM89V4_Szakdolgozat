@@ -16,6 +16,7 @@ import {
   editUserProfile,
   login,
   registration,
+  testCreateAthleteProfiles,
   trainerProfileCreate,
   userAthleteConnection,
   userSportCreate,
@@ -225,6 +226,19 @@ export async function registrationAction({ request }) {
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400)
       return error?.response?.data;
+    throw error;
+  }
+}
+
+export async function testCreateAthleteProfilesAction() {
+  try {
+    await testCreateAthleteProfiles();
+    return redirect("/admin/test-functions");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
     throw error;
   }
 }

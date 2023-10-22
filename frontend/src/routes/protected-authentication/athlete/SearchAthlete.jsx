@@ -18,6 +18,8 @@ export default function SearchTrainer() {
   const { user } = useOutletContext();
   const submit = useSubmit();
 
+  console.log(athletes);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(3);
 

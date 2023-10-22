@@ -16,6 +16,7 @@ urlpatterns = [
     path('sports/<int:pk>', SportsRUD.as_view()),
     path('token/', TokenObtainPairView.as_view()),                      
     path('token/refresh/', TokenRefreshView.as_view()),                 
+    path('create-test-athlete-profile/', CreateTestAthleteProfilesView.as_view()),
     path('trainer-profile/', TrainerProfileLC.as_view()),
     path('trainer-profile/<int:pk>', TrainerProfileRUD.as_view()),
     path('user-athlete-connection/', UserAthleteConnectionC.as_view()),

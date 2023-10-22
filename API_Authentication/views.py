@@ -6,15 +6,18 @@ from rest_framework.response import Response
 from django_pandas.io import read_frame
 import pandas as pd
 import random
-from sklearn.metrics.pairwise import cosine_similarity, linear_kernel
+from sklearn.metrics.pairwise import cosine_similarity
 
 from .models import *
 from .serializers import *
 
 
+
+
 def standardize(row):
     new_row = (row - row.mean()) / (row.max() - row.min())
     return new_row
+
 
 def get_recommended_users(user):
     athlete_profiles_df = read_frame(AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(user=user).values_list('athlete_profile')))
@@ -50,9 +53,6 @@ class AthleteProfileLC(generics.ListCreateAPIView):
 
         return athlete_profiles
 
-        return AthleteProfile.objects.exclude(
-            pk__in=UserAthleteConnection.objects.filter(user=self.request.user).values_list('athlete_profile')).exclude(pk=self.request.user.athlete_profile.id)
-
     def get_serializer_class(self):
         return AthleteProfileSerializerL if self.request.method in SAFE_METHODS else AthleteProfileSerializer
 
@@ -71,6 +71,24 @@ class AuthenticatedUser(generics.GenericAPIView):
 
     def get(self, request):
         return Response(self.serializer_class(self.get_object()).data, status=status.HTTP_200_OK)
+
+
+class CreateTestAthleteProfilesView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = AthleteProfile.objects.all()
+    serializer_class = AthleteProfileSerializer
+
+    def post(self, request):
+        with transaction.atomic():
+            for i in range(1000):
+                gender_random = random.randint(0, 1)
+                sex = True if gender_random is 0 else False
+                athlete_profile = AthleteProfile.objects.create(biography=f'Test Athlete biography {i}')
+                User.objects.create(athlete_profile=athlete_profile, email=f'test_athlete{i}@test_athlete.com', first_name="TEST", last_name=f'Athlete {i}', sex=sex)
+                for person_question in PersonQuestion.objects.all():
+                    weight_random = random.randint(1, 5)
+                    PersonQuestionWeighing.objects.create(athlete_profile=athlete_profile, person_question=person_question, weight=weight_random)
+            return Response(status=status.HTTP_200_OK)
 
 
 class PersonQuestionLC(generics.ListCreateAPIView):

@@ -49,6 +49,7 @@ import {
   personQuestionWeighingCreateAction,
   personQuestionWeighingEditAction,
   registrationAction,
+  testCreateAthleteProfilesAction,
   trainerProfileCreateAction,
   userAthleteConnectionAction,
   userSportCreateAction,
@@ -219,6 +220,12 @@ const router = createBrowserRouter([
               {
                 path: "test-functions",
                 element: <TestFunctions />,
+                children: [
+                  {
+                    path: "create-athlete-profiles",
+                    action: testCreateAthleteProfilesAction,
+                  },
+                ],
               },
             ],
           },
