@@ -17,7 +17,7 @@ def standardize(row):
     return new_row
 
 def get_recommended_users(user):
-    athlete_profiles_df = read_frame(AthleteProfile.objects.all())
+    athlete_profiles_df = read_frame(AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(user=user).values_list('athlete_profile')))
     person_question_weighing_df = pd.DataFrame.from_records(PersonQuestionWeighing.objects.all().values( 'athlete_profile__id', 'weight', 'person_question__question'))
     merged_df = athlete_profiles_df.merge(person_question_weighing_df, left_on="id", right_on="athlete_profile__id")
 
