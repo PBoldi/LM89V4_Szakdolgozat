@@ -88,7 +88,7 @@ export default function SearchTrainer() {
             ))}
         </Grid>
       </Grid>
-      <Grid>
+      <Grid paddingY={2}>
         <Pagination
           count={Math.ceil(athletes.length / 3)}
           page={currentPage}
