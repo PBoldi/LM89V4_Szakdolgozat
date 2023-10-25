@@ -12,8 +12,6 @@ from .models import *
 from .serializers import *
 
 
-
-
 def standardize(row):
     new_row = (row - row.mean()) / (row.max() - row.min())
     return new_row
@@ -36,7 +34,6 @@ def get_recommended_users(user):
     similar_score = similar_score.sort_values(ascending=False)
 
     users = similar_score.index.values.tolist()
-
     return users
 
 
@@ -80,6 +77,8 @@ class CreateTestAthleteProfilesView(generics.GenericAPIView):
 
     def post(self, request):
         with transaction.atomic():
+            if AthleteProfile.objects.filter(biography="Test Athlete biography 1"):
+                return Response(status=status.HTTP_200_OK)
             for i in range(1000):
                 gender_random = random.randint(0, 1)
                 sex = True if gender_random is 0 else False
