@@ -51,7 +51,15 @@ export default function SearchTrainer() {
             ?.slice(indexOfFirstCard, indexOfLastCard)
             ?.map((trainer) => (
               <Grid key={trainer?.id} paddingY={1} xs={4}>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card
+                  sx={{
+                    maxWidth: 345,
+                    transition: "transform 0.2s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                    },
+                  }}
+                >
                   <CardHeader
                     title={
                       trainer?.user_set[0]?.first_name &&
@@ -113,6 +121,7 @@ export default function SearchTrainer() {
                   <CardActions disableSpacing>
                     <IconButton
                       aria-label={"Connect"}
+                      color={"success"}
                       onClick={() => handleConnection(true, trainer?.id)}
                     >
                       <DoneOutlineIcon />
@@ -120,6 +129,7 @@ export default function SearchTrainer() {
                     <Box sx={{ flexGrow: 1 }} />
                     <IconButton
                       aria-label={"Don't connect"}
+                      color={"error"}
                       onClick={() => handleConnection(false, trainer?.id)}
                     >
                       <CloseIcon />
