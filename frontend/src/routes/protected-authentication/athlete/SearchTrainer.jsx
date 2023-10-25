@@ -17,19 +17,19 @@ import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 
 export default function SearchTrainer() {
-  const trainers = useLoaderData();
+  const trainersLoader = useLoaderData();
   const { user } = useOutletContext();
   const submit = useSubmit();
 
-  console.log(trainers);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(3);
+  const [trainers, setTrainers] = useState(trainersLoader);
 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
 
   function handleConnection(connect, trainerProfileId) {
+    setTrainers(trainers.filter((trainer) => trainer.id !== trainerProfileId));
     submit(
       { connect: connect, trainer_profile: trainerProfileId, user: user?.id },
       { method: "post" }

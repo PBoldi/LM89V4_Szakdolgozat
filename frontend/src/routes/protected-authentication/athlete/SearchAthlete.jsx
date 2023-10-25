@@ -15,10 +15,11 @@ import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 
 export default function SearchTrainer() {
-  const athletes = useLoaderData();
+  const athletesLoader = useLoaderData();
   const { user } = useOutletContext();
   const submit = useSubmit();
 
+  const [athletes, setAthlets] = useState(athletesLoader);
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(3);
 
@@ -26,6 +27,7 @@ export default function SearchTrainer() {
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
 
   function handleConnection(athleteProfileId, connect) {
+    setAthlets(athletes.filter((athlete) => athlete.id !== athleteProfileId));
     submit(
       { athlete_profile: athleteProfileId, connect: connect, user: user?.id },
       { method: "post" }
