@@ -6,6 +6,7 @@ import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -17,8 +18,6 @@ export default function SearchTrainer() {
   const athletes = useLoaderData();
   const { user } = useOutletContext();
   const submit = useSubmit();
-
-  console.log(athletes);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(3);
@@ -36,12 +35,28 @@ export default function SearchTrainer() {
   return (
     <Grid container justifyContent={"center"} xs={12}>
       <Grid xs={12}>
-        <Grid container justifyContent={"center"} xs={12}>
+        <Grid
+          alignItems={"center"}
+          container
+          justifyContent={"center"}
+          spacing={2}
+          xs={12}
+        >
           {athletes
             ?.slice(indexOfFirstCard, indexOfLastCard)
             ?.map((athlete) => (
               <Grid key={athlete?.id} paddingY={1} xs={4}>
-                <Card sx={{ minHeight: 350, width: 350, m: 1 }}>
+                <Card
+                  sx={{
+                    minHeight: 350,
+                    width: 350,
+                    m: 1,
+                    transition: "transform 0.2s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                    },
+                  }}
+                >
                   <CardHeader
                     title={
                       athlete?.user_set[0]?.first_name &&
@@ -64,15 +79,35 @@ export default function SearchTrainer() {
                     src={athlete?.user_set[0]?.profile_picture}
                   />
                   <CardContent>
-                    <Typography>
-                      {athlete?.user_set[0]?.sex ? "Férfi" : "Nő"}
-                    </Typography>
+                    <Grid paddingY={1} xs={12}>
+                      <Typography>
+                        {athlete?.user_set[0]?.sex ? "Férfi" : "Nő"}
+                      </Typography>
+                    </Grid>
                     <Typography>{athlete?.biography}</Typography>
+                    <Grid
+                      alignItems={"center"}
+                      container
+                      paddingY={1}
+                      spacing={1}
+                      xs={12}
+                    >
+                      {athlete?.user_set?.[0]?.usersport_set.map(
+                        (userSport) => (
+                          <Grid key={userSport?.sport?.id} xs={"auto"}>
+                            <Chip
+                              label={userSport?.sport?.name}
+                              color={"primary"}
+                            />
+                          </Grid>
+                        )
+                      )}
+                    </Grid>
                   </CardContent>
-
                   <CardActions disableSpacing>
                     <IconButton
                       aria-label={"Connect"}
+                      color={"success"}
                       onClick={() => handleConnection(athlete?.id, true)}
                     >
                       <DoneOutlineIcon />
@@ -80,6 +115,7 @@ export default function SearchTrainer() {
                     <Box sx={{ flexGrow: 1 }} />
                     <IconButton
                       aria-label={"Don't connect"}
+                      color={"error"}
                       onClick={() => handleConnection(athlete?.id, false)}
                     >
                       <CloseIcon />
