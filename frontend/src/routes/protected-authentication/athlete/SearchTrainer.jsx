@@ -7,10 +7,12 @@ import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Checkbox from "@mui/material/Checkbox";
+import Chip from "@mui/material/Chip";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Unstable_Grid2";
+import Grow from "@mui/material/Grow";
 import IconButton from "@mui/material/IconButton";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
@@ -19,6 +21,8 @@ export default function SearchTrainer() {
   const trainers = useLoaderData();
   const { user } = useOutletContext();
   const submit = useSubmit();
+
+  console.log(trainers);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(3);
@@ -36,7 +40,13 @@ export default function SearchTrainer() {
   return (
     <Grid container justifyContent={"center"} xs={12}>
       <Grid xs={12}>
-        <Grid container justifyContent={"center"} spacing={2} xs={12}>
+        <Grid
+          alignItems={"center"}
+          container
+          justifyContent={"center"}
+          spacing={2}
+          xs={12}
+        >
           {trainers
             ?.slice(indexOfFirstCard, indexOfLastCard)
             ?.map((trainer) => (
@@ -71,7 +81,7 @@ export default function SearchTrainer() {
                       {trainer?.user_set[0]?.sex ? "Férfi" : "Nő"}
                     </Typography>
                     <Typography>
-                      {"Óránkénti ár: " + trainer?.price_per_hour}
+                      {"Egy óra edzés ára: " + trainer?.price_per_hour + " Ft"}
                     </Typography>
                     <FormControlLabel
                       control={
@@ -87,6 +97,18 @@ export default function SearchTrainer() {
                       label={"Dietetikus"}
                       sx={{ pl: 1 }}
                     />
+                    <Grid alignItems={"center"} container spacing={1} xs={12}>
+                      {trainer?.user_set?.[0]?.usersport_set.map(
+                        (userSport) => (
+                          <Grid key={userSport?.sport?.id} xs={"auto"}>
+                            <Chip
+                              label={userSport?.sport?.name}
+                              color={"primary"}
+                            />
+                          </Grid>
+                        )
+                      )}
+                    </Grid>
                   </CardContent>
                   <CardActions disableSpacing>
                     <IconButton

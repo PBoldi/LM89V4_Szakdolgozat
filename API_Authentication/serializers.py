@@ -69,17 +69,38 @@ class UserSerializerL(ModelSerializer):
 
     def get_profile_picture(self, instance):
         return f'{"http://localhost:8000/media/"}{instance.profile_picture}' if instance.profile_picture else None
+
+
+class UserSportForProfilesSerializer(ModelSerializer):
+    sport = SportSerializer()
+
+    class Meta:
+        model = UserSport
+        fields = ('sport',)
+
+
+class UserSerializerForProfilesL(ModelSerializer):
+    profile_picture = SerializerMethodField()
+    usersport_set = UserSportForProfilesSerializer(many=True)
+    
+    class Meta:
+        fields = '__all__'
+        model = User
+
+    def get_profile_picture(self, instance):
+        return f'{"http://localhost:8000/media/"}{instance.profile_picture}' if instance.profile_picture else None
     
 
 class AthleteProfileSerializerL(ModelSerializer):
-    user_set = UserSerializerL(many=True)
+    user_set = UserSerializerForProfilesL(many=True)
+
     class Meta:
         fields = '__all__'
         model = AthleteProfile
 
 
 class TrainerProfileSerializerL(ModelSerializer):
-    user_set = UserSerializerL(many=True)
+    user_set = UserSerializerForProfilesL(many=True)
     class Meta:
         fields = '__all__'
         model = TrainerProfile
