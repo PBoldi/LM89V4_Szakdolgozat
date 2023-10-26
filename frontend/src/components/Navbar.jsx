@@ -18,6 +18,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import PeopleIcon from "@mui/icons-material/People";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import SpeedIcon from "@mui/icons-material/Speed";
@@ -83,6 +84,18 @@ export default function Navbar({ user }) {
                   >
                     <GroupAddIcon sx={{ mr: 1 }} />
                     Edzőtárs keresés
+                  </IconButton>
+                </Fragment>
+              ) : user?.trainer_profile ? (
+                <Fragment>
+                  <IconButton
+                    color={"inherit"}
+                    onClick={() => navigate("/trainer/applied-athletes")}
+                    size={"small"}
+                    sx={{ mr: 2 }}
+                  >
+                    <PeopleIcon sx={{ mr: 1 }} />
+                    Jelentkezett sportolók
                   </IconButton>
                 </Fragment>
               ) : null}

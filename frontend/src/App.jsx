@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 
+import AppliedAthletes from "./routes/protected-authentication/trainer/AppliedAthletes";
 import AthleteProfile from "./routes/protected-authentication/profile-choose/AthleteProfile";
 import AthleteProfileEdit from "./routes/protected-authentication/athlete/AthleteProfileEdit";
 import Login from "./routes/authentication/Login";
@@ -57,6 +58,7 @@ import {
 } from "./utilities/actions";
 
 import {
+  appliedAthletesLoader,
   athleteProfileLoader,
   personQuestionLoader,
   personQuestionsLoader,
@@ -155,6 +157,11 @@ const router = createBrowserRouter([
                 element: <TrainerProfileEdit />,
                 action: editTrainerProfileAction,
                 loader: trainerProfileLoader,
+              },
+              {
+                path: "applied-athletes",
+                element: <AppliedAthletes />,
+                loader: appliedAthletesLoader,
               },
             ],
           },

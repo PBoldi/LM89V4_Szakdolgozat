@@ -37,6 +37,14 @@ def get_recommended_users(user):
     return users
 
 
+class AppliedAthletesL(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AthleteProfileSerializerL
+
+    def get_queryset(self):
+        return AthleteProfile.objects.filter(user__in=User.objects.filter(id__in=UserTrainerConnection.objects.filter(trainer_profile=self.request.user.trainer_profile).values("user__id")))
+
+
 class AthleteProfileLC(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = AthleteProfile.objects.all()

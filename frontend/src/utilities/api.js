@@ -83,6 +83,9 @@ export const editTrainerProfile = (data, id) =>
 export const editUserProfile = (data, id) =>
   protectedInstance.patch(`/auth/users/${id}`, data);
 
+export const getAppliedAthletes = () =>
+  protectedInstance.get(`/auth/applied-athletes/`);
+
 export const getAthlete = (id) =>
   protectedInstance.get(`/auth/athlete-profile/${id}`);
 
