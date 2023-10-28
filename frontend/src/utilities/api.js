@@ -91,6 +91,9 @@ export const getAthlete = (id) =>
 
 export const getAthletes = () => protectedInstance.get("/auth/athlete-profile");
 
+export const getAthletePartners = () =>
+  protectedInstance.get("/auth/athlete-partners");
+
 export const getAthletesToBePartner = () =>
   protectedInstance.get("/auth/athlete-to-be-partner");
 

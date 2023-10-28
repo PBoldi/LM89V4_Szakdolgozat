@@ -99,7 +99,7 @@ export default function Navbar({ user }) {
                   </IconButton>
                   <IconButton
                     color={"inherit"}
-                    onClick={() => navigate("/athlete/partner-athletes")}
+                    onClick={() => navigate("/athlete/athlete-partners")}
                     size={"small"}
                     sx={{ mr: 2 }}
                   >

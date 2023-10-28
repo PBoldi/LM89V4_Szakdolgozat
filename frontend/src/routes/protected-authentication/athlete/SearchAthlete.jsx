@@ -19,7 +19,7 @@ export default function SearchTrainer() {
   const { user } = useOutletContext();
   const submit = useSubmit();
 
-  const [athletes, setAthlets] = useState(athletesLoader);
+  const [athletes, setAthletes] = useState(athletesLoader);
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(3);
 
@@ -27,7 +27,7 @@ export default function SearchTrainer() {
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
 
   function handleConnection(athleteProfileId, connect) {
-    setAthlets(athletes.filter((athlete) => athlete.id !== athleteProfileId));
+    setAthletes(athletes.filter((athlete) => athlete.id !== athleteProfileId));
     submit(
       {
         athlete_profile: user?.athleteprofile?.id,

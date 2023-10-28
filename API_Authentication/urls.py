@@ -7,6 +7,7 @@ from .views import *
 
 urlpatterns = [
     path('applied-athletes/', AppliedAthletesL.as_view()),
+    path('athlete-partners/', AthletePartnersL.as_view()),
     path('athlete-profile/', AthleteProfileLC.as_view()),
     path('athlete-profile/<int:pk>', AthleteProfileRUD.as_view()),
     path('athlete-to-be-partner/', AthletesToBePartnerL.as_view()),

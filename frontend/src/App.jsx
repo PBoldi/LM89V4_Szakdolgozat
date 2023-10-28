@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 
 import AppliedAthletes from "./routes/protected-authentication/trainer/AppliedAthletes";
+import AthletePartners from "./routes/protected-authentication/athlete/AthletePartners";
 import AthleteProfile from "./routes/protected-authentication/profile-choose/AthleteProfile";
 import AthleteProfileEdit from "./routes/protected-authentication/athlete/AthleteProfileEdit";
 import AthletesToBePartner from "./routes/protected-authentication/athlete/AthletesToBePartner";
@@ -60,6 +61,7 @@ import {
 
 import {
   appliedAthletesLoader,
+  athletePartnersLoader,
   athleteProfileLoader,
   athletesToBePartnerLoader,
   personQuestionLoader,
@@ -147,12 +149,11 @@ const router = createBrowserRouter([
                 action: userAthleteConnectionAction,
                 loader: athletesToBePartnerLoader,
               },
-              // {
-              //   path: "partner-athletes",
-              //   element: <SearchAthlete />,
-              //   action: userAthleteConnectionAction,
-              //   loader: searchAthletesLoader,
-              // },
+              {
+                path: "athlete-partners",
+                element: <AthletePartners />,
+                loader: athletePartnersLoader,
+              },
               {
                 path: "search-trainer",
                 element: <SearchTrainer />,

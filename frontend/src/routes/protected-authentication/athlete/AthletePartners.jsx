@@ -1,23 +1,16 @@
 import { useState } from "react";
 import { useLoaderData, useOutletContext, useSubmit } from "react-router-dom";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
-import CloseIcon from "@mui/icons-material/Close";
-import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import Grid from "@mui/material/Unstable_Grid2";
-import IconButton from "@mui/material/IconButton";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 
-export default function AthletesToBePartner() {
+export default function AthletePartners() {
   const athletesLoader = useLoaderData();
-  const { user } = useOutletContext();
-  const submit = useSubmit();
 
   const [athletes, setAthletes] = useState(athletesLoader);
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,18 +18,6 @@ export default function AthletesToBePartner() {
 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-
-  function handleConnection(athleteProfileId, connect) {
-    setAthletes(athletes.filter((athlete) => athlete.id !== athleteProfileId));
-    submit(
-      {
-        athlete_profile: user?.athleteprofile?.id,
-        connect: connect,
-        athlete_profile_liked: athleteProfileId,
-      },
-      { method: "post" }
-    );
-  }
 
   return (
     <Grid container justifyContent={"center"} xs={12}>
@@ -107,23 +88,6 @@ export default function AthletesToBePartner() {
                       ))}
                     </Grid>
                   </CardContent>
-                  <CardActions disableSpacing>
-                    <IconButton
-                      aria-label={"Connect"}
-                      color={"success"}
-                      onClick={() => handleConnection(athlete?.id, true)}
-                    >
-                      <DoneOutlineIcon />
-                    </IconButton>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <IconButton
-                      aria-label={"Don't connect"}
-                      color={"error"}
-                      onClick={() => handleConnection(athlete?.id, false)}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  </CardActions>
                 </Card>
               </Grid>
             ))}

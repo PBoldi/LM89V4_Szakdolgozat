@@ -1,6 +1,7 @@
 import {
   getAppliedAthletes,
   getAthlete,
+  getAthletePartners,
   getAthletes,
   getAthletesToBePartner,
   getPersonQuestion,
@@ -17,6 +18,16 @@ import {
 export async function appliedAthletesLoader() {
   try {
     const response = await getAppliedAthletes();
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function athletePartnersLoader() {
+  try {
+    const response = await getAthletePartners();
     return response?.data;
   } catch (error) {
     console.log(error);
