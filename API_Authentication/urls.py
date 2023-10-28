@@ -9,6 +9,7 @@ urlpatterns = [
     path('applied-athletes/', AppliedAthletesL.as_view()),
     path('athlete-profile/', AthleteProfileLC.as_view()),
     path('athlete-profile/<int:pk>', AthleteProfileRUD.as_view()),
+    path('athlete-to-be-partner/', AthletesToBePartnerL.as_view()),
     path('person-questions/', PersonQuestionLC.as_view()),
     path('person-questions/<int:pk>', PersonQuestionRUD.as_view()),
     path('person-question-weighing/', PersonQuestionWeighingLC.as_view()),

@@ -42,8 +42,15 @@ class AppliedAthletesL(generics.ListAPIView):
     serializer_class = AthleteProfileSerializerL
 
     def get_queryset(self):
-        print(UserTrainerConnection.objects.filter(trainer_profile=self.request.user.trainerprofile).values("athlete_profile__id"))
         return AthleteProfile.objects.filter(id__in=UserTrainerConnection.objects.filter(trainer_profile=self.request.user.trainerprofile).values("athlete_profile__id"))
+
+
+class AthletesToBePartnerL(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AthleteProfileSerializerL
+
+    def get_queryset(self):
+        return AthleteProfile.objects.filter(id__in=UserAthleteConnection.objects.filter(athlete_profile_liked=self.request.user.athleteprofile).values("athlete_profile__id")).exclude(id__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile).values("athlete_profile_liked__id"))
 
 
 class AthleteProfileLC(generics.ListCreateAPIView):

@@ -14,7 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 
-export default function SearchTrainer() {
+export default function AthletesToBePartner() {
   const athletesLoader = useLoaderData();
   const { user } = useOutletContext();
   const submit = useSubmit();

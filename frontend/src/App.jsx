@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import AppliedAthletes from "./routes/protected-authentication/trainer/AppliedAthletes";
 import AthleteProfile from "./routes/protected-authentication/profile-choose/AthleteProfile";
 import AthleteProfileEdit from "./routes/protected-authentication/athlete/AthleteProfileEdit";
+import AthletesToBePartner from "./routes/protected-authentication/athlete/AthletesToBePartner";
 import Login from "./routes/authentication/Login";
 import PersonQuestionCreate from "./routes/protected-admin/PersonQuestionCreate";
 import PersonQuestionDelete from "./routes/protected-admin/PersonQuestionDelete";
@@ -60,6 +61,7 @@ import {
 import {
   appliedAthletesLoader,
   athleteProfileLoader,
+  athletesToBePartnerLoader,
   personQuestionLoader,
   personQuestionsLoader,
   personQuestionsWeighingLoader,
@@ -133,13 +135,24 @@ const router = createBrowserRouter([
                   },
                 ],
               },
-
               {
                 path: "search-athlete",
                 element: <SearchAthlete />,
                 action: userAthleteConnectionAction,
                 loader: searchAthletesLoader,
               },
+              {
+                path: "athletes-to-be-partner",
+                element: <AthletesToBePartner />,
+                action: userAthleteConnectionAction,
+                loader: athletesToBePartnerLoader,
+              },
+              // {
+              //   path: "partner-athletes",
+              //   element: <SearchAthlete />,
+              //   action: userAthleteConnectionAction,
+              //   loader: searchAthletesLoader,
+              // },
               {
                 path: "search-trainer",
                 element: <SearchTrainer />,

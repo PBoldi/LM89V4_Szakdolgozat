@@ -2,6 +2,7 @@ import {
   getAppliedAthletes,
   getAthlete,
   getAthletes,
+  getAthletesToBePartner,
   getPersonQuestion,
   getPersonQuestions,
   getPersonQuestionWeighings,
@@ -32,6 +33,16 @@ export async function athleteProfileLoader({ params }) {
       sports: promiseSports?.data,
       userSports: promiseUserSports?.data,
     };
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function athletesToBePartnerLoader() {
+  try {
+    const response = await getAthletesToBePartner();
+    return response?.data;
   } catch (error) {
     console.log(error);
     return null;

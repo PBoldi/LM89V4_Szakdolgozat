@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { Link, useNavigate, useSubmit } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AddReactionIcon from "@mui/icons-material/AddReaction";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -11,6 +12,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import GroupIcon from "@mui/icons-material/Group";
 import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -76,6 +78,7 @@ export default function Navbar({ user }) {
                     <SportsIcon sx={{ mr: 1 }} />
                     Edző keresés
                   </IconButton>
+
                   <IconButton
                     color={"inherit"}
                     onClick={() => navigate("/athlete/search-athlete")}
@@ -84,6 +87,24 @@ export default function Navbar({ user }) {
                   >
                     <GroupAddIcon sx={{ mr: 1 }} />
                     Edzőtárs keresés
+                  </IconButton>
+                  <IconButton
+                    color={"inherit"}
+                    onClick={() => navigate("/athlete/athletes-to-be-partner")}
+                    size={"small"}
+                    sx={{ mr: 2 }}
+                  >
+                    <AddReactionIcon sx={{ mr: 1 }} />
+                    Edzőtársnak jelentkezők
+                  </IconButton>
+                  <IconButton
+                    color={"inherit"}
+                    onClick={() => navigate("/athlete/partner-athletes")}
+                    size={"small"}
+                    sx={{ mr: 2 }}
+                  >
+                    <GroupIcon sx={{ mr: 1 }} />
+                    Edzőtársak
                   </IconButton>
                 </Fragment>
               ) : user?.trainerprofile ? (
