@@ -9,27 +9,11 @@ class AthleteProfileSerializer(ModelSerializer):
         fields = '__all__'
         model = AthleteProfile
 
-    def create(self, validated_data):
-        with transaction.atomic():
-            athlete_profile = AthleteProfile.objects.create(**validated_data)
-            user = User.objects.get(id=self.context['request'].user.id)
-            user.athlete_profile = athlete_profile
-            user.save()
-            return athlete_profile
-
 
 class TrainerProfileSerializer(ModelSerializer):
     class Meta:
         fields = '__all__'
         model = TrainerProfile
-
-    def create(self, validated_data):
-        with transaction.atomic():
-            trainer_profile = TrainerProfile.objects.create(**validated_data)
-            user = User.objects.get(id=self.context['request'].user.id)
-            user.trainer_profile = trainer_profile
-            user.save()
-            return trainer_profile
 
 
 class PersonQuestionSerializer(ModelSerializer):
@@ -92,7 +76,7 @@ class UserSerializerForProfilesL(ModelSerializer):
     
 
 class AthleteProfileSerializerL(ModelSerializer):
-    user_set = UserSerializerForProfilesL(many=True)
+    user = UserSerializerForProfilesL()
 
     class Meta:
         fields = '__all__'
@@ -100,7 +84,7 @@ class AthleteProfileSerializerL(ModelSerializer):
 
 
 class TrainerProfileSerializerL(ModelSerializer):
-    user_set = UserSerializerForProfilesL(many=True)
+    user = UserSerializerForProfilesL()
     class Meta:
         fields = '__all__'
         model = TrainerProfile
@@ -119,8 +103,8 @@ class UserTrainerConnectionSerializer(ModelSerializer):
 
 
 class UserSerializerRUD(ModelSerializer):
-    athlete_profile = AthleteProfileSerializer()
-    trainer_profile = TrainerProfileSerializer()
+    athleteprofile = AthleteProfileSerializer()
+    trainerprofile = TrainerProfileSerializer()
     full_name = ReadOnlyField()
     profile_picture = SerializerMethodField()
 

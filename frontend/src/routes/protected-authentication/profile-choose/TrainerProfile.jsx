@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, useNavigation } from "react-router-dom";
+import { Form, useNavigation, useOutletContext } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -10,6 +10,7 @@ import TextField from "@mui/material/TextField";
 
 export default function TrainerProfile() {
   const navigation = useNavigation();
+  const { user } = useOutletContext();
 
   const [biography, setBiography] = useState("");
   const [certificate, setCertificate] = useState("");
@@ -25,6 +26,7 @@ export default function TrainerProfile() {
   return (
     <Grid xs={12}>
       <Form encType={"multipart/form-data"} method={"post"}>
+        <input hidden name={"user"} value={user?.id} />
         <Grid container>
           <Grid xs={12}>
             <TextField

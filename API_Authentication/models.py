@@ -2,31 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
-class AthleteProfile(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)
-
-    class Meta:
-        db_table = 'AthleteProfile'
-
-    biography = models.CharField(blank=True, db_column='Biography', max_length=1000)
-
-    def __str__(self):
-        return str(self.id)
-
-
-class TrainerProfile(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)
-
-    class Meta:
-        db_table = 'TrainerProfile'
-
-    biography = models.CharField(blank=True, db_column='Biography', max_length=1000)
-    certificate = models.ImageField(blank=True, db_column='Certificate', max_length=1000, upload_to='API_Authentication/user/certificate/')
-    is_available_online = models.BooleanField(db_column='IsAvailableOnline', default=False)
-    is_dietician = models.BooleanField(db_column='IsDietician', default=False)
-    price_per_hour = models.PositiveIntegerField(db_column='PricePerHour', default=0)
-
-
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         user = self.model(email=self.normalize_email(email))
@@ -55,9 +30,6 @@ class User(AbstractBaseUser):
     sex = models.BooleanField(db_column='Sex (1 stands for male)', null=True)
     is_admin = models.BooleanField(db_column='IsAdmin', default=False)
 
-    athlete_profile = models.ForeignKey(AthleteProfile, db_column='AthleteProfileID', on_delete=models.SET_NULL, null=True)
-    trainer_profile = models.ForeignKey(TrainerProfile, db_column='TrainerProfileID', on_delete=models.SET_NULL, null=True)
-
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
@@ -73,6 +45,33 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
     
+
+class AthleteProfile(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True)
+    user = models.OneToOneField(User, db_column='User', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'AthleteProfile'
+
+    biography = models.CharField(blank=True, db_column='Biography', max_length=1000)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class TrainerProfile(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True)
+    user = models.OneToOneField(User, db_column='User', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'TrainerProfile'
+
+    biography = models.CharField(blank=True, db_column='Biography', max_length=1000)
+    certificate = models.ImageField(blank=True, db_column='Certificate', max_length=1000, upload_to='API_Authentication/user/certificate/')
+    is_available_online = models.BooleanField(db_column='IsAvailableOnline', default=False)
+    is_dietician = models.BooleanField(db_column='IsDietician', default=False)
+    price_per_hour = models.PositiveIntegerField(db_column='PricePerHour', default=0)
+
 
 class PersonQuestion(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
@@ -131,8 +130,8 @@ class UserAthleteConnection(models.Model):
     
     connect = models.BooleanField(db_column='Connect')
 
-    athlete_profile = models.ForeignKey(AthleteProfile, db_column='AthleteProfile', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, db_column='User', on_delete=models.CASCADE)
+    athlete_profile = models.ForeignKey(AthleteProfile, db_column='AthleteProfile', on_delete=models.CASCADE, related_name='athlete_profile')
+    athlete_profile_liked = models.ForeignKey(AthleteProfile, db_column='AthleteProfileLiked', on_delete=models.CASCADE, related_name="athlete_profile_liked")
 
 
 class UserTrainerConnection(models.Model):
@@ -143,8 +142,8 @@ class UserTrainerConnection(models.Model):
     
     connect = models.BooleanField(db_column='Connect')
 
+    athlete_profile = models.ForeignKey(AthleteProfile, db_column='AthleteProfile', on_delete=models.CASCADE)
     trainer_profile = models.ForeignKey(TrainerProfile, db_column='TrainerProfile', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, db_column='User', on_delete=models.CASCADE)
 
 
 class UserSport(models.Model):

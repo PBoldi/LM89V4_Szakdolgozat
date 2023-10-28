@@ -65,7 +65,7 @@ export default function Navbar({ user }) {
             </Fragment>
           ) : (
             <Fragment>
-              {user?.athlete_profile ? (
+              {user?.athleteprofile ? (
                 <Fragment>
                   <IconButton
                     color={"inherit"}
@@ -86,7 +86,7 @@ export default function Navbar({ user }) {
                     Edzőtárs keresés
                   </IconButton>
                 </Fragment>
-              ) : user?.trainer_profile ? (
+              ) : user?.trainerprofile ? (
                 <Fragment>
                   <IconButton
                     color={"inherit"}
@@ -126,10 +126,10 @@ export default function Navbar({ user }) {
                   </ListItemIcon>
                   <ListItemText primary={"Profil"} />
                 </MenuItem>
-                {user?.trainer_profile ? (
+                {user?.trainerprofile ? (
                   <MenuItem
                     component={Link}
-                    to={`/trainer/${user?.trainer_profile?.id}/trainer-profile`}
+                    to={`/trainer/${user?.trainerprofile?.id}/trainer-profile`}
                   >
                     <ListItemIcon>
                       <SportsIcon />
@@ -137,10 +137,10 @@ export default function Navbar({ user }) {
                     <ListItemText primary={"Edző profil"} />
                   </MenuItem>
                 ) : null}
-                {user?.athlete_profile ? (
+                {user?.athleteprofile ? (
                   <MenuItem
                     component={Link}
-                    to={`/athlete/${user?.athlete_profile?.id}/athlete-profile`}
+                    to={`/athlete/${user?.athleteprofile?.id}/athlete-profile`}
                   >
                     <ListItemIcon>
                       <FitnessCenterIcon />

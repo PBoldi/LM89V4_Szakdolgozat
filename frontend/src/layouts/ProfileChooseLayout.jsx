@@ -17,7 +17,7 @@ export default function ProfileChoose() {
 
   const nestedPath = pathname?.split("/")?.[2];
 
-  return Boolean(user?.athlete_profile || user?.trainer_profile) ? (
+  return Boolean(user?.athleteprofile || user?.trainerprofile) ? (
     <Navigate replace to={"/"} />
   ) : (
     <Grid
@@ -49,7 +49,7 @@ export default function ProfileChoose() {
               </Tabs>
             </Grid>
           ) : null}
-          <Outlet />
+          <Outlet context={{ user }} />
         </Grid>
       </Paper>
     </Grid>

@@ -11,7 +11,7 @@ export default function ProtectedAuthenticationLayout() {
   const { user } = useOutletContext();
 
   return user?.id ? (
-    Boolean(user?.athlete_profile || user?.trainer_profile) ? (
+    Boolean(user?.athleteprofile || user?.trainerprofile) ? (
       <Outlet context={{ user }} />
     ) : (
       <Fragment>

@@ -18,19 +18,19 @@ def standardize(row):
 
 
 def get_recommended_users(user):
-    athlete_profiles_df = read_frame(AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(user=user).values_list('athlete_profile')))
+    athlete_profiles_df = read_frame(AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(athlete_profile=user.athleteprofile).values_list('athlete_profile_liked')))
     person_question_weighing_df = pd.DataFrame.from_records(PersonQuestionWeighing.objects.all().values( 'athlete_profile__id', 'weight', 'person_question__question'))
     merged_df = athlete_profiles_df.merge(person_question_weighing_df, left_on="id", right_on="athlete_profile__id")
 
     merged_pivot_df = merged_df.pivot(index="id", columns="person_question__question", values="weight").fillna(0)
 
-    merged_pivot_df_standard = merged_pivot_df.apply(standardize)
+    merged_pivot_df_standard = merged_pivot_df.apply(standardize).fillna(0)
 
     cosine_sim = cosine_similarity(merged_pivot_df_standard)
     sim_dataframe = pd.DataFrame(cosine_sim, index=merged_pivot_df_standard.index, columns=merged_pivot_df_standard.index)
 
     stress_value = random.randint(1, 5)
-    similar_score = sim_dataframe[user.athlete_profile.id] * (stress_value - 2.5)
+    similar_score = sim_dataframe[user.athleteprofile.id] * (stress_value - 2.5)
     similar_score = similar_score.sort_values(ascending=False)
 
     users = similar_score.index.values.tolist()
@@ -42,7 +42,8 @@ class AppliedAthletesL(generics.ListAPIView):
     serializer_class = AthleteProfileSerializerL
 
     def get_queryset(self):
-        return AthleteProfile.objects.filter(user__in=User.objects.filter(id__in=UserTrainerConnection.objects.filter(trainer_profile=self.request.user.trainer_profile).values("user__id")))
+        print(UserTrainerConnection.objects.filter(trainer_profile=self.request.user.trainerprofile).values("athlete_profile__id"))
+        return AthleteProfile.objects.filter(id__in=UserTrainerConnection.objects.filter(trainer_profile=self.request.user.trainerprofile).values("athlete_profile__id"))
 
 
 class AthleteProfileLC(generics.ListCreateAPIView):
@@ -52,7 +53,7 @@ class AthleteProfileLC(generics.ListCreateAPIView):
     def get_queryset(self):
         athlete_profile_pks = get_recommended_users(self.request.user)
 
-        athlete_profiles = AthleteProfile.objects.filter(pk__in=athlete_profile_pks).exclude(pk=self.request.user.athlete_profile.id)
+        athlete_profiles = AthleteProfile.objects.filter(pk__in=athlete_profile_pks).exclude(pk=self.request.user.athleteprofile.id)
 
         athlete_profiles = sorted(athlete_profiles, key=lambda obj: athlete_profile_pks.index(obj.pk))
 
@@ -90,8 +91,8 @@ class CreateTestAthleteProfilesView(generics.GenericAPIView):
             for i in range(1000):
                 gender_random = random.randint(0, 1)
                 sex = True if gender_random is 0 else False
-                athlete_profile = AthleteProfile.objects.create(biography=f'Test Athlete biography {i}')
-                User.objects.create(athlete_profile=athlete_profile, email=f'test_athlete{i}@test_athlete.com', first_name="TEST", last_name=f'Athlete {i}', sex=sex)
+                user = User.objects.create(email=f'test.athlete{i}@testathlete.com', first_name="TEST", last_name=f'Athlete {i}', password="123", sex=sex)
+                athlete_profile = AthleteProfile.objects.create(biography=f'Test Athlete biography {i}', user=user)
                 for person_question in PersonQuestion.objects.all():
                     weight_random = random.randint(1, 5)
                     PersonQuestionWeighing.objects.create(athlete_profile=athlete_profile, person_question=person_question, weight=weight_random)
@@ -110,7 +111,7 @@ class PersonQuestionWeighingLC(generics.ListCreateAPIView):
     serializer_class = PersonQuestionWeighingSerializer
 
     def get_queryset(self):
-        return PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athlete_profile)
+        return PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athleteprofile)
 
 
 class PersonQuestionWeighingU(generics.UpdateAPIView):
@@ -119,7 +120,7 @@ class PersonQuestionWeighingU(generics.UpdateAPIView):
     serializer_class = PersonQuestionWeighingSerializer
 
     def get_queryset(self):
-        return PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athlete_profile)
+        return PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athleteprofile)
 
 
 class PersonQuestionRUD(generics.RetrieveUpdateDestroyAPIView):
@@ -143,7 +144,7 @@ class SportsRUD(generics.RetrieveUpdateDestroyAPIView):
 class TrainerProfileLC(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
-        return TrainerProfile.objects.exclude(pk__in=UserTrainerConnection.objects.filter(user=self.request.user).values_list('trainer_profile'))
+        return TrainerProfile.objects.exclude(pk__in=UserTrainerConnection.objects.filter(athlete_profile=self.request.user.athleteprofile).values_list('trainer_profile'))
 
     def get_serializer_class(self):
         return TrainerProfileSerializerL if self.request.method in SAFE_METHODS else TrainerProfileSerializer

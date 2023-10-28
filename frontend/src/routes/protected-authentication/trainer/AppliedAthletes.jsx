@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLoaderData, useOutletContext, useSubmit } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -46,16 +46,15 @@ export default function AppliedAthletes() {
                 >
                   <CardHeader
                     title={
-                      athlete?.user_set[0]?.first_name &&
-                      athlete?.user_set[0]?.last_name
-                        ? athlete?.user_set[0]?.first_name +
+                      athlete?.user?.first_name && athlete?.user?.last_name
+                        ? athlete?.user?.first_name +
                           " " +
-                          athlete?.user_set[0]?.last_name
-                        : athlete?.user_set[0]?.email
+                          athlete?.user?.last_name
+                        : athlete?.user?.email
                     }
                     subheader={
-                      athlete?.user_set[0]?.birth_date
-                        ? athlete?.user_set[0]?.birth_date
+                      athlete?.user?.birth_date
+                        ? athlete?.user?.birth_date
                         : "Nincs megadva születési idő"
                     }
                   />
@@ -63,12 +62,12 @@ export default function AppliedAthletes() {
                     alt={"profile_picture"}
                     component={"img"}
                     height={"150"}
-                    src={athlete?.user_set[0]?.profile_picture}
+                    src={athlete?.user?.profile_picture}
                   />
                   <CardContent>
                     <Grid paddingY={1} xs={12}>
                       <Typography>
-                        {athlete?.user_set[0]?.sex ? "Férfi" : "Nő"}
+                        {athlete?.user?.sex ? "Férfi" : "Nő"}
                       </Typography>
                     </Grid>
                     <Typography>{athlete?.biography}</Typography>
@@ -79,16 +78,14 @@ export default function AppliedAthletes() {
                       spacing={1}
                       xs={12}
                     >
-                      {athlete?.user_set?.[0]?.usersport_set.map(
-                        (userSport) => (
-                          <Grid key={userSport?.sport?.id} xs={"auto"}>
-                            <Chip
-                              label={userSport?.sport?.name}
-                              color={"primary"}
-                            />
-                          </Grid>
-                        )
-                      )}
+                      {athlete?.user?.usersport_set.map((userSport) => (
+                        <Grid key={userSport?.sport?.id} xs={"auto"}>
+                          <Chip
+                            label={userSport?.sport?.name}
+                            color={"primary"}
+                          />
+                        </Grid>
+                      ))}
                     </Grid>
                   </CardContent>
                 </Card>
@@ -98,7 +95,7 @@ export default function AppliedAthletes() {
       </Grid>
       <Grid paddingY={2}>
         <Pagination
-          count={Math.ceil(athletes.length / 3)}
+          count={Math.ceil(athletes?.length / 3)}
           page={currentPage}
           onChange={(_, value) => setCurrentPage(value)}
         />

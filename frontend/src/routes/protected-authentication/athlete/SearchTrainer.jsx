@@ -31,7 +31,11 @@ export default function SearchTrainer() {
   function handleConnection(connect, trainerProfileId) {
     setTrainers(trainers.filter((trainer) => trainer.id !== trainerProfileId));
     submit(
-      { connect: connect, trainer_profile: trainerProfileId, user: user?.id },
+      {
+        connect: connect,
+        trainer_profile: trainerProfileId,
+        athlete_profile: user?.athleteprofile?.id,
+      },
       { method: "post" }
     );
   }
@@ -61,16 +65,15 @@ export default function SearchTrainer() {
                 >
                   <CardHeader
                     title={
-                      trainer?.user_set[0]?.first_name &&
-                      trainer?.user_set[0]?.last_name
-                        ? trainer?.user_set[0]?.first_name +
+                      trainer?.user?.first_name && trainer?.user?.last_name
+                        ? trainer?.user?.first_name +
                           " " +
-                          trainer?.user_set[0]?.last_name
-                        : trainer?.user_set[0]?.email
+                          trainer?.user?.last_name
+                        : trainer?.user?.email
                     }
                     subheader={
-                      trainer?.user_set[0]?.birth_date
-                        ? trainer?.user_set[0]?.birth_date
+                      trainer?.user?.birth_date
+                        ? trainer?.user?.birth_date
                         : "Nincs megadva születési idő"
                     }
                   />
@@ -85,7 +88,7 @@ export default function SearchTrainer() {
                       {"Bemutatkozás: " + trainer?.biography}
                     </Typography>
                     <Typography>
-                      {trainer?.user_set[0]?.sex ? "Férfi" : "Nő"}
+                      {trainer?.user?.sex ? "Férfi" : "Nő"}
                     </Typography>
                     <Typography>
                       {"Egy óra edzés ára: " + trainer?.price_per_hour + " Ft"}
@@ -105,16 +108,14 @@ export default function SearchTrainer() {
                       sx={{ pl: 1 }}
                     />
                     <Grid alignItems={"center"} container spacing={1} xs={12}>
-                      {trainer?.user_set?.[0]?.usersport_set.map(
-                        (userSport) => (
-                          <Grid key={userSport?.sport?.id} xs={"auto"}>
-                            <Chip
-                              label={userSport?.sport?.name}
-                              color={"primary"}
-                            />
-                          </Grid>
-                        )
-                      )}
+                      {trainer?.user?.usersport_set.map((userSport) => (
+                        <Grid key={userSport?.sport?.id} xs={"auto"}>
+                          <Chip
+                            label={userSport?.sport?.name}
+                            color={"primary"}
+                          />
+                        </Grid>
+                      ))}
                     </Grid>
                   </CardContent>
                   <CardActions disableSpacing>
@@ -141,7 +142,7 @@ export default function SearchTrainer() {
       </Grid>
       <Grid paddingY={2}>
         <Pagination
-          count={Math.ceil(trainers.length / 3)}
+          count={Math.ceil(trainers?.length / 3)}
           page={currentPage}
           onChange={(_, value) => setCurrentPage(value)}
         />

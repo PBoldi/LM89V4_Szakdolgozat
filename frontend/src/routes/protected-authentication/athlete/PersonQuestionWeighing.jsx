@@ -34,7 +34,7 @@ export default function PersonQuestionWeighing() {
   ) {
     submit(
       {
-        athlete_profile: user?.athlete_profile?.id,
+        athlete_profile: user?.athleteprofile?.id,
         person_question: personQuestionId,
         weight: weight,
         pathname: pathname,
