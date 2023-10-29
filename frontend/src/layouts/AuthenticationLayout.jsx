@@ -1,4 +1,10 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+  useOutletContext,
+} from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2";
 import LoginIcon from "@mui/icons-material/Login";
 import Paper from "@mui/material/Paper";
@@ -7,11 +13,14 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
 export default function AuthenticationLayout() {
+  const { user } = useOutletContext();
   const { pathname } = useLocation();
 
   const nestedPath = pathname?.split("/")?.[2];
 
-  return (
+  return user?.id ? (
+    <Navigate replace to={"/"} />
+  ) : (
     <Grid container justifyContent={"center"} p={1} xs={12}>
       <Grid xs={12} md={8}>
         <Paper elevation={10} sx={{ height: 300 }}>
