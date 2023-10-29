@@ -9,7 +9,10 @@ import CardContent from "@mui/material/CardContent";
 import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
 import CloseIcon from "@mui/icons-material/Close";
+import Collapse from "@mui/material/Collapse";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Unstable_Grid2";
 import IconButton from "@mui/material/IconButton";
@@ -23,6 +26,7 @@ export default function SearchTrainer() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(3);
+  const [openCollapse, setOpenCollapse] = useState(false);
   const [trainers, setTrainers] = useState(trainersLoader);
 
   const indexOfLastCard = currentPage * cardsPerPage;
@@ -86,31 +90,6 @@ export default function SearchTrainer() {
                         src={trainer?.certificate}
                       />
                       <CardContent>
-                        <Typography>
-                          {"Bemutatkozás: " + trainer?.biography}
-                        </Typography>
-                        <Typography>
-                          {trainer?.user?.sex ? "Férfi" : "Nő"}
-                        </Typography>
-                        <Typography>
-                          {"Egy óra edzés ára: " +
-                            trainer?.price_per_hour +
-                            " Ft"}
-                        </Typography>
-                        <FormControlLabel
-                          control={
-                            <Checkbox checked={trainer?.is_available_online} />
-                          }
-                          disabled
-                          label={"Online is elérhető az edzés anyag"}
-                          sx={{ pl: 1 }}
-                        />
-                        <FormControlLabel
-                          control={<Checkbox checked={trainer?.is_dietician} />}
-                          disabled
-                          label={"Dietetikus"}
-                          sx={{ pl: 1 }}
-                        />
                         <Grid
                           alignItems={"center"}
                           container
@@ -127,22 +106,84 @@ export default function SearchTrainer() {
                           ))}
                         </Grid>
                       </CardContent>
-                      <CardActions disableSpacing>
-                        <IconButton
-                          aria-label={"Connect"}
-                          color={"success"}
-                          onClick={() => handleConnection(true, trainer?.id)}
-                        >
-                          <DoneOutlineIcon />
-                        </IconButton>
-                        <Box sx={{ flexGrow: 1 }} />
-                        <IconButton
-                          aria-label={"Don't connect"}
-                          color={"error"}
-                          onClick={() => handleConnection(false, trainer?.id)}
-                        >
-                          <CloseIcon />
-                        </IconButton>
+                      <Collapse
+                        in={openCollapse}
+                        timeout={"auto"}
+                        unmountOnExit
+                      >
+                        <CardContent>
+                          <Typography>
+                            {"Bemutatkozás: " + trainer?.biography}
+                          </Typography>
+                          <Typography>
+                            {trainer?.user?.sex ? "Férfi" : "Nő"}
+                          </Typography>
+                          <Typography>
+                            {"Egy óra edzés ára: " +
+                              trainer?.price_per_hour +
+                              " Ft"}
+                          </Typography>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={trainer?.is_available_online}
+                              />
+                            }
+                            disabled
+                            label={"Online is elérhető az edzés anyag"}
+                            sx={{ pl: 1 }}
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox checked={trainer?.is_dietician} />
+                            }
+                            disabled
+                            label={"Dietetikus"}
+                            sx={{ pl: 1 }}
+                          />
+                        </CardContent>
+                      </Collapse>
+                      <CardActions>
+                        <Grid container justifyContent={"center"} xs={12}>
+                          <Grid container justifyContent={"center"} xs={12}>
+                            <Typography>
+                              {trainer?.user?.sex ? "Férfi" : "Nő"}
+                            </Typography>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <IconButton
+                              aria-label={"Show more"}
+                              color={"primary"}
+                              onClick={() => setOpenCollapse(!openCollapse)}
+                            >
+                              {openCollapse ? <ExpandLess /> : <ExpandMore />}
+                            </IconButton>
+                          </Grid>
+                          <Grid container xs={12}>
+                            <Grid>
+                              <IconButton
+                                aria-label={"Connect"}
+                                color={"success"}
+                                onClick={() =>
+                                  handleConnection(true, trainer?.id)
+                                }
+                              >
+                                <DoneOutlineIcon />
+                              </IconButton>
+                            </Grid>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <Grid>
+                              <IconButton
+                                aria-label={"Don't connect"}
+                                color={"error"}
+                                onClick={() =>
+                                  handleConnection(false, trainer?.id)
+                                }
+                              >
+                                <CloseIcon />
+                              </IconButton>
+                            </Grid>
+                          </Grid>
+                        </Grid>
                       </CardActions>
                     </Card>
                   </Grid>
