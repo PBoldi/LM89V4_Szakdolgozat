@@ -73,35 +73,36 @@ export default function AppliedAthletes() {
                         height={"150"}
                         src={athlete?.user?.profile_picture}
                       />
+
                       <CardContent>
-                        <Collapse
-                          in={openCollapse}
-                          timeout={"auto"}
-                          unmountOnExit
-                        >
-                          <CardContent>
-                            <Typography>
-                              {"Bemutatkozás: " + athlete?.biography}
-                            </Typography>
-                            {athlete?.user?.usersport_set.map((userSport) => (
-                              <Grid
-                                alignItems={"center"}
-                                container
-                                paddingY={1}
-                                spacing={1}
-                                xs={12}
-                              >
-                                <Grid key={userSport?.sport?.id} xs={"auto"}>
-                                  <Chip
-                                    label={userSport?.sport?.name}
-                                    color={"primary"}
-                                  />
-                                </Grid>
-                              </Grid>
-                            ))}
-                          </CardContent>
-                        </Collapse>
+                        {athlete?.user?.usersport_set.map((userSport) => (
+                          <Grid
+                            alignItems={"center"}
+                            container
+                            paddingY={1}
+                            spacing={1}
+                            xs={12}
+                          >
+                            <Grid key={userSport?.sport?.id} xs={"auto"}>
+                              <Chip
+                                label={userSport?.sport?.name}
+                                color={"primary"}
+                              />
+                            </Grid>
+                          </Grid>
+                        ))}
                       </CardContent>
+                      <Collapse
+                        in={openCollapse}
+                        timeout={"auto"}
+                        unmountOnExit
+                      >
+                        <CardContent>
+                          <Typography>
+                            {"Bemutatkozás: " + athlete?.biography}
+                          </Typography>
+                        </CardContent>
+                      </Collapse>
                       <CardActions>
                         <Typography>
                           {athlete?.user?.sex ? "Férfi" : "Nő"}

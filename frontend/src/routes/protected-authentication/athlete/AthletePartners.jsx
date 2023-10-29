@@ -1,11 +1,17 @@
 import { Fragment, useState } from "react";
-import { useLoaderData, useOutletContext, useSubmit } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Unstable_Grid2";
+import IconButton from "@mui/material/IconButton";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 
@@ -15,6 +21,7 @@ export default function AthletePartners() {
   const [athletes, setAthletes] = useState(athletesLoader);
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(3);
+  const [openCollapse, setOpenCollapse] = useState(false);
 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
@@ -67,29 +74,45 @@ export default function AthletePartners() {
                         src={athlete?.user?.profile_picture}
                       />
                       <CardContent>
-                        <Grid paddingY={1} xs={12}>
-                          <Typography>
-                            {athlete?.user?.sex ? "Férfi" : "Nő"}
-                          </Typography>
-                        </Grid>
-                        <Typography>{athlete?.biography}</Typography>
-                        <Grid
-                          alignItems={"center"}
-                          container
-                          paddingY={1}
-                          spacing={1}
-                          xs={12}
-                        >
-                          {athlete?.user?.usersport_set.map((userSport) => (
+                        {athlete?.user?.usersport_set.map((userSport) => (
+                          <Grid
+                            alignItems={"center"}
+                            container
+                            paddingY={1}
+                            spacing={1}
+                            xs={12}
+                          >
                             <Grid key={userSport?.sport?.id} xs={"auto"}>
                               <Chip
                                 label={userSport?.sport?.name}
                                 color={"primary"}
                               />
                             </Grid>
-                          ))}
-                        </Grid>
+                          </Grid>
+                        ))}
                       </CardContent>
+                      <Collapse
+                        in={openCollapse}
+                        timeout={"auto"}
+                        unmountOnExit
+                      >
+                        <CardContent>
+                          <Typography>{athlete?.biography}</Typography>
+                        </CardContent>
+                      </Collapse>
+                      <CardActions>
+                        <Typography>
+                          {athlete?.user?.sex ? "Férfi" : "Nő"}
+                        </Typography>
+                        <Box sx={{ flexGrow: 1 }} />
+                        <IconButton
+                          aria-label={"Show more"}
+                          color={"primary"}
+                          onClick={() => setOpenCollapse(!openCollapse)}
+                        >
+                          {openCollapse ? <ExpandLess /> : <ExpandMore />}
+                        </IconButton>
+                      </CardActions>
                     </Card>
                   </Grid>
                 ))}
