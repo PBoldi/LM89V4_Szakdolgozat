@@ -67,7 +67,28 @@ export default function Navbar({ user }) {
             </Fragment>
           ) : (
             <Fragment>
-              {user?.athleteprofile ? (
+              {!user?.athleteprofile && !user?.trainerprofile ? (
+                <Fragment>
+                  <IconButton
+                    color={"inherit"}
+                    onClick={() => navigate("/profile-choose/athlete-profile")}
+                    size={"small"}
+                    sx={{ mr: 2 }}
+                  >
+                    <FitnessCenterIcon sx={{ mr: 1 }} />
+                    Sportolói profil készítése
+                  </IconButton>
+                  <IconButton
+                    color={"inherit"}
+                    onClick={() => navigate("/profile-choose/trainer-profile")}
+                    size={"small"}
+                    sx={{ mr: 2 }}
+                  >
+                    <SportsIcon sx={{ mr: 1 }} />
+                    Edző profil készítése
+                  </IconButton>
+                </Fragment>
+              ) : user?.athleteprofile ? (
                 <Fragment>
                   <IconButton
                     color={"inherit"}

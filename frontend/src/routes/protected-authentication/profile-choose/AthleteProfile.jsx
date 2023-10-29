@@ -37,7 +37,7 @@ export default function AthleteProfile() {
           <LoadingButton
             loading={["loading", "submitting"].includes(navigation.state)}
           >
-            {"Sportoló profil készítése"}
+            {"Sportolói profil készítése"}
           </LoadingButton>
         </Grid>
       </Form>
