@@ -26,7 +26,6 @@ export default function SearchTrainer() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(3);
-  const [openCollapse, setOpenCollapse] = useState(false);
   const [trainers, setTrainers] = useState(trainersLoader);
 
   const indexOfLastCard = currentPage * cardsPerPage;
@@ -42,6 +41,20 @@ export default function SearchTrainer() {
       },
       { method: "post" }
     );
+  }
+
+  function handleOpenCollapse(trainerProfileId) {
+    const tempTrainers = trainers?.map((trainer) =>
+      trainer?.id === trainerProfileId
+        ? {
+            ...trainer,
+            openCollapse: !trainers.find(
+              (trainer) => trainer?.id === trainerProfileId
+            ).openCollapse,
+          }
+        : { ...trainer }
+    );
+    setTrainers(tempTrainers);
   }
 
   return (
@@ -107,7 +120,7 @@ export default function SearchTrainer() {
                         </Grid>
                       </CardContent>
                       <Collapse
-                        in={openCollapse}
+                        in={trainer?.openCollapse}
                         timeout={"auto"}
                         unmountOnExit
                       >
@@ -153,9 +166,13 @@ export default function SearchTrainer() {
                             <IconButton
                               aria-label={"Show more"}
                               color={"primary"}
-                              onClick={() => setOpenCollapse(!openCollapse)}
+                              onClick={() => handleOpenCollapse(trainer?.id)}
                             >
-                              {openCollapse ? <ExpandLess /> : <ExpandMore />}
+                              {trainer?.openCollapse ? (
+                                <ExpandLess />
+                              ) : (
+                                <ExpandMore />
+                              )}
                             </IconButton>
                           </Grid>
                           <Grid container xs={12}>
