@@ -19,7 +19,7 @@ export default function AuthenticationLayout() {
   const nestedPath = pathname?.split("/")?.[2];
 
   return user?.id ? (
-    <Navigate replace to={"/"} />
+    <Navigate replace to={"/home"} />
   ) : (
     <Grid container justifyContent={"center"} p={1} xs={12}>
       <Grid xs={12} md={8}>

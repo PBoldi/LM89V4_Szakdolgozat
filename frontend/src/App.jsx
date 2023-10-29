@@ -7,6 +7,7 @@ import AthletePartners from "./routes/protected-authentication/athlete/AthletePa
 import AthleteProfile from "./routes/protected-authentication/profile-choose/AthleteProfile";
 import AthleteProfileEdit from "./routes/protected-authentication/athlete/AthleteProfileEdit";
 import AthletesToBePartner from "./routes/protected-authentication/athlete/AthletesToBePartner";
+import Home from "./routes/Home";
 import Login from "./routes/authentication/Login";
 import PersonQuestionCreate from "./routes/protected-admin/PersonQuestionCreate";
 import PersonQuestionDelete from "./routes/protected-admin/PersonQuestionDelete";
@@ -93,6 +94,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      { path: "home", element: <Home /> },
       {
         element: <ProtectedAuthenticationLayout />,
         children: [

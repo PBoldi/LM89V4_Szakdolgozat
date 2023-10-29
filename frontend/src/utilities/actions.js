@@ -27,7 +27,7 @@ export async function athleteProfileCreateAction({ request }) {
   try {
     const formData = await request.formData();
     await athleteProfileCreate(formData);
-    return redirect("/");
+    return redirect("/home");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);
@@ -111,7 +111,7 @@ export async function editAthleteProfileAction({ params, request }) {
     const formData = await request.formData();
 
     await editAthleteProfile(formData, params?.id);
-    return redirect("/");
+    return redirect("/home");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);
@@ -156,7 +156,7 @@ export async function editTrainerProfileAction({ params, request }) {
     const formData = await request.formData();
 
     await editTrainerProfile(formData, params?.id);
-    return redirect("/");
+    return redirect("/home");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);
@@ -173,7 +173,7 @@ export async function loginAction({ request }) {
     const response = await login(Object.fromEntries(formData));
     localStorage.setItem("accessToken", response?.data?.access);
     localStorage.setItem("refreshToken", response?.data?.refresh);
-    return redirect("/");
+    return redirect("/home");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 401)
       return error?.response?.data;
@@ -184,7 +184,7 @@ export async function loginAction({ request }) {
 export function logOutAction() {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
-  return redirect("/");
+  return redirect("/home");
 }
 
 export async function personQuestionWeighingCreateAction({ request }) {
@@ -247,7 +247,7 @@ export async function trainerProfileCreateAction({ request }) {
   try {
     const formData = await request.formData();
     await trainerProfileCreate(formData);
-    return redirect("/");
+    return redirect("/home");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);

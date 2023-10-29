@@ -18,7 +18,7 @@ export default function ProfileChoose() {
   const nestedPath = pathname?.split("/")?.[2];
 
   return Boolean(user?.athleteprofile || user?.trainerprofile) ? (
-    <Navigate replace to={"/"} />
+    <Navigate replace to={"/home"} />
   ) : (
     <Grid
       alignItems={"center"}

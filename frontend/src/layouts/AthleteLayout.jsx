@@ -6,6 +6,6 @@ export default function AthleteLayout() {
   return user?.athleteprofile ? (
     <Outlet context={{ user }} />
   ) : (
-    <Navigate replace to={"/"} />
+    <Navigate replace to={"/home"} />
   );
 }

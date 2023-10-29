@@ -6,6 +6,6 @@ export default function TrainerLayout() {
   return user?.trainerprofile ? (
     <Outlet context={{ user }} />
   ) : (
-    <Navigate replace to={"/"} />
+    <Navigate replace to={"/home"} />
   );
 }

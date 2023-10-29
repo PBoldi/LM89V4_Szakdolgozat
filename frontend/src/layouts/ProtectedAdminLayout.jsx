@@ -6,6 +6,6 @@ export default function ProtectedAuthenticationLayout() {
   return user?.is_admin ? (
     <Outlet context={{ user }} />
   ) : (
-    <Navigate replace to={"/"} />
+    <Navigate replace to={"/home"} />
   );
 }
