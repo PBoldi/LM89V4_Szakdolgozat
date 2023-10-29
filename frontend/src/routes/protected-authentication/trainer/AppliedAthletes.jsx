@@ -21,10 +21,23 @@ export default function AppliedAthletes() {
   const [athletes, setAthletes] = useState(appliedAthletesLoader);
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(3);
-  const [openCollapse, setOpenCollapse] = useState(false);
 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+
+  function handleOpenCollapse(athleteProfileId) {
+    const tempAthletes = athletes?.map((athlete) =>
+      athlete?.id === athleteProfileId
+        ? {
+            ...athlete,
+            openCollapse: !athletes.find(
+              (athlete) => athlete?.id === athleteProfileId
+            ).openCollapse,
+          }
+        : { ...athlete }
+    );
+    setAthletes(tempAthletes);
+  }
 
   return (
     <Grid container justifyContent={"center"} xs={12}>
@@ -93,7 +106,7 @@ export default function AppliedAthletes() {
                         ))}
                       </CardContent>
                       <Collapse
-                        in={openCollapse}
+                        in={athlete?.openCollapse}
                         timeout={"auto"}
                         unmountOnExit
                       >
@@ -111,9 +124,13 @@ export default function AppliedAthletes() {
                         <IconButton
                           aria-label={"Show more"}
                           color={"primary"}
-                          onClick={() => setOpenCollapse(!openCollapse)}
+                          onClick={() => handleOpenCollapse(athlete?.id)}
                         >
-                          {openCollapse ? <ExpandLess /> : <ExpandMore />}
+                          {athlete?.openCollapse ? (
+                            <ExpandLess />
+                          ) : (
+                            <ExpandMore />
+                          )}
                         </IconButton>
                       </CardActions>
                     </Card>
