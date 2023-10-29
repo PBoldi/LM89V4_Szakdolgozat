@@ -8,6 +8,9 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
 import CloseIcon from "@mui/icons-material/Close";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import Grid from "@mui/material/Unstable_Grid2";
 import IconButton from "@mui/material/IconButton";
@@ -36,6 +39,20 @@ export default function AthletesToBePartner() {
       },
       { method: "post" }
     );
+  }
+
+  function handleOpenCollapse(athleteProfileId) {
+    const tempAthletes = athletes?.map((athlete) =>
+      athlete?.id === athleteProfileId
+        ? {
+            ...athlete,
+            openCollapse: !athletes.find(
+              (athlete) => athlete?.id === athleteProfileId
+            ).openCollapse,
+          }
+        : { ...athlete }
+    );
+    setAthletes(tempAthletes);
   }
 
   return (
@@ -86,45 +103,77 @@ export default function AthletesToBePartner() {
                         src={athlete?.user?.profile_picture}
                       />
                       <CardContent>
-                        <Grid paddingY={1} xs={12}>
-                          <Typography>
-                            {athlete?.user?.sex ? "Férfi" : "Nő"}
-                          </Typography>
-                        </Grid>
-                        <Typography>{athlete?.biography}</Typography>
-                        <Grid
-                          alignItems={"center"}
-                          container
-                          paddingY={1}
-                          spacing={1}
-                          xs={12}
-                        >
-                          {athlete?.user?.usersport_set.map((userSport) => (
+                        {athlete?.user?.usersport_set.map((userSport) => (
+                          <Grid
+                            alignItems={"center"}
+                            container
+                            paddingY={1}
+                            spacing={1}
+                            xs={12}
+                          >
                             <Grid key={userSport?.sport?.id} xs={"auto"}>
                               <Chip
                                 label={userSport?.sport?.name}
                                 color={"primary"}
                               />
                             </Grid>
-                          ))}
-                        </Grid>
+                          </Grid>
+                        ))}
                       </CardContent>
+                      <Collapse
+                        in={athlete?.openCollapse}
+                        timeout={"auto"}
+                        unmountOnExit
+                      >
+                        <CardContent>
+                          <Typography>{athlete?.biography}</Typography>
+                        </CardContent>
+                      </Collapse>
                       <CardActions disableSpacing>
-                        <IconButton
-                          aria-label={"Connect"}
-                          color={"success"}
-                          onClick={() => handleConnection(athlete?.id, true)}
-                        >
-                          <DoneOutlineIcon />
-                        </IconButton>
-                        <Box sx={{ flexGrow: 1 }} />
-                        <IconButton
-                          aria-label={"Don't connect"}
-                          color={"error"}
-                          onClick={() => handleConnection(athlete?.id, false)}
-                        >
-                          <CloseIcon />
-                        </IconButton>
+                        <Grid container justifyContent={"center"} xs={12}>
+                          <Grid container justifyContent={"center"} xs={12}>
+                            <Typography>
+                              {athlete?.user?.sex ? "Férfi" : "Nő"}
+                            </Typography>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <IconButton
+                              aria-label={"Show more"}
+                              color={"primary"}
+                              onClick={() => handleOpenCollapse(athlete?.id)}
+                            >
+                              {athlete?.openCollapse ? (
+                                <ExpandLess />
+                              ) : (
+                                <ExpandMore />
+                              )}
+                            </IconButton>
+                          </Grid>
+                          <Grid container xs={12}>
+                            <Grid>
+                              <IconButton
+                                aria-label={"Connect"}
+                                color={"success"}
+                                onClick={() =>
+                                  handleConnection(true, athlete?.id)
+                                }
+                              >
+                                <DoneOutlineIcon />
+                              </IconButton>
+                            </Grid>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <Grid>
+                              <IconButton
+                                aria-label={"Don't connect"}
+                                color={"error"}
+                                onClick={() =>
+                                  handleConnection(false, athlete?.id)
+                                }
+                              >
+                                <CloseIcon />
+                              </IconButton>
+                            </Grid>
+                          </Grid>
+                        </Grid>
                       </CardActions>
                     </Card>
                   </Grid>
