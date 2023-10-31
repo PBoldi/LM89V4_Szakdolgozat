@@ -191,9 +191,9 @@ export async function personQuestionWeighingCreateAction({ request }) {
   try {
     const formData = await request.formData();
 
-    await createPersonQuestionWeighing(formData);
+    const response = await createPersonQuestionWeighing(formData);
 
-    return redirect(formData.get("pathname"));
+    return response?.data;
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400)
       return error?.response?.data;

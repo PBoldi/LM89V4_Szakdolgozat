@@ -75,8 +75,8 @@ export async function personQuestionsWeighingLoader() {
     const [promisePersonQuestions, promisePersonQuestionWeighings] =
       await Promise.all([getPersonQuestions(), getPersonQuestionWeighings()]);
     return {
-      personQuestions: promisePersonQuestions?.data,
-      personQuestionWeighings: promisePersonQuestionWeighings?.data,
+      personQuestionsLoader: promisePersonQuestions?.data,
+      personQuestionWeighingsLoader: promisePersonQuestionWeighings?.data,
     };
   } catch (error) {
     console.log(error);

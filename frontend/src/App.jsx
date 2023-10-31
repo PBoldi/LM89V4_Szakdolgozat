@@ -127,12 +127,12 @@ const router = createBrowserRouter([
                   {
                     path: "person-question-weighings",
                     element: <PersonQuestionWeighing />,
+                    action: personQuestionWeighingCreateAction,
                     loader: personQuestionsWeighingLoader,
                   },
-                  {
-                    path: "person-question-weighings/create",
-                    action: personQuestionWeighingCreateAction,
-                  },
+                  // {
+                  //   path: "person-question-weighings/create",
+                  // },
                   {
                     path: "person-question-weighings/edit",
                     action: personQuestionWeighingEditAction,

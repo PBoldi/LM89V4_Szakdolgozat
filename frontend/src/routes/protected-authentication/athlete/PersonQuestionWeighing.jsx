@@ -1,10 +1,12 @@
+import { useEffect, useState } from "react";
 import {
   Form,
-  useParams,
+  useActionData,
   useLocation,
   useLoaderData,
   useNavigate,
   useOutletContext,
+  useParams,
   useSubmit,
 } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -20,12 +22,32 @@ import Slider from "@mui/material/Slider";
 import { FixedSizeList } from "react-window";
 
 export default function PersonQuestionWeighing() {
-  const { personQuestions, personQuestionWeighings } = useLoaderData();
+  const { personQuestionsLoader, personQuestionWeighingsLoader } =
+    useLoaderData();
+
+  const data = useActionData();
   const { pathname } = useLocation();
   const { user } = useOutletContext();
   const { id } = useParams();
   const navigate = useNavigate();
   const submit = useSubmit();
+
+  const [personQuestions, setPersonQuestions] = useState(personQuestionsLoader);
+
+  const [personQuestionWeighings, setPersonQuestionWeighings] = useState(
+    personQuestionWeighingsLoader
+  );
+
+  useEffect(() => {
+    if (
+      data &&
+      !personQuestionWeighings?.find(
+        (personQuestionWeighing) => personQuestionWeighing?.id === data?.id
+      )
+    ) {
+      setPersonQuestionWeighings((current) => [...current, data]);
+    }
+  }, [JSON.stringify(data)]);
 
   function handleSliderChange(
     weight,
@@ -43,10 +65,20 @@ export default function PersonQuestionWeighing() {
       {
         action: personQuestionWeighingId
           ? `/athlete/${id}/athlete-profile/person-question-weighings/edit`
-          : `/athlete/${id}/athlete-profile/person-question-weighings/create`,
+          : `/athlete/${id}/athlete-profile/person-question-weighings`,
         method: "post",
       }
     );
+    if (personQuestionWeighingId) {
+      const tempPersonQuestionWeighings = personQuestionWeighings?.map(
+        (personQuestionWeighing) =>
+          personQuestionWeighing?.id === personQuestionWeighingId
+            ? { ...personQuestionWeighing, weight: weight }
+            : personQuestionWeighing
+      );
+
+      setPersonQuestionWeighings(tempPersonQuestionWeighings);
+    }
   }
 
   return (
