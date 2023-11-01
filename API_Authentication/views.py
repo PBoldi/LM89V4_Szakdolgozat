@@ -18,6 +18,8 @@ def standardize(row):
 
 
 def get_recommended_users(user):
+    
+
     athlete_profiles_df = read_frame(AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(athlete_profile=user.athleteprofile).values_list('athlete_profile_liked')))
     person_question_weighing_df = pd.DataFrame.from_records(PersonQuestionWeighing.objects.all().values( 'athlete_profile__id', 'weight', 'person_question__question'))
     merged_df = athlete_profiles_df.merge(person_question_weighing_df, left_on="id", right_on="athlete_profile__id")
@@ -66,6 +68,9 @@ class AthleteProfileLC(generics.ListCreateAPIView):
     queryset = AthleteProfile.objects.all()
 
     def get_queryset(self):
+        if not PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athleteprofile):
+            return AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile))
+        
         athlete_profile_pks = get_recommended_users(self.request.user)
 
         athlete_profiles = AthleteProfile.objects.filter(pk__in=athlete_profile_pks).exclude(pk=self.request.user.athleteprofile.id)
