@@ -154,7 +154,7 @@ export default function AthletesToBePartner() {
                                 aria-label={"Connect"}
                                 color={"success"}
                                 onClick={() =>
-                                  handleConnection(true, athlete?.id)
+                                  handleConnection(athlete?.id, true)
                                 }
                               >
                                 <DoneOutlineIcon />
@@ -166,7 +166,7 @@ export default function AthletesToBePartner() {
                                 aria-label={"Don't connect"}
                                 color={"error"}
                                 onClick={() =>
-                                  handleConnection(false, athlete?.id)
+                                  handleConnection(athlete?.id, false)
                                 }
                               >
                                 <CloseIcon />
