@@ -88,22 +88,22 @@ export default function AppliedAthletes() {
                       />
 
                       <CardContent>
-                        {athlete?.user?.usersport_set.map((userSport) => (
-                          <Grid
-                            alignItems={"center"}
-                            container
-                            paddingY={1}
-                            spacing={1}
-                            xs={12}
-                          >
+                        <Grid
+                          alignItems={"center"}
+                          container
+                          paddingY={1}
+                          spacing={1}
+                          xs={12}
+                        >
+                          {athlete?.user?.usersport_set.map((userSport) => (
                             <Grid key={userSport?.sport?.id} xs={"auto"}>
                               <Chip
                                 label={userSport?.sport?.name}
                                 color={"primary"}
                               />
                             </Grid>
-                          </Grid>
-                        ))}
+                          ))}
+                        </Grid>
                       </CardContent>
                       <Collapse
                         in={athlete?.openCollapse}
