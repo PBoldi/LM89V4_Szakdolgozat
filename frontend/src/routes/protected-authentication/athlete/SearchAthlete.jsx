@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import { useLoaderData, useOutletContext, useSubmit } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -56,7 +57,7 @@ export default function SearchTrainer() {
   }
 
   return (
-    <Grid container justifyContent={"center"} xs={12}>
+    <Grid container justifyContent={"center"} xs={"auto"}>
       {athletes?.length ? (
         <Fragment>
           <Grid xs={12}>
@@ -84,11 +85,28 @@ export default function SearchTrainer() {
                     >
                       <CardHeader
                         title={
-                          athlete?.user?.first_name && athlete?.user?.last_name
-                            ? athlete?.user?.first_name +
-                              " " +
+                          <Grid
+                            alignItems={"center"}
+                            container
+                            paddingY={1}
+                            xs={12}
+                          >
+                            <Avatar
+                              alt={athlete?.user?.email}
+                              src={athlete?.user?.profile_picture}
+                              sx={{ mr: 2 }}
+                            >
+                              {athlete?.user?.email?.[0]}
+                            </Avatar>
+                            <Typography>
+                              {athlete?.user?.first_name &&
                               athlete?.user?.last_name
-                            : athlete?.user?.email
+                                ? athlete?.user?.first_name +
+                                  " " +
+                                  athlete?.user?.last_name
+                                : athlete?.user?.email}
+                            </Typography>
+                          </Grid>
                         }
                         subheader={
                           athlete?.user?.birth_date

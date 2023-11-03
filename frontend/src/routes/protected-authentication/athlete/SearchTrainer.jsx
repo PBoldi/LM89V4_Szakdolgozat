@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import { useLoaderData, useOutletContext, useSubmit } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -58,7 +59,7 @@ export default function SearchTrainer() {
   }
 
   return (
-    <Grid container justifyContent={"center"} xs={12}>
+    <Grid container justifyContent={"center"} xs={"auto"}>
       {trainers?.length ? (
         <Fragment>
           <Grid xs={12}>
@@ -84,11 +85,28 @@ export default function SearchTrainer() {
                     >
                       <CardHeader
                         title={
-                          trainer?.user?.first_name && trainer?.user?.last_name
-                            ? trainer?.user?.first_name +
-                              " " +
+                          <Grid
+                            alignItems={"center"}
+                            container
+                            paddingY={1}
+                            xs={12}
+                          >
+                            <Avatar
+                              alt={trainer?.user?.email}
+                              src={trainer?.user?.profile_picture}
+                              sx={{ mr: 2 }}
+                            >
+                              {trainer?.user?.email?.[0]}
+                            </Avatar>
+                            <Typography>
+                              {trainer?.user?.first_name &&
                               trainer?.user?.last_name
-                            : trainer?.user?.email
+                                ? trainer?.user?.first_name +
+                                  " " +
+                                  trainer?.user?.last_name
+                                : trainer?.user?.email}
+                            </Typography>
+                          </Grid>
                         }
                         subheader={
                           trainer?.user?.birth_date
