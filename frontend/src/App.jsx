@@ -54,6 +54,7 @@ import {
   personQuestionWeighingEditAction,
   registrationAction,
   testCreateAthleteProfilesAction,
+  testCreateTrainerProfilesAction,
   trainerProfileCreateAction,
   userAthleteConnectionAction,
   userSportCreateAction,
@@ -130,9 +131,6 @@ const router = createBrowserRouter([
                     action: personQuestionWeighingCreateAction,
                     loader: personQuestionsWeighingLoader,
                   },
-                  // {
-                  //   path: "person-question-weighings/create",
-                  // },
                   {
                     path: "person-question-weighings/edit",
                     action: personQuestionWeighingEditAction,
@@ -247,6 +245,10 @@ const router = createBrowserRouter([
                   {
                     path: "create-athlete-profiles",
                     action: testCreateAthleteProfilesAction,
+                  },
+                  {
+                    path: "create-trainer-profiles",
+                    action: testCreateTrainerProfilesAction,
                   },
                 ],
               },

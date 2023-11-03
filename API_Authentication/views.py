@@ -109,13 +109,42 @@ class CreateTestAthleteProfilesView(generics.GenericAPIView):
             if AthleteProfile.objects.filter(biography="Test Athlete biography 1"):
                 return Response(status=status.HTTP_200_OK)
             for i in range(1000):
-                gender_random = random.randint(0, 1)
-                sex = True if gender_random is 0 else False
+                sex = True if random.randint(0, 1) == 0 else False
                 user = User.objects.create(email=f'test.athlete{i}@testathlete.com', first_name="TEST", last_name=f'Athlete {i}', password="123", sex=sex)
                 athlete_profile = AthleteProfile.objects.create(biography=f'Test Athlete biography {i}', user=user)
                 for person_question in PersonQuestion.objects.all():
                     weight_random = random.randint(1, 5)
                     PersonQuestionWeighing.objects.create(athlete_profile=athlete_profile, person_question=person_question, weight=weight_random)
+
+                for sport in Sport.objects.all():
+                    sport_random = random.randint(0, 10)
+                    if sport_random == 1:
+                        UserSport.objects.create(sport=sport, user=user)
+            return Response(status=status.HTTP_200_OK)
+
+
+class CreateTestTrainerProfilesView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = TrainerProfile.objects.all()
+    serializer_class = TrainerProfileSerializer
+
+    def post(self, request):
+        with transaction.atomic():
+            if TrainerProfile.objects.filter(biography="Test Trainer biography 1"):
+                return Response(status=status.HTTP_200_OK)
+            for i in range(500):
+                is_available_online = True if random.randint(0, 1) == 0 else False
+                is_dietician = True if random.randint(0, 1) == 0 else False
+                price_per_hour = random.randint(1000, 15000)
+                sex = True if random.randint(0, 1) == 0 else False
+                user = User.objects.create(email=f'test.trainer{i}@testtrainer.com', first_name="TEST", last_name=f'Trainer {i}', password="123", sex=sex)
+                TrainerProfile.objects.create(biography=f'Test Trainer biography {i}', is_available_online=is_available_online, is_dietician=is_dietician, price_per_hour=price_per_hour, user=user)
+
+                for sport in Sport.objects.all():
+                    sport_random = random.randint(0, 10)
+                    if sport_random == 1:
+                        UserSport.objects.create(sport=sport, user=user)
+
             return Response(status=status.HTTP_200_OK)
 
 
