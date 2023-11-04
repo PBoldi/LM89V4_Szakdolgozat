@@ -146,6 +146,18 @@ class UserTrainerConnection(models.Model):
     trainer_profile = models.ForeignKey(TrainerProfile, db_column='TrainerProfile', on_delete=models.CASCADE)
 
 
+class TrainerAthleteConnection(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True)
+
+    class Meta:
+        db_table= 'TrainerAthleteConnections'
+    
+    connect = models.BooleanField(db_column='Connect')
+
+    athlete_profile = models.ForeignKey(AthleteProfile, db_column='AthleteProfile', on_delete=models.CASCADE)
+    trainer_profile = models.ForeignKey(TrainerProfile, db_column='TrainerProfile', on_delete=models.CASCADE)
+
+
 class UserSport(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
 
