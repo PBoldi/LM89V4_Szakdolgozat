@@ -131,6 +131,9 @@ export const testCreateAthleteProfiles = () =>
 export const testCreateTrainerProfiles = () =>
   protectedInstance.post("/auth/create-test-trainer-profile/");
 
+export const trainerAthleteConnection = (data) =>
+  protectedInstance.post(`/auth/trainer-athlete-connection/`, data);
+
 export const trainerProfileCreate = (data) =>
   protectedInstance.post("/auth/trainer-profile/", data);
 

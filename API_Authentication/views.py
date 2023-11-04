@@ -44,7 +44,7 @@ class AppliedAthletesL(generics.ListAPIView):
     serializer_class = AthleteProfileSerializerL
 
     def get_queryset(self):
-        return AthleteProfile.objects.filter(id__in=UserTrainerConnection.objects.filter(connect=True, trainer_profile=self.request.user.trainerprofile).values("athlete_profile__id"))
+        return AthleteProfile.objects.filter(id__in=UserTrainerConnection.objects.filter(connect=True, trainer_profile=self.request.user.trainerprofile).values("athlete_profile__id")).exclude(id__in=TrainerAthleteConnection.objects.filter(connect=True, trainer_profile=self.request.user.trainerprofile).values("athlete_profile__id"))
 
 
 class AthletesToBePartnerL(generics.ListAPIView):

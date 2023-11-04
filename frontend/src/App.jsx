@@ -55,6 +55,7 @@ import {
   registrationAction,
   testCreateAthleteProfilesAction,
   testCreateTrainerProfilesAction,
+  trainerAthleteConnectionAction,
   trainerProfileCreateAction,
   userAthleteConnectionAction,
   userSportCreateAction,
@@ -175,6 +176,7 @@ const router = createBrowserRouter([
               {
                 path: "applied-athletes",
                 element: <AppliedAthletes />,
+                action: trainerAthleteConnectionAction,
                 loader: appliedAthletesLoader,
               },
             ],

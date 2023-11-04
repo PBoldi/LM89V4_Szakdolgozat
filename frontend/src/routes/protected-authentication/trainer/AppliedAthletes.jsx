@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useOutletContext, useSubmit } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -8,7 +8,9 @@ import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
+import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
+import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -18,6 +20,9 @@ import Typography from "@mui/material/Typography";
 
 export default function AppliedAthletes() {
   const appliedAthletesLoader = useLoaderData();
+  const { user } = useOutletContext();
+
+  const submit = useSubmit();
 
   const [athletes, setAthletes] = useState(appliedAthletesLoader);
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,6 +30,18 @@ export default function AppliedAthletes() {
 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+
+  function handleConnection(athleteProfileId, connect) {
+    setAthletes(athletes.filter((athlete) => athlete.id !== athleteProfileId));
+    submit(
+      {
+        athlete_profile: athleteProfileId,
+        connect: connect,
+        trainer_profile: user?.trainerprofile?.id,
+      },
+      { method: "post" }
+    );
+  }
 
   function handleOpenCollapse(athleteProfileId) {
     const tempAthletes = athletes?.map((athlete) =>
@@ -41,7 +58,7 @@ export default function AppliedAthletes() {
   }
 
   return (
-    <Grid container justifyContent={"center"} xs={"auto"}>
+    <Grid container justifyContent={"center"} xs={12}>
       {athletes?.length ? (
         <Fragment>
           <Grid xs={12}>
@@ -135,21 +152,50 @@ export default function AppliedAthletes() {
                         </CardContent>
                       </Collapse>
                       <CardActions>
-                        <Typography>
-                          {athlete?.user?.sex ? "Férfi" : "Nő"}
-                        </Typography>
-                        <Box sx={{ flexGrow: 1 }} />
-                        <IconButton
-                          aria-label={"Show more"}
-                          color={"primary"}
-                          onClick={() => handleOpenCollapse(athlete?.id)}
-                        >
-                          {athlete?.openCollapse ? (
-                            <ExpandLess />
-                          ) : (
-                            <ExpandMore />
-                          )}
-                        </IconButton>
+                        <Grid container justifyContent={"center"} xs={12}>
+                          <Grid container justifyContent={"center"} xs={12}>
+                            <Typography>
+                              {athlete?.user?.sex ? "Férfi" : "Nő"}
+                            </Typography>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <IconButton
+                              aria-label={"Show more"}
+                              color={"primary"}
+                              onClick={() => handleOpenCollapse(athlete?.id)}
+                            >
+                              {athlete?.openCollapse ? (
+                                <ExpandLess />
+                              ) : (
+                                <ExpandMore />
+                              )}
+                            </IconButton>
+                          </Grid>
+                          <Grid container xs={12}>
+                            <Grid>
+                              <IconButton
+                                aria-label={"Connect"}
+                                color={"success"}
+                                onClick={() =>
+                                  handleConnection(athlete?.id, true)
+                                }
+                              >
+                                <DoneOutlineIcon />
+                              </IconButton>
+                            </Grid>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <Grid>
+                              <IconButton
+                                aria-label={"Don't connect"}
+                                color={"error"}
+                                onClick={() =>
+                                  handleConnection(athlete?.id, false)
+                                }
+                              >
+                                <CloseIcon />
+                              </IconButton>
+                            </Grid>
+                          </Grid>
+                        </Grid>
                       </CardActions>
                     </Card>
                   </Grid>
