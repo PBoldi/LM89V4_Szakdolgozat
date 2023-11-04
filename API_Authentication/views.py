@@ -224,6 +224,14 @@ class TrainerRatingU(generics.UpdateAPIView):
     serializer_class= TrainerRatingSerializer
 
 
+class TrainerAthletes(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AthleteProfileSerializerL
+
+    def get_queryset(self):
+        return AthleteProfile.objects.filter(id__in=TrainerAthleteConnection.objects.filter(connect=True, trainer_profile=self.request.user.trainerprofile).values("athlete_profile__id"))
+
+
 class TrainerAthleteConnectionC(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = TrainerAthleteConnection.objects.all()

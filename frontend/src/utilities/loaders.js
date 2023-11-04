@@ -11,6 +11,7 @@ import {
   getSport,
   getSports,
   getTrainer,
+  getTrainerAthletes,
   getTrainers,
   getUserByAccessToken,
   getUserSports,
@@ -148,6 +149,16 @@ export async function sportLoader({ params }) {
 export async function sportsLoader() {
   try {
     const response = await getSports();
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function trainerAthletesLoader() {
+  try {
+    const response = await getTrainerAthletes();
     return response?.data;
   } catch (error) {
     console.log(error);

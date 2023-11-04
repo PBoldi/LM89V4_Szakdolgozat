@@ -149,6 +149,15 @@ export default function Navbar({ user }) {
                     <PeopleIcon sx={{ mr: 1 }} />
                     Jelentkezett sportolók
                   </IconButton>
+                  <IconButton
+                    color={"inherit"}
+                    onClick={() => navigate("/trainer/trainer-athletes")}
+                    size={"small"}
+                    sx={{ mr: 2 }}
+                  >
+                    <EmojiEventsIcon sx={{ mr: 1 }} />
+                    Sportolóim
+                  </IconButton>
                 </Fragment>
               ) : null}
               <Box sx={{ flexGrow: 1 }} />

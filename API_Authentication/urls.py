@@ -22,6 +22,7 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view()),                 
     path('create-test-athlete-profile/', CreateTestAthleteProfilesView.as_view()),
     path('create-test-trainer-profile/', CreateTestTrainerProfilesView.as_view()),
+    path('trainer-athletes/', TrainerAthletes.as_view()),
     path('trainer-athlete-connection/', TrainerAthleteConnectionC.as_view()),
     path('trainer-profile/', TrainerProfileLC.as_view()),
     path('trainer-profile/<int:pk>', TrainerProfileRUD.as_view()),

@@ -119,6 +119,9 @@ export const getSports = () => protectedInstance.get("/auth/sports/");
 export const getTrainer = (id) =>
   protectedInstance.get(`/auth/trainer-profile/${id}`);
 
+export const getTrainerAthletes = () =>
+  protectedInstance.get("/auth/trainer-athletes");
+
 export const getTrainers = () => protectedInstance.get("/auth/trainer-profile");
 
 export const getUserByAccessToken = () =>

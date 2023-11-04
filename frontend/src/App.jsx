@@ -23,6 +23,7 @@ import SportDelete from "./routes/protected-admin/SportDelete";
 import SportEdit from "./routes/protected-admin/SportEdit";
 import Sports from "./routes/protected-admin/Sports";
 import TestFunctions from "./routes/protected-admin/TestFunctions";
+import TrainerAthletes from "./routes/protected-authentication/trainer/TrainerAthletes";
 import TrainerProfile from "./routes/protected-authentication/profile-choose/TrainerProfile";
 import TrainerProfileEdit from "./routes/protected-authentication/trainer/TrainerProfileEdit";
 import UserProfileEdit from "./routes/protected-authentication/UserProfileEdit";
@@ -79,6 +80,7 @@ import {
   searchTrainersLoader,
   sportLoader,
   sportsLoader,
+  trainerAthletesLoader,
   trainerProfileLoader,
 } from "./utilities/loaders";
 
@@ -194,6 +196,11 @@ const router = createBrowserRouter([
                 element: <AppliedAthletes />,
                 action: trainerAthleteConnectionAction,
                 loader: appliedAthletesLoader,
+              },
+              {
+                path: "trainer-athletes",
+                element: <TrainerAthletes />,
+                loader: trainerAthletesLoader,
               },
             ],
           },
