@@ -90,6 +90,12 @@ class TrainerProfileSerializerL(ModelSerializer):
         model = TrainerProfile
 
 
+class TrainerAthleteConnectionSerializer(ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = TrainerAthleteConnection
+
+
 class UserAthleteConnectionSerializer(ModelSerializer):
     class Meta:
         fields = '__all__'

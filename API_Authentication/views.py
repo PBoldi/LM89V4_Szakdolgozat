@@ -205,6 +205,12 @@ class TrainerProfileRUD(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TrainerProfileSerializer
 
 
+class TrainerAthleteConnectionC(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = TrainerAthleteConnection.objects.all()
+    serializer_class = TrainerAthleteConnectionSerializer
+
+
 class UserAthleteConnectionC(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = UserAthleteConnection.objects.all()
