@@ -18,6 +18,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Unstable_Grid2";
 import IconButton from "@mui/material/IconButton";
 import Pagination from "@mui/material/Pagination";
+import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 
 export default function SearchTrainer() {
@@ -147,9 +148,6 @@ export default function SearchTrainer() {
                             {"Bemutatkozás: " + trainer?.biography}
                           </Typography>
                           <Typography>
-                            {trainer?.user?.sex ? "Férfi" : "Nő"}
-                          </Typography>
-                          <Typography>
                             {"Egy óra edzés ára: " +
                               trainer?.price_per_hour +
                               " Ft"}
@@ -205,6 +203,12 @@ export default function SearchTrainer() {
                                 <DoneOutlineIcon />
                               </IconButton>
                             </Grid>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <Rating
+                              defaultValue={trainer?.trainer_aggregated_rating}
+                              disabled
+                              precision={0.1}
+                            />
                             <Box sx={{ flexGrow: 1 }} />
                             <Grid>
                               <IconButton

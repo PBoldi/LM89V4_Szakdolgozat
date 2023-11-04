@@ -1,5 +1,7 @@
 from rest_framework.serializers import ModelSerializer, ReadOnlyField, SerializerMethodField
 
+from django.db.models import Avg
+
 from .models import *
 
 
@@ -90,6 +92,7 @@ class TrainerRatingSerializer(ModelSerializer):
 
 class TrainerProfileSerializerL(ModelSerializer):
     trainer_user_rating = SerializerMethodField()
+    trainer_aggregated_rating = SerializerMethodField()
     user = UserSerializerForProfilesL()
     class Meta:
         fields = '__all__'
@@ -97,6 +100,12 @@ class TrainerProfileSerializerL(ModelSerializer):
 
     def get_trainer_user_rating(self, instance):
         return TrainerRatingSerializer(TrainerRating.objects.filter(athlete_profile=self.context['request'].user.athleteprofile, trainer_profile=instance).first()).data
+    
+    def get_trainer_aggregated_rating(self, instance):
+        ratings = TrainerRating.objects.filter(trainer_profile=instance)
+        if ratings:
+            return ratings.aggregate(Avg("rating", default=0))["rating__avg"]
+        return None
 
 
 class TrainerAthleteConnectionSerializer(ModelSerializer):
