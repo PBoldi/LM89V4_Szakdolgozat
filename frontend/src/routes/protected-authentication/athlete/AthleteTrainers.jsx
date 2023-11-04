@@ -9,6 +9,8 @@ import {
 import Avatar from "@mui/material/Avatar";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import FemaleIcon from "@mui/icons-material/Female";
+import MaleIcon from "@mui/icons-material/Male";
 import Paper from "@mui/material/Paper";
 import Rating from "@mui/material/Rating";
 import Table from "@mui/material/Table";
@@ -83,6 +85,9 @@ export default function AthleteTrainers() {
           <TableRow>
             <TableCell></TableCell>
             <TableCell>Név vagy e-mail</TableCell>
+            <TableCell>Bemutatkozás</TableCell>
+            <TableCell align={"center"}>Születési dátum</TableCell>
+            <TableCell align={"center"}>Neme</TableCell>
             <TableCell align={"center"}>Online edzés anyag</TableCell>
             <TableCell align={"center"}>Dietetikus</TableCell>
             <TableCell align={"center"}>Egy óra edzés ára</TableCell>
@@ -108,6 +113,13 @@ export default function AthleteTrainers() {
               </TableCell>
               <TableCell>
                 {trainer?.user?.full_name ?? trainer?.user?.email}
+              </TableCell>
+              <TableCell>{trainer?.biography}</TableCell>
+              <TableCell align={"center"}>
+                {trainer?.user?.birth_date ?? "Nincs születési dátum megadva"}
+              </TableCell>
+              <TableCell align={"center"}>
+                {trainer?.user?.sex ? <MaleIcon /> : <FemaleIcon />}
               </TableCell>
               <TableCell align={"center"}>
                 {trainer?.is_available_online ? (
