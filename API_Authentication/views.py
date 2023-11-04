@@ -47,14 +47,6 @@ class AppliedAthletesL(generics.ListAPIView):
         return AthleteProfile.objects.filter(id__in=UserTrainerConnection.objects.filter(connect=True, trainer_profile=self.request.user.trainerprofile).values("athlete_profile__id")).exclude(id__in=TrainerAthleteConnection.objects.filter(connect=True, trainer_profile=self.request.user.trainerprofile).values("athlete_profile__id"))
 
 
-class AthletesToBePartnerL(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = AthleteProfileSerializerL
-
-    def get_queryset(self):
-        return AthleteProfile.objects.filter(id__in=UserAthleteConnection.objects.filter(connect=True, athlete_profile_liked=self.request.user.athleteprofile).values("athlete_profile__id")).exclude(id__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile).values("athlete_profile_liked__id"))
-
-
 class AthletePartnersL(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = AthleteProfileSerializerL
@@ -87,6 +79,22 @@ class AthleteProfileRUD(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = AthleteProfile.objects.all()
     serializer_class = AthleteProfileSerializer
+
+
+class AthletesToBePartnerL(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AthleteProfileSerializerL
+
+    def get_queryset(self):
+        return AthleteProfile.objects.filter(id__in=UserAthleteConnection.objects.filter(connect=True, athlete_profile_liked=self.request.user.athleteprofile).values("athlete_profile__id")).exclude(id__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile).values("athlete_profile_liked__id"))
+
+
+class AthleteTrainers(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = TrainerProfileSerializer
+
+    def get_queryset(self):
+        return TrainerProfile.objects.filter(id__in=TrainerAthleteConnection.objects.filter(connect=True, athlete_profile=self.request.user.athleteprofile).values("athlete_profile__id"))
 
 
 class AuthenticatedUser(generics.GenericAPIView):
