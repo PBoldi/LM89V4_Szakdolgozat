@@ -80,6 +80,9 @@ export const editSport = (data, id) =>
 export const editTrainerProfile = (data, id) =>
   protectedInstance.put(`/auth/trainer-profile/${id}`, data);
 
+export const editTrainerRating = (data, id) =>
+  protectedInstance.patch(`/auth/trainer-rating/${id}`, data);
+
 export const editUserProfile = (data, id) =>
   protectedInstance.patch(`/auth/users/${id}`, data);
 
@@ -139,6 +142,9 @@ export const trainerAthleteConnection = (data) =>
 
 export const trainerProfileCreate = (data) =>
   protectedInstance.post("/auth/trainer-profile/", data);
+
+export const trainerRatingCreate = (data) =>
+  protectedInstance.post("/auth/trainer-rating/", data);
 
 export const userAthleteConnection = (data) =>
   protectedInstance.post(`/auth/user-athlete-connection/`, data);

@@ -48,6 +48,7 @@ import {
   editPersonQuestionAction,
   editSportAction,
   editTrainerProfileAction,
+  editTrainerRatingAction,
   editUserProfileAction,
   loginAction,
   logOutAction,
@@ -58,6 +59,7 @@ import {
   testCreateTrainerProfilesAction,
   trainerAthleteConnectionAction,
   trainerProfileCreateAction,
+  trainerRatingCreateAction,
   userAthleteConnectionAction,
   userSportCreateAction,
   userTrainerConnectionAction,
@@ -154,7 +156,14 @@ const router = createBrowserRouter([
               {
                 path: "athlete-trainers",
                 element: <AthleteTrainers />,
+                action: trainerRatingCreateAction,
                 loader: athleteTrainersLoader,
+                children: [
+                  {
+                    path: "trainer-rating/update",
+                    action: editTrainerRatingAction,
+                  },
+                ],
               },
               {
                 path: "search-athlete",

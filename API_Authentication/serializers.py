@@ -1,4 +1,3 @@
-from django.db import transaction
 from rest_framework.serializers import ModelSerializer, ReadOnlyField, SerializerMethodField
 
 from .models import *
@@ -83,11 +82,21 @@ class AthleteProfileSerializerL(ModelSerializer):
         model = AthleteProfile
 
 
+class TrainerRatingSerializer(ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = TrainerRating
+
+
 class TrainerProfileSerializerL(ModelSerializer):
+    trainer_user_rating = SerializerMethodField()
     user = UserSerializerForProfilesL()
     class Meta:
         fields = '__all__'
         model = TrainerProfile
+
+    def get_trainer_user_rating(self, instance):
+        return TrainerRatingSerializer(TrainerRating.objects.filter(athlete_profile=self.context['request'].user.athleteprofile, trainer_profile=instance).first()).data
 
 
 class TrainerAthleteConnectionSerializer(ModelSerializer):

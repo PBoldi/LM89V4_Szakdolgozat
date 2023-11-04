@@ -1,5 +1,11 @@
-import { useState } from "react";
-import { useLoaderData, useOutletContext, useSubmit } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  useActionData,
+  useLoaderData,
+  useLocation,
+  useOutletContext,
+  useSubmit,
+} from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
@@ -14,12 +20,61 @@ import TableRow from "@mui/material/TableRow";
 
 export default function AthleteTrainers() {
   const trainersLoader = useLoaderData();
+  const data = useActionData();
+  const pathname = useLocation();
 
   const { user } = useOutletContext();
   const submit = useSubmit();
 
   const [trainers, setTrainers] = useState(trainersLoader);
-  const [value, setValue] = useState(2);
+
+  function handleRatingChange(trainerId, value, trainerRatingId) {
+    if (trainerRatingId) {
+      submit(
+        {
+          id: trainerRatingId,
+          rating: value,
+        },
+        { action: "trainer-rating/update", method: "post" }
+      );
+    } else {
+      submit(
+        {
+          athlete_profile: user?.athleteprofile?.id,
+          rating: value,
+          trainer_profile: trainerId,
+        },
+        { action: pathname, method: "post" }
+      );
+    }
+
+    const trainersTemp = trainers.map((trainer) =>
+      trainer?.id === trainerId
+        ? {
+            ...trainer,
+            trainer_user_rating: {
+              ...trainer?.trainer_user_rating,
+              rating: value,
+            },
+          }
+        : { ...trainer }
+    );
+    setTrainers(trainersTemp);
+  }
+
+  useEffect(() => {
+    if (data) {
+      const trainersTemp = trainers.map((trainer) =>
+        trainer?.id === data?.trainer_profile
+          ? {
+              ...trainer,
+              trainer_user_rating: data,
+            }
+          : { ...trainer }
+      );
+      setTrainers(trainersTemp);
+    }
+  }, [JSON.stringify(data)]);
 
   return (
     <TableContainer component={Paper}>
@@ -71,10 +126,13 @@ export default function AthleteTrainers() {
               <TableCell align={"center"}>{trainer?.price_per_hour}</TableCell>
               <TableCell align={"right"}>
                 <Rating
-                  name="simple-controlled"
-                  value={value}
-                  onChange={(event, newValue) => {
-                    setValue(newValue);
+                  value={trainer?.trainer_user_rating?.rating}
+                  onChange={(_, value) => {
+                    handleRatingChange(
+                      trainer?.id,
+                      value,
+                      trainer?.trainer_user_rating?.id
+                    );
                   }}
                 />
               </TableCell>

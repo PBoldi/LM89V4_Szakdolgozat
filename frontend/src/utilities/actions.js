@@ -13,6 +13,7 @@ import {
   editPersonQuestionWeighing,
   editSport,
   editTrainerProfile,
+  editTrainerRating,
   editUserProfile,
   login,
   registration,
@@ -20,6 +21,7 @@ import {
   testCreateTrainerProfiles,
   trainerAthleteConnection,
   trainerProfileCreate,
+  trainerRatingCreate,
   userAthleteConnection,
   userSportCreate,
   userTrainerConnection,
@@ -168,6 +170,21 @@ export async function editTrainerProfileAction({ params, request }) {
   }
 }
 
+export async function editTrainerRatingAction({ request }) {
+  try {
+    const formData = await request.formData();
+
+    await editTrainerRating(formData, formData.get("id"));
+    return redirect("/athlete/athlete-trainers");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
 export async function loginAction({ request }) {
   try {
     const formData = await request.formData();
@@ -263,6 +280,20 @@ export async function trainerProfileCreateAction({ request }) {
     const formData = await request.formData();
     await trainerProfileCreate(formData);
     return redirect("/home");
+  } catch (error) {
+    if (error?.response?.data && error?.response?.status === 400) {
+      console.log(error);
+      return error?.response?.data;
+    }
+    throw error;
+  }
+}
+
+export async function trainerRatingCreateAction({ request }) {
+  try {
+    const formData = await request.formData();
+    const response = await trainerRatingCreate(formData);
+    return response?.data;
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);

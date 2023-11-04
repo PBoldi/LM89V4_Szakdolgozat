@@ -25,6 +25,8 @@ urlpatterns = [
     path('trainer-athlete-connection/', TrainerAthleteConnectionC.as_view()),
     path('trainer-profile/', TrainerProfileLC.as_view()),
     path('trainer-profile/<int:pk>', TrainerProfileRUD.as_view()),
+    path('trainer-rating/', TrainerRatingC.as_view()),
+    path('trainer-rating/<int:pk>', TrainerRatingU.as_view()),
     path('user-athlete-connection/', UserAthleteConnectionC.as_view()),
     path('user-trainer-connection/', UserTrainerConnectionC.as_view()),
     path('user-sports/', UserSportsLC.as_view()),
