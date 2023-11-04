@@ -91,10 +91,10 @@ class AthletesToBePartnerL(generics.ListAPIView):
 
 class AthleteTrainers(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = TrainerProfileSerializer
+    serializer_class = TrainerProfileSerializerL
 
     def get_queryset(self):
-        return TrainerProfile.objects.filter(id__in=TrainerAthleteConnection.objects.filter(connect=True, athlete_profile=self.request.user.athleteprofile).values("athlete_profile__id"))
+        return TrainerProfile.objects.filter(id__in=TrainerAthleteConnection.objects.filter(connect=True, athlete_profile=self.request.user.athleteprofile).values("trainer_profile__id"))
 
 
 class AuthenticatedUser(generics.GenericAPIView):

@@ -97,6 +97,9 @@ export const getAthletePartners = () =>
 export const getAthletesToBePartner = () =>
   protectedInstance.get("/auth/athlete-to-be-partner");
 
+export const getAthleteTrainers = () =>
+  protectedInstance.get("/auth/athlete-trainers");
+
 export const getPersonQuestion = (id) =>
   protectedInstance.get(`/auth/person-questions/${id}`);
 

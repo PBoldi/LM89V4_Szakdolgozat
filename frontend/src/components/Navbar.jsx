@@ -8,6 +8,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import Divider from "@mui/material/Divider";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
@@ -126,6 +127,15 @@ export default function Navbar({ user }) {
                   >
                     <GroupIcon sx={{ mr: 1 }} />
                     Edzőtársak
+                  </IconButton>
+                  <IconButton
+                    color={"inherit"}
+                    onClick={() => navigate("/athlete/athlete-trainers")}
+                    size={"small"}
+                    sx={{ mr: 2 }}
+                  >
+                    <EmojiEventsIcon sx={{ mr: 1 }} />
+                    Edzőim
                   </IconButton>
                 </Fragment>
               ) : user?.trainerprofile ? (

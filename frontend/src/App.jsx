@@ -7,6 +7,7 @@ import AthletePartners from "./routes/protected-authentication/athlete/AthletePa
 import AthleteProfile from "./routes/protected-authentication/profile-choose/AthleteProfile";
 import AthleteProfileEdit from "./routes/protected-authentication/athlete/AthleteProfileEdit";
 import AthletesToBePartner from "./routes/protected-authentication/athlete/AthletesToBePartner";
+import AthleteTrainers from "./routes/protected-authentication/athlete/AthleteTrainers";
 import Home from "./routes/Home";
 import Login from "./routes/authentication/Login";
 import PersonQuestionCreate from "./routes/protected-admin/PersonQuestionCreate";
@@ -67,6 +68,7 @@ import {
   athletePartnersLoader,
   athleteProfileLoader,
   athletesToBePartnerLoader,
+  athleteTrainersLoader,
   personQuestionLoader,
   personQuestionsLoader,
   personQuestionsWeighingLoader,
@@ -139,10 +141,9 @@ const router = createBrowserRouter([
                 ],
               },
               {
-                path: "search-athlete",
-                element: <SearchAthlete />,
-                action: userAthleteConnectionAction,
-                loader: searchAthletesLoader,
+                path: "athlete-partners",
+                element: <AthletePartners />,
+                loader: athletePartnersLoader,
               },
               {
                 path: "athletes-to-be-partner",
@@ -151,9 +152,15 @@ const router = createBrowserRouter([
                 loader: athletesToBePartnerLoader,
               },
               {
-                path: "athlete-partners",
-                element: <AthletePartners />,
-                loader: athletePartnersLoader,
+                path: "athlete-trainers",
+                element: <AthleteTrainers />,
+                loader: athleteTrainersLoader,
+              },
+              {
+                path: "search-athlete",
+                element: <SearchAthlete />,
+                action: userAthleteConnectionAction,
+                loader: searchAthletesLoader,
               },
               {
                 path: "search-trainer",

@@ -4,6 +4,7 @@ import {
   getAthletePartners,
   getAthletes,
   getAthletesToBePartner,
+  getAthleteTrainers,
   getPersonQuestion,
   getPersonQuestions,
   getPersonQuestionWeighings,
@@ -53,6 +54,16 @@ export async function athleteProfileLoader({ params }) {
 export async function athletesToBePartnerLoader() {
   try {
     const response = await getAthletesToBePartner();
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function athleteTrainersLoader() {
+  try {
+    const response = await getAthleteTrainers();
     return response?.data;
   } catch (error) {
     console.log(error);
