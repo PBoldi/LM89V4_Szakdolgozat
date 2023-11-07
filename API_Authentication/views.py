@@ -1,6 +1,6 @@
 from rest_framework import generics, status
 from rest_framework.permissions import SAFE_METHODS
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.db import transaction
@@ -108,7 +108,7 @@ class AuthenticatedUser(generics.GenericAPIView):
 
 
 class CreateTestAthleteProfilesView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
     queryset = AthleteProfile.objects.all()
     serializer_class = AthleteProfileSerializer
 
@@ -132,7 +132,7 @@ class CreateTestAthleteProfilesView(generics.GenericAPIView):
 
 
 class CreateTestTrainerProfilesView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
     queryset = TrainerProfile.objects.all()
     serializer_class = TrainerProfileSerializer
 

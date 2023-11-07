@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 import json
 
-from .models import User
+from .models import AthleteProfile, User
 
 def create_admin(self):
     data = {"email":"admin@admin.admin", "password":"admin"}
@@ -149,3 +149,19 @@ class PersonQuestionTestCase(APITestCase):
     def test_delete_person_question_not_admin(self):
         response = self.client.delete(f'http://localhost:8000/auth/person-questions/1', HTTP_AUTHORIZATION='Bearer {}'.format(PersonQuestionTestCase.access), format='json')
         self.assertEqual(response.status_code, 403)
+
+
+class CreateTestAthleteUsersTestCase(APITestCase):
+    def setUp(self):
+        CreateTestAthleteUsersTestCase.access = create_user(self)
+        CreateTestAthleteUsersTestCase.access_admin = create_admin(self)
+
+    def test_create_test_athletes_not_admin(self):
+        response = self.client.post(f'http://localhost:8000/auth/create-test-athlete-profile/', HTTP_AUTHORIZATION='Bearer {}'.format(CreateTestAthleteUsersTestCase.access), format='json')
+        self.assertEqual(response.status_code, 403)
+
+    def test_create_test_athletes(self):
+        response = self.client.post(f'http://localhost:8000/auth/create-test-athlete-profile/', HTTP_AUTHORIZATION='Bearer {}'.format(CreateTestAthleteUsersTestCase.access_admin), format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(User.objects.count(), 1002)
+        self.assertEqual(AthleteProfile.objects.count(), 1000)
