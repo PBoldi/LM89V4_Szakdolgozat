@@ -87,5 +87,46 @@ class TrainerProfileTestCase(APITestCase):
         self.assertEqual(response.data["biography"], "Test biography!")       
         self.assertEqual(response.data["is_available_online"], False)       
         self.assertEqual(response.data["is_dietician"], False)       
-        self.assertEqual(response.data["price_per_hour"], 55)       
+        self.assertEqual(response.data["price_per_hour"], 55)
+
+
+class SportsTestCase(APITestCase):
+    def setUp(self):
+        data = {"email":"test@test.test", "password":"test", "is_admin": True}
+        response = self.client.post('http://localhost:8000/auth/users/', data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        response = self.client.post('http://localhost:8000/auth/token/', data, format='json')
+        SportsTestCase.access = json.loads(response.content)['access']
+
+        response = self.client.get(
+            'http://localhost:8000/auth/users/authenticated/', HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json'
+        )
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['email'], "test@test.test")
+        
+        data={"name": "Labdarúgás"}
+
+        response = self.client.post('http://localhost:8000/auth/sports/', data, HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_get_sport(self):
+        response = self.client.get(f'http://localhost:8000/auth/sports/1', HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["name"], "Labdarúgás")     
+    
+    def test_update_sport(self):
+        data = {"name": "Foci"}
+        response = self.client.patch(f'http://localhost:8000/auth/sports/1', data, HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["name"], "Foci")
+
+    def test_delete_sport(self):
+        response = self.client.delete(f'http://localhost:8000/auth/sports/1', HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
 
