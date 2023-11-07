@@ -10,6 +10,7 @@ import random
 from sklearn.metrics.pairwise import cosine_similarity
 
 from .models import *
+from .permissions import *
 from .serializers import *
 
 
@@ -156,7 +157,13 @@ class CreateTestTrainerProfilesView(generics.GenericAPIView):
 
 
 class PersonQuestionLC(generics.ListCreateAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminOrReadOnly]
+    queryset = PersonQuestion.objects.all()
+    serializer_class = PersonQuestionSerializer
+
+
+class PersonQuestionRUD(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAdminOrReadOnly]
     queryset = PersonQuestion.objects.all()
     serializer_class = PersonQuestionSerializer
 
@@ -179,20 +186,14 @@ class PersonQuestionWeighingU(generics.UpdateAPIView):
         return PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athleteprofile)
 
 
-class PersonQuestionRUD(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [AllowAny]
-    queryset = PersonQuestion.objects.all()
-    serializer_class = PersonQuestionSerializer
-
-
 class SportsLC(generics.ListCreateAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminOrReadOnly]
     queryset = Sport.objects.all()
     serializer_class = SportSerializer
 
 
 class SportsRUD(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminOrReadOnly]
     queryset = Sport.objects.all()
     serializer_class = SportSerializer
 

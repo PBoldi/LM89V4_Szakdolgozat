@@ -2,6 +2,21 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 import json
 
+from .models import User
+
+def create_admin(self):
+    data = {"email":"admin@admin.admin", "password":"admin"}
+    User.objects.create_superuser(email=data["email"], password=data["password"])
+    response = self.client.post('http://localhost:8000/auth/token/', data, format='json')
+    return json.loads(response.content)['access']
+
+
+def create_user(self):
+    data = {"email":"test@test.test", "password":"test"}
+    self.client.post('http://localhost:8000/auth/users/', data, format='json')
+    response = self.client.post('http://localhost:8000/auth/token/', data, format='json')
+    return json.loads(response.content)['access']
+
 
 class AuthenticatedUserTestCase(APITestCase):
     def setUp(self):
@@ -22,19 +37,7 @@ class AuthenticatedUserTestCase(APITestCase):
 
 class AthleteProfileTestCase(APITestCase):
     def setUp(self):
-        data = {"email":"test@test.test", "password":"test"}
-        response = self.client.post('http://localhost:8000/auth/users/', data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-        response = self.client.post('http://localhost:8000/auth/token/', data, format='json')
-        AthleteProfileTestCase.access = json.loads(response.content)['access']
-
-        response = self.client.get(
-            'http://localhost:8000/auth/users/authenticated/', HTTP_AUTHORIZATION='Bearer {}'.format(AthleteProfileTestCase.access), format='json'
-        )
-        
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['email'], "test@test.test")
+        AthleteProfileTestCase.access = create_user(self)
 
         data = {"user": 1, "biography": "Test biography"}
         response = self.client.post('http://localhost:8000/auth/athlete-profile/', data, HTTP_AUTHORIZATION='Bearer {}'.format(AthleteProfileTestCase.access), format='json')
@@ -54,19 +57,7 @@ class AthleteProfileTestCase(APITestCase):
 
 class TrainerProfileTestCase(APITestCase):
     def setUp(self):
-        data = {"email":"test@test.test", "password":"test"}
-        response = self.client.post('http://localhost:8000/auth/users/', data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-        response = self.client.post('http://localhost:8000/auth/token/', data, format='json')
-        AthleteProfileTestCase.access = json.loads(response.content)['access']
-
-        response = self.client.get(
-            'http://localhost:8000/auth/users/authenticated/', HTTP_AUTHORIZATION='Bearer {}'.format(AthleteProfileTestCase.access), format='json'
-        )
-        
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['email'], "test@test.test")
+        AthleteProfileTestCase.access = create_user(self)
 
         data = {"user": 1, "biography": "Test biography", "is_available_online": True, "is_dietician": True, "price_per_hour": 50}
         response = self.client.post('http://localhost:8000/auth/trainer-profile/', data, HTTP_AUTHORIZATION='Bearer {}'.format(AthleteProfileTestCase.access), format='json')
@@ -92,24 +83,12 @@ class TrainerProfileTestCase(APITestCase):
 
 class SportsTestCase(APITestCase):
     def setUp(self):
-        data = {"email":"test@test.test", "password":"test", "is_admin": True}
-        response = self.client.post('http://localhost:8000/auth/users/', data, format='json')
+        SportsTestCase.access = create_user(self)
+        SportsTestCase.access_admin = create_admin(self)
 
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-        response = self.client.post('http://localhost:8000/auth/token/', data, format='json')
-        SportsTestCase.access = json.loads(response.content)['access']
-
-        response = self.client.get(
-            'http://localhost:8000/auth/users/authenticated/', HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json'
-        )
-        
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['email'], "test@test.test")
-        
         data={"name": "Labdarúgás"}
 
-        response = self.client.post('http://localhost:8000/auth/sports/', data, HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json')
+        response = self.client.post('http://localhost:8000/auth/sports/', data, HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access_admin), format='json')
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -120,36 +99,31 @@ class SportsTestCase(APITestCase):
     
     def test_update_sport(self):
         data = {"name": "Foci"}
-        response = self.client.patch(f'http://localhost:8000/auth/sports/1', data, HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json')
+        response = self.client.patch(f'http://localhost:8000/auth/sports/1', data, HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access_admin), format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["name"], "Foci")
 
     def test_delete_sport(self):
-        response = self.client.delete(f'http://localhost:8000/auth/sports/1', HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json')
+        response = self.client.delete(f'http://localhost:8000/auth/sports/1', HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access_admin), format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_update_sport_not_admin(self):
+        data = {"name": "Foci"}
+        response = self.client.patch(f'http://localhost:8000/auth/sports/1', data, HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json')
+        self.assertEqual(response.status_code, 403)
+
+    def test_delete_sport_not_admin(self):
+        response = self.client.delete(f'http://localhost:8000/auth/sports/1', HTTP_AUTHORIZATION='Bearer {}'.format(SportsTestCase.access), format='json')
+        self.assertEqual(response.status_code, 403)
 
 
 class PersonQuestionTestCase(APITestCase):
     def setUp(self):
-        data = {"email":"test@test.test", "password":"test", "is_admin": True}
-        response = self.client.post('http://localhost:8000/auth/users/', data, format='json')
+        PersonQuestionTestCase.access = create_user(self)
+        PersonQuestionTestCase.access_admin = create_admin(self)
 
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-        response = self.client.post('http://localhost:8000/auth/token/', data, format='json')
-        PersonQuestionTestCase.access = json.loads(response.content)['access']
-
-        response = self.client.get(
-            'http://localhost:8000/auth/users/authenticated/', HTTP_AUTHORIZATION='Bearer {}'.format(PersonQuestionTestCase.access), format='json'
-        )
-        
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['email'], "test@test.test")
-        
         data={"question": "Szereted az alkalmazást?"}
-
-        response = self.client.post('http://localhost:8000/auth/person-questions/', data, HTTP_AUTHORIZATION='Bearer {}'.format(PersonQuestionTestCase.access), format='json')
-
+        response = self.client.post('http://localhost:8000/auth/person-questions/', data, HTTP_AUTHORIZATION='Bearer {}'.format(PersonQuestionTestCase.access_admin), format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_get_person_question(self):
@@ -159,10 +133,19 @@ class PersonQuestionTestCase(APITestCase):
     
     def test_update_person_question(self):
         data = {"question": "Szereted az TrainingAssistort?"}
-        response = self.client.patch(f'http://localhost:8000/auth/person-questions/1', data, HTTP_AUTHORIZATION='Bearer {}'.format(PersonQuestionTestCase.access), format='json')
+        response = self.client.patch(f'http://localhost:8000/auth/person-questions/1', data, HTTP_AUTHORIZATION='Bearer {}'.format(PersonQuestionTestCase.access_admin), format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["question"], "Szereted az TrainingAssistort?")
 
     def test_delete_person_question(self):
-        response = self.client.delete(f'http://localhost:8000/auth/person-questions/1', HTTP_AUTHORIZATION='Bearer {}'.format(PersonQuestionTestCase.access), format='json')
+        response = self.client.delete(f'http://localhost:8000/auth/person-questions/1', HTTP_AUTHORIZATION='Bearer {}'.format(PersonQuestionTestCase.access_admin), format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_update_person_question_not_admin(self):
+        data = {"question": "Szereted az TrainingAssistort?"}
+        response = self.client.patch(f'http://localhost:8000/auth/person-questions/1', data, HTTP_AUTHORIZATION='Bearer {}'.format(PersonQuestionTestCase.access), format='json')
+        self.assertEqual(response.status_code, 403)
+
+    def test_delete_person_question_not_admin(self):
+        response = self.client.delete(f'http://localhost:8000/auth/person-questions/1', HTTP_AUTHORIZATION='Bearer {}'.format(PersonQuestionTestCase.access), format='json')
+        self.assertEqual(response.status_code, 403)
