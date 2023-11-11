@@ -181,3 +181,63 @@ class CreateTestTrainerUsersTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(User.objects.count(), 502)
         self.assertEqual(TrainerProfile.objects.count(), 500)
+
+
+class UserConnectionsTestCase(APITestCase):
+    def setUp(self):
+        UserConnectionsTestCase.access_athlete = create_user(self)
+        UserConnectionsTestCase.access_trainer = create_user(self)
+
+        data = {"user": 1, "biography": "Test biography"}
+        response = self.client.post('http://localhost:8000/auth/athlete-profile/', data, HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_athlete), format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        UserConnectionsTestCase.athlete = response.data
+
+        data = {"user": 1, "biography": "Test biography", "is_available_online": True, "is_dietician": True, "price_per_hour": 50}
+        response = self.client.post('http://localhost:8000/auth/trainer-profile/', data, HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_trainer), format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        UserConnectionsTestCase.trainer = response.data
+
+    def test_athlete_connect_to_trainer(self):
+        data = {"athlete_profile": UserConnectionsTestCase.athlete["id"], "trainer_profile": UserConnectionsTestCase.trainer["id"], "connect": True}
+        response = self.client.post('http://localhost:8000/auth/user-trainer-connection/', data, HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_athlete), format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["connect"], True)
+
+        response = self.client.get('http://localhost:8000/auth/applied-athletes/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_trainer), format='json')
+        self.assertEqual(len(response.data), 1)
+
+    def test_athlete_connect_false_to_trainer(self):
+        data = {"athlete_profile": UserConnectionsTestCase.athlete["id"], "trainer_profile": UserConnectionsTestCase.trainer["id"], "connect": False}
+        response = self.client.post('http://localhost:8000/auth/user-trainer-connection/', data, HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_athlete), format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["connect"], False)
+
+        response = self.client.get('http://localhost:8000/auth/applied-athletes/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_trainer), format='json')
+        self.assertEqual(len(response.data), 0)
+
+    def test_trainer_connect_to_athlete(self):
+        data = {"athlete_profile": UserConnectionsTestCase.athlete["id"], "trainer_profile": UserConnectionsTestCase.trainer["id"], "connect": True}
+        response = self.client.post('http://localhost:8000/auth/trainer-athlete-connection/', data, HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_trainer), format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["connect"], True)
+        
+        response = self.client.get('http://localhost:8000/auth/athlete-trainers/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_athlete), format='json')
+        self.assertEqual(len(response.data), 1)
+
+        response = self.client.get('http://localhost:8000/auth/trainer-athletes/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_trainer), format='json')
+        self.assertEqual(len(response.data), 1)
+
+
+    def test_trainer_connect_false_to_athlete(self):
+        data = {"athlete_profile": UserConnectionsTestCase.athlete["id"], "trainer_profile": UserConnectionsTestCase.trainer["id"], "connect": False}
+        response = self.client.post('http://localhost:8000/auth/trainer-athlete-connection/', data, HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_trainer), format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["connect"], False)
+
+        response = self.client.get('http://localhost:8000/auth/athlete-trainers/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_athlete), format='json')
+        self.assertEqual(len(response.data), 0)
+
+        response = self.client.get('http://localhost:8000/auth/trainer-athletes/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_trainer), format='json')
+        self.assertEqual(len(response.data), 0)
+
