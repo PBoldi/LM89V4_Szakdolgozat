@@ -14,9 +14,9 @@ from .permissions import *
 from .serializers import *
 
 
-def standardize(row):
-    new_row = (row - row.mean()) / (row.max() - row.min())
-    return new_row
+def standardize(column):
+    new_column = (column - column.mean()) / (column.max() - column.min())
+    return new_column
 
 
 def get_recommended_users(user):
