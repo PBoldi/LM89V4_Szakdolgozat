@@ -7,6 +7,7 @@ from django.db import transaction
 from django_pandas.io import read_frame
 import pandas as pd
 import random
+import traceback
 from sklearn.metrics.pairwise import cosine_similarity
 
 from .models import *
@@ -20,22 +21,24 @@ def standardize(column):
 
 
 def get_recommended_users(user):
-    athlete_profiles_df = read_frame(AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(athlete_profile=user.athleteprofile).values_list('athlete_profile_liked')))
-    person_question_weighing_df = pd.DataFrame.from_records(PersonQuestionWeighing.objects.all().values( 'athlete_profile__id', 'weight', 'person_question__question'))
-    merged_df = athlete_profiles_df.merge(person_question_weighing_df, left_on="id", right_on="athlete_profile__id")
+    try:
+        athlete_profiles_df = read_frame(AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(athlete_profile=user.athleteprofile).values_list('athlete_profile_liked')))
+        person_question_weighing_df = pd.DataFrame.from_records(PersonQuestionWeighing.objects.all().values( 'athlete_profile__id', 'weight', 'person_question__question'))
+        merged_df = athlete_profiles_df.merge(person_question_weighing_df, left_on="id", right_on="athlete_profile__id")
+        merged_pivot_df = merged_df.pivot(index="id", columns="person_question__question", values="weight_y").fillna(0)
 
-    merged_pivot_df = merged_df.pivot(index="id", columns="person_question__question", values="weight").fillna(0)
+        merged_pivot_df_standard = merged_pivot_df.apply(standardize).fillna(0)
 
-    merged_pivot_df_standard = merged_pivot_df.apply(standardize).fillna(0)
+        cosine_sim = cosine_similarity(merged_pivot_df_standard)
+        sim_dataframe = pd.DataFrame(cosine_sim, index=merged_pivot_df_standard.index, columns=merged_pivot_df_standard.index)
 
-    cosine_sim = cosine_similarity(merged_pivot_df_standard)
-    sim_dataframe = pd.DataFrame(cosine_sim, index=merged_pivot_df_standard.index, columns=merged_pivot_df_standard.index)
+        similar_score = sim_dataframe[user.athleteprofile.id]
+        similar_score = similar_score.sort_values(ascending=False)
 
-    similar_score = sim_dataframe[user.athleteprofile.id]
-    similar_score = similar_score.sort_values(ascending=False)
-
-    users = similar_score.index.values.tolist()
-    return users
+        users = similar_score.index.values.tolist()
+        return users
+    except:
+        print(traceback.format_exc())
 
 
 class AppliedAthletesL(generics.ListAPIView):
