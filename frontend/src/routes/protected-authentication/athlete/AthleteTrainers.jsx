@@ -87,6 +87,7 @@ export default function AthleteTrainers() {
             <TableCell>Név vagy e-mail</TableCell>
             <TableCell>Bemutatkozás</TableCell>
             <TableCell align={"center"}>Születési dátum</TableCell>
+            <TableCell align={"center"}>Lakhely</TableCell>
             <TableCell align={"center"}>Neme</TableCell>
             <TableCell align={"center"}>Online edzés anyag</TableCell>
             <TableCell align={"center"}>Dietetikus</TableCell>
@@ -119,13 +120,14 @@ export default function AthleteTrainers() {
                   ? trainer?.biography
                   : "Nincs bemutatkozás megadva"}
               </TableCell>
+
+              <TableCell align={"center"}>
+                {trainer?.user?.birth_date ?? "Nincs születési dátum megadva"}
+              </TableCell>
               <TableCell>
                 {trainer?.user?.city?.length
                   ? trainer?.user?.city
                   : "Nincs lakhely megadva"}
-              </TableCell>
-              <TableCell align={"center"}>
-                {trainer?.user?.birth_date ?? "Nincs születési dátum megadva"}
               </TableCell>
               <TableCell align={"center"}>
                 {trainer?.user?.sex ? <MaleIcon /> : <FemaleIcon />}
