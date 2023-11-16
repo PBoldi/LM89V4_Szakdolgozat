@@ -308,7 +308,7 @@ export async function editUserProfileAction({ request }) {
     const formData = await request.formData();
 
     await editUserProfile(formData, formData.get("id"));
-    return redirect("/user-profile");
+    return redirect("/home");
   } catch (error) {
     if (error?.response?.data && error?.response?.status === 400) {
       console.log(error);

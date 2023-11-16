@@ -27,7 +27,7 @@ export default function ProfileChoose() {
       p={1}
       xs={12}
     >
-      <Paper>
+      <Paper sx={{ minHeight: 300 }}>
         <Grid p={1} xs={12}>
           {["athlete-profile", "trainer-profile"].includes(nestedPath) ? (
             <Grid mb={1} xs={12}>

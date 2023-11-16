@@ -26,6 +26,7 @@ export default function UserProfileEdit() {
     user?.birth_date ? new Date(user.birth_date) : null
   );
 
+  const [city, setCity] = useState(user?.city ?? "");
   const [firstName, setFirstName] = useState(user?.first_name ?? "");
   const [lastName, setLastName] = useState(user?.last_name ?? "");
   const [profilePicture, setProfilePicture] = useState("");
@@ -85,6 +86,12 @@ export default function UserProfileEdit() {
             name={"first_name"}
             onChange={(event) => setFirstName(event.target.value)}
             value={firstName}
+          />
+          <TextField
+            label={"Lakhely"}
+            name={"city"}
+            onChange={(event) => setCity(event.target.value)}
+            value={city}
           />
           <FormControl>
             <InputLabel>{"Neme"}</InputLabel>

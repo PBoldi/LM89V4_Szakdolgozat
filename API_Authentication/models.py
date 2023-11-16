@@ -23,6 +23,7 @@ class User(AbstractBaseUser):
         db_table = 'Users'
 
     birth_date = models.DateField(db_column='BirthDate', null=True)
+    city = models.CharField(blank=True, db_column="City", max_length=100)
     email = models.EmailField(db_column='Email', max_length=50, unique=True)
     first_name = models.CharField(blank=True, db_column='FirstName', max_length=255)
     last_name = models.CharField(blank=True, db_column='LastName', max_length=255)
@@ -54,6 +55,8 @@ class AthleteProfile(models.Model):
         db_table = 'AthleteProfile'
 
     biography = models.CharField(blank=True, db_column='Biography', max_length=1000)
+    height = models.PositiveIntegerField(db_column="Height")
+    weight = models.PositiveIntegerField(db_column="Weight")
 
     def __str__(self):
         return str(self.id)

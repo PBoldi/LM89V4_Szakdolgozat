@@ -21,7 +21,9 @@ export default function AthleteProfileEdit() {
   const { user } = useOutletContext();
 
   const [biography, setBiography] = useState(athleteProfile?.biography ?? "");
+  const [height, setHeight] = useState(athleteProfile?.height);
   const [open, setOpen] = useState(false);
+  const [weight, setWeight] = useState(athleteProfile?.weight);
 
   return (
     <Fragment>
@@ -33,6 +35,7 @@ export default function AthleteProfileEdit() {
         userSports={userSports}
       />
       <Form action={pathname} encType={"multipart/form-data"} method={"post"}>
+        <input defaultValue={user?.id} hidden name={"user"} />
         <Grid container spacing={2} xs={12}>
           <Grid xs={12}>
             <TextField
@@ -51,6 +54,30 @@ export default function AthleteProfileEdit() {
               placeholder={"Magamról"}
               value={biography}
             />
+          </Grid>
+          <Grid container xs={12}>
+            <Grid xs={6}>
+              <TextField
+                inputProps={{ min: 0 }}
+                label={"Magasság"}
+                name={"height"}
+                onChange={(event) => setHeight(event.target.value)}
+                placeholder={"Magasság"}
+                type={"number"}
+                value={height}
+              />
+            </Grid>
+            <Grid xs={6}>
+              <TextField
+                inputProps={{ min: 0 }}
+                label={"Testsúly"}
+                name={"weight"}
+                onChange={(event) => setWeight(event.target.value)}
+                placeholder={"Testsúly"}
+                type={"number"}
+                value={weight}
+              />
+            </Grid>
           </Grid>
           <Grid paddingY={1} xs={6}>
             <Button color={"secondary"} onClick={() => setOpen(true)}>

@@ -10,6 +10,8 @@ export default function AthleteProfile() {
   const { user } = useOutletContext();
 
   const [biography, setBiography] = useState("");
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
 
   return (
     <Grid xs={12}>
@@ -31,6 +33,24 @@ export default function AthleteProfile() {
             onChange={(event) => setBiography(event.target.value)}
             placeholder={"Magamról"}
             value={biography}
+          />
+          <TextField
+            inputProps={{ min: 0 }}
+            label={"Magasság"}
+            name={"height"}
+            onChange={(event) => setHeight(event.target.value)}
+            placeholder={"Magasság"}
+            type={"number"}
+            value={height}
+          />
+          <TextField
+            inputProps={{ min: 0 }}
+            label={"Testsúly"}
+            name={"weight"}
+            onChange={(event) => setWeight(event.target.value)}
+            placeholder={"Testsúly"}
+            type={"number"}
+            value={weight}
           />
         </Grid>
         <Grid paddingY={1} xs={12}>
