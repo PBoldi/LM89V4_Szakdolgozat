@@ -1,8 +1,9 @@
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Outlet, useLoaderData } from "react-router-dom";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Unstable_Grid2";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import Navbar from "../components/Navbar";
@@ -33,7 +34,7 @@ export default function RootLayout() {
           minHeight: "100vh",
         }}
       >
-        <div
+        <Grid
           style={{
             alignItems: "center",
             display: "flex",
@@ -42,9 +43,10 @@ export default function RootLayout() {
             justifyContent: "center",
             overflowY: "auto",
           }}
+          paddingY={10}
         >
           <Outlet context={{ user }} />
-        </div>
+        </Grid>
       </Container>
       <Footer />
     </LocalizationProvider>
