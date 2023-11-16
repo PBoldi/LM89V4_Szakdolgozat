@@ -57,188 +57,182 @@ export default function SearchTrainer() {
   }
 
   return (
-    <Grid container justifyContent={"center"} xs={"auto"}>
+    <Fragment>
       {athletes?.length ? (
-        <Fragment>
-          <Grid xs={12}>
-            <Grid
-              alignItems={"center"}
-              container
-              justifyContent={"center"}
-              spacing={2}
-              xs={12}
-            >
-              {athletes
-                ?.slice(indexOfFirstCard, indexOfLastCard)
-                ?.map((athlete) => (
-                  <Grid key={athlete?.id} paddingY={1} xs={4}>
-                    <Card
-                      sx={{
-                        minHeight: 350,
-                        width: 350,
-                        m: 1,
-                        transition: "transform 0.2s ease-in-out",
-                        "&:hover": {
-                          transform: "scale(1.05)",
-                        },
-                      }}
-                    >
-                      <CardHeader
-                        title={
-                          <Grid
-                            alignItems={"center"}
-                            container
-                            paddingY={1}
-                            xs={12}
-                          >
-                            <Avatar
-                              alt={athlete?.user?.email}
-                              src={athlete?.user?.profile_picture}
-                              sx={{ mr: 2 }}
-                            >
-                              {athlete?.user?.email?.[0]}
-                            </Avatar>
-                            <Typography>
-                              {athlete?.user?.first_name &&
-                              athlete?.user?.last_name
-                                ? athlete?.user?.first_name +
-                                  " " +
-                                  athlete?.user?.last_name
-                                : athlete?.user?.email}
-                            </Typography>
-                          </Grid>
-                        }
-                        subheader={
-                          athlete?.user?.birth_date
-                            ? athlete?.user?.birth_date
-                            : "Nincs megadva születési idő"
-                        }
-                      />
-                      <CardMedia
-                        alt={"profile_picture"}
-                        component={"img"}
-                        height={"150"}
-                        src={athlete?.user?.profile_picture}
-                      />
-                      <CardContent>
+        <Grid container justifyContent={"center"} spacing={2} xs={12}>
+          <Grid container justifyContent={"center"} xs={12}>
+            {athletes
+              ?.slice(indexOfFirstCard, indexOfLastCard)
+              ?.map((athlete) => (
+                <Grid key={athlete?.id} paddingY={1} xs={4}>
+                  <Card
+                    sx={{
+                      m: 1,
+                      minHeight: 350,
+                      transition: "transform 0.2s ease-in-out",
+                      "&:hover": {
+                        transform: "scale(1.05)",
+                      },
+                      width: 350,
+                    }}
+                  >
+                    <CardHeader
+                      title={
                         <Grid
                           alignItems={"center"}
                           container
                           paddingY={1}
-                          spacing={1}
                           xs={12}
                         >
-                          {athlete?.user?.usersport_set.map((userSport) => (
-                            <Grid key={userSport?.sport?.id} xs={"auto"}>
-                              <Chip
-                                label={userSport?.sport?.name}
-                                color={"primary"}
-                              />
-                            </Grid>
-                          ))}
+                          <Avatar
+                            alt={athlete?.user?.email}
+                            src={athlete?.user?.profile_picture}
+                            sx={{ mr: 2 }}
+                          >
+                            {athlete?.user?.email?.[0]}
+                          </Avatar>
+                          <Typography>
+                            {athlete?.user?.first_name &&
+                            athlete?.user?.last_name
+                              ? athlete?.user?.first_name +
+                                " " +
+                                athlete?.user?.last_name
+                              : athlete?.user?.email}
+                          </Typography>
+                        </Grid>
+                      }
+                      subheader={
+                        athlete?.user?.birth_date
+                          ? athlete?.user?.birth_date
+                          : "Nincs megadva születési idő"
+                      }
+                    />
+                    <CardMedia
+                      alt={"profile_picture"}
+                      component={"img"}
+                      height={"150"}
+                      src={athlete?.user?.profile_picture}
+                    />
+                    <CardContent>
+                      <Grid
+                        alignItems={"center"}
+                        container
+                        paddingY={1}
+                        spacing={1}
+                        xs={12}
+                      >
+                        {athlete?.user?.usersport_set.map((userSport) => (
+                          <Grid key={userSport?.sport?.id} xs={"auto"}>
+                            <Chip
+                              label={userSport?.sport?.name}
+                              color={"primary"}
+                            />
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </CardContent>
+                    <Collapse
+                      in={athlete?.openCollapse}
+                      timeout={"auto"}
+                      unmountOnExit
+                    >
+                      <CardContent>
+                        <Grid container spacing={1} xs={12}>
+                          <Grid xs={12}>
+                            <Typography>
+                              <i>Bemutatkozás: </i>
+                              <br />
+                              {athlete?.biography?.length
+                                ? athlete?.biography
+                                : "Nincs bemutatkozás megadva"}
+                            </Typography>
+                          </Grid>
+                          <Grid xs={12}>
+                            <Typography>
+                              <i>Lakhely: </i>
+                              {athlete?.user?.city?.length
+                                ? athlete?.user?.city?.length
+                                : "Nincs lakhely megadva"}
+                            </Typography>
+                          </Grid>
+                          <Grid xs={12}>
+                            <Typography>
+                              <i>Magasság: </i>
+                              {athlete?.height ?? "Nincs magasság megadva"}
+                            </Typography>
+                          </Grid>
+                          <Grid xs={12}>
+                            <Typography>
+                              <i>Testsúly: </i>
+                              {athlete?.weight ?? "Nincs testsúly megadva"}
+                            </Typography>
+                          </Grid>
                         </Grid>
                       </CardContent>
-                      <Collapse
-                        in={athlete?.openCollapse}
-                        timeout={"auto"}
-                        unmountOnExit
-                      >
-                        <CardContent>
-                          <Grid container spacing={1} xs={12}>
-                            <Grid xs={12}>
-                              <Typography>
-                                <i>Bemutatkozás: </i>
-                                <br />
-                                {athlete?.biography?.length
-                                  ? athlete?.biography
-                                  : "Nincs bemutatkozás megadva"}
-                              </Typography>
-                            </Grid>
-                            <Grid xs={12}>
-                              <Typography>
-                                <i>Lakhely: </i>
-                                {athlete?.user?.city?.length
-                                  ? athlete?.user?.city?.length
-                                  : "Nincs lakhely megadva"}
-                              </Typography>
-                            </Grid>
-                            <Grid xs={12}>
-                              <Typography>
-                                <i>Magasság: </i>
-                                {athlete?.height ?? "Nincs magasság megadva"}
-                              </Typography>
-                            </Grid>
-                            <Grid xs={12}>
-                              <Typography>
-                                <i>Testsúly: </i>
-                                {athlete?.weight ?? "Nincs testsúly megadva"}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        </CardContent>
-                      </Collapse>
-                      <CardActions disableSpacing>
+                    </Collapse>
+                    <CardActions disableSpacing>
+                      <Grid container justifyContent={"center"} xs={12}>
                         <Grid container justifyContent={"center"} xs={12}>
-                          <Grid container justifyContent={"center"} xs={12}>
-                            <Typography>
-                              {athlete?.user?.sex ? "Férfi" : "Nő"}
-                            </Typography>
-                            <Box sx={{ flexGrow: 1 }} />
+                          <Typography>
+                            {athlete?.user?.sex ? "Férfi" : "Nő"}
+                          </Typography>
+                          <Box sx={{ flexGrow: 1 }} />
+                          <IconButton
+                            aria-label={"Show more"}
+                            color={"primary"}
+                            onClick={() => handleOpenCollapse(athlete?.id)}
+                          >
+                            {athlete?.openCollapse ? (
+                              <ExpandLess />
+                            ) : (
+                              <ExpandMore />
+                            )}
+                          </IconButton>
+                        </Grid>
+                        <Grid container xs={12}>
+                          <Grid>
                             <IconButton
-                              aria-label={"Show more"}
-                              color={"primary"}
-                              onClick={() => handleOpenCollapse(athlete?.id)}
+                              aria-label={"Connect"}
+                              color={"success"}
+                              onClick={() =>
+                                handleConnection(athlete?.id, true)
+                              }
                             >
-                              {athlete?.openCollapse ? (
-                                <ExpandLess />
-                              ) : (
-                                <ExpandMore />
-                              )}
+                              <DoneOutlineIcon />
                             </IconButton>
                           </Grid>
-                          <Grid container xs={12}>
-                            <Grid>
-                              <IconButton
-                                aria-label={"Connect"}
-                                color={"success"}
-                                onClick={() =>
-                                  handleConnection(athlete?.id, true)
-                                }
-                              >
-                                <DoneOutlineIcon />
-                              </IconButton>
-                            </Grid>
-                            <Box sx={{ flexGrow: 1 }} />
-                            <Grid>
-                              <IconButton
-                                aria-label={"Don't connect"}
-                                color={"error"}
-                                onClick={() =>
-                                  handleConnection(athlete?.id, false)
-                                }
-                              >
-                                <CloseIcon />
-                              </IconButton>
-                            </Grid>
+                          <Box sx={{ flexGrow: 1 }} />
+                          <Grid>
+                            <IconButton
+                              aria-label={"Don't connect"}
+                              color={"error"}
+                              onClick={() =>
+                                handleConnection(athlete?.id, false)
+                              }
+                            >
+                              <CloseIcon />
+                            </IconButton>
                           </Grid>
                         </Grid>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-                ))}
-            </Grid>
+                      </Grid>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
-          <Grid paddingY={2}>
+          <Grid container justifyContent={"center"} paddingY={2} xs={12}>
             <Pagination
               count={Math.ceil(athletes?.length / 3)}
               page={currentPage}
               onChange={(_, value) => setCurrentPage(value)}
             />
           </Grid>
-        </Fragment>
+        </Grid>
       ) : (
-        <Typography>Nincsenek megjeleníthető sportolók</Typography>
+        <Grid container justifyContent={"center"} xs={12}>
+          <Typography>Nincsenek megjeleníthető sportolók</Typography>
+        </Grid>
       )}
-    </Grid>
+    </Fragment>
   );
 }

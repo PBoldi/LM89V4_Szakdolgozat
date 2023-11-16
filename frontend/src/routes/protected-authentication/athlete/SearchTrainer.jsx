@@ -60,206 +60,197 @@ export default function SearchTrainer() {
   }
 
   return (
-    <Grid container justifyContent={"center"} xs={"auto"}>
+    <Fragment>
       {trainers?.length ? (
-        <Fragment>
-          <Grid xs={12}>
-            <Grid
-              alignItems={"center"}
-              container
-              justifyContent={"center"}
-              spacing={2}
-              xs={12}
-            >
-              {trainers
-                ?.slice(indexOfFirstCard, indexOfLastCard)
-                ?.map((trainer) => (
-                  <Grid key={trainer?.id} paddingY={1} xs={4}>
-                    <Card
-                      sx={{
-                        maxWidth: 345,
-                        transition: "transform 0.2s ease-in-out",
-                        "&:hover": {
-                          transform: "scale(1.05)",
-                        },
-                      }}
-                    >
-                      <CardHeader
-                        title={
-                          <Grid
-                            alignItems={"center"}
-                            container
-                            paddingY={1}
-                            xs={12}
-                          >
-                            <Avatar
-                              alt={trainer?.user?.email}
-                              src={trainer?.user?.profile_picture}
-                              sx={{ mr: 2 }}
-                            >
-                              {trainer?.user?.email?.[0]}
-                            </Avatar>
-                            <Typography>
-                              {trainer?.user?.first_name &&
-                              trainer?.user?.last_name
-                                ? trainer?.user?.first_name +
-                                  " " +
-                                  trainer?.user?.last_name
-                                : trainer?.user?.email}
-                            </Typography>
-                          </Grid>
-                        }
-                        subheader={
-                          trainer?.user?.birth_date
-                            ? trainer?.user?.birth_date
-                            : "Nincs megadva születési idő"
-                        }
-                      />
-                      <CardMedia
-                        alt={"certificate"}
-                        component={"img"}
-                        height={"194"}
-                        src={trainer?.certificate}
-                      />
-                      <CardContent>
+        <Grid container justifyContent={"center"} spacing={2} xs={12}>
+          <Grid container justifyContent={"center"} xs={12}>
+            {trainers
+              ?.slice(indexOfFirstCard, indexOfLastCard)
+              ?.map((trainer) => (
+                <Grid key={trainer?.id} paddingY={1} xs={4}>
+                  <Card
+                    sx={{
+                      m: 1,
+                      minHeight: 350,
+                      transition: "transform 0.2s ease-in-out",
+                      "&:hover": {
+                        transform: "scale(1.05)",
+                      },
+                      width: 350,
+                    }}
+                  >
+                    <CardHeader
+                      title={
                         <Grid
                           alignItems={"center"}
                           container
-                          spacing={1}
+                          paddingY={1}
                           xs={12}
                         >
-                          {trainer?.user?.usersport_set.map((userSport) => (
-                            <Grid key={userSport?.sport?.id} xs={"auto"}>
-                              <Chip
-                                label={userSport?.sport?.name}
-                                color={"primary"}
-                              />
-                            </Grid>
-                          ))}
+                          <Avatar
+                            alt={trainer?.user?.email}
+                            src={trainer?.user?.profile_picture}
+                            sx={{ mr: 2 }}
+                          >
+                            {trainer?.user?.email?.[0]}
+                          </Avatar>
+                          <Typography>
+                            {trainer?.user?.first_name &&
+                            trainer?.user?.last_name
+                              ? trainer?.user?.first_name +
+                                " " +
+                                trainer?.user?.last_name
+                              : trainer?.user?.email}
+                          </Typography>
+                        </Grid>
+                      }
+                      subheader={
+                        trainer?.user?.birth_date
+                          ? trainer?.user?.birth_date
+                          : "Nincs megadva születési idő"
+                      }
+                    />
+                    <CardMedia
+                      alt={"certificate"}
+                      component={"img"}
+                      height={"194"}
+                      src={trainer?.certificate}
+                    />
+                    <CardContent>
+                      <Grid alignItems={"center"} container spacing={1} xs={12}>
+                        {trainer?.user?.usersport_set.map((userSport) => (
+                          <Grid key={userSport?.sport?.id} xs={"auto"}>
+                            <Chip
+                              label={userSport?.sport?.name}
+                              color={"primary"}
+                            />
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </CardContent>
+                    <Collapse
+                      in={trainer?.openCollapse}
+                      timeout={"auto"}
+                      unmountOnExit
+                    >
+                      <CardContent>
+                        <Grid container spacing={1} xs={12}>
+                          <Grid xs={12}>
+                            <i>Bemutatkozás: </i>
+                            <Typography>
+                              {trainer?.biography?.length
+                                ? trainer?.biography
+                                : "Nincs bemutatkozás megadva"}
+                            </Typography>
+                          </Grid>
+                          <Grid xs={12}>
+                            <Typography>
+                              <i>Lakhely: </i>
+                              {trainer?.user?.city?.length
+                                ? trainer?.user?.city
+                                : "Nincs lakhely megadva"}
+                            </Typography>
+                          </Grid>
+                          <Grid xs={12}>
+                            <Typography>
+                              <i>Egy óra edzés ára: </i>
+                              {trainer?.price_per_hour + " Ft"}
+                            </Typography>
+                          </Grid>
+                          <Grid xs={12}>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={trainer?.is_available_online}
+                                />
+                              }
+                              disabled
+                              label={"Online is elérhető az edzés anyag"}
+                              sx={{ pl: 1 }}
+                            />
+                          </Grid>
+                          <Grid xs={12}>
+                            <FormControlLabel
+                              control={
+                                <Checkbox checked={trainer?.is_dietician} />
+                              }
+                              disabled
+                              label={"Dietetikus"}
+                              sx={{ pl: 1 }}
+                            />
+                          </Grid>
                         </Grid>
                       </CardContent>
-                      <Collapse
-                        in={trainer?.openCollapse}
-                        timeout={"auto"}
-                        unmountOnExit
-                      >
-                        <CardContent>
-                          <Grid container spacing={1} xs={12}>
-                            <Grid xs={12}>
-                              <i>Bemutatkozás: </i>
-                              <Typography>
-                                {trainer?.biography?.length
-                                  ? trainer?.biography
-                                  : "Nincs bemutatkozás megadva"}
-                              </Typography>
-                            </Grid>
-                            <Grid xs={12}>
-                              <Typography>
-                                <i>Lakhely: </i>
-                                {trainer?.user?.city?.length
-                                  ? trainer?.user?.city
-                                  : "Nincs lakhely megadva"}
-                              </Typography>
-                            </Grid>
-                            <Grid xs={12}>
-                              <Typography>
-                                <i>Egy óra edzés ára: </i>
-                                {trainer?.price_per_hour + " Ft"}
-                              </Typography>
-                            </Grid>
-                            <Grid xs={12}>
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={trainer?.is_available_online}
-                                  />
-                                }
-                                disabled
-                                label={"Online is elérhető az edzés anyag"}
-                                sx={{ pl: 1 }}
-                              />
-                            </Grid>
-                            <Grid xs={12}>
-                              <FormControlLabel
-                                control={
-                                  <Checkbox checked={trainer?.is_dietician} />
-                                }
-                                disabled
-                                label={"Dietetikus"}
-                                sx={{ pl: 1 }}
-                              />
-                            </Grid>
-                          </Grid>
-                        </CardContent>
-                      </Collapse>
-                      <CardActions>
+                    </Collapse>
+                    <CardActions>
+                      <Grid container justifyContent={"center"} xs={12}>
                         <Grid container justifyContent={"center"} xs={12}>
-                          <Grid container justifyContent={"center"} xs={12}>
-                            <Typography>
-                              {trainer?.user?.sex ? "Férfi" : "Nő"}
-                            </Typography>
-                            <Box sx={{ flexGrow: 1 }} />
+                          <Typography>
+                            {trainer?.user?.sex ? "Férfi" : "Nő"}
+                          </Typography>
+                          <Box sx={{ flexGrow: 1 }} />
+                          <IconButton
+                            aria-label={"Show more"}
+                            color={"primary"}
+                            onClick={() => handleOpenCollapse(trainer?.id)}
+                          >
+                            {trainer?.openCollapse ? (
+                              <ExpandLess />
+                            ) : (
+                              <ExpandMore />
+                            )}
+                          </IconButton>
+                        </Grid>
+                        <Grid container xs={12}>
+                          <Grid>
                             <IconButton
-                              aria-label={"Show more"}
-                              color={"primary"}
-                              onClick={() => handleOpenCollapse(trainer?.id)}
+                              aria-label={"Connect"}
+                              color={"success"}
+                              onClick={() =>
+                                handleConnection(true, trainer?.id)
+                              }
                             >
-                              {trainer?.openCollapse ? (
-                                <ExpandLess />
-                              ) : (
-                                <ExpandMore />
-                              )}
+                              <DoneOutlineIcon />
                             </IconButton>
                           </Grid>
-                          <Grid container xs={12}>
-                            <Grid>
-                              <IconButton
-                                aria-label={"Connect"}
-                                color={"success"}
-                                onClick={() =>
-                                  handleConnection(true, trainer?.id)
-                                }
-                              >
-                                <DoneOutlineIcon />
-                              </IconButton>
-                            </Grid>
-                            <Box sx={{ flexGrow: 1 }} />
-                            <Rating
-                              defaultValue={trainer?.trainer_aggregated_rating}
-                              disabled
-                              precision={0.1}
-                            />
-                            <Box sx={{ flexGrow: 1 }} />
-                            <Grid>
-                              <IconButton
-                                aria-label={"Don't connect"}
-                                color={"error"}
-                                onClick={() =>
-                                  handleConnection(false, trainer?.id)
-                                }
-                              >
-                                <CloseIcon />
-                              </IconButton>
-                            </Grid>
+                          <Box sx={{ flexGrow: 1 }} />
+                          <Rating
+                            defaultValue={trainer?.trainer_aggregated_rating}
+                            disabled
+                            precision={0.1}
+                          />
+                          <Box sx={{ flexGrow: 1 }} />
+                          <Grid>
+                            <IconButton
+                              aria-label={"Don't connect"}
+                              color={"error"}
+                              onClick={() =>
+                                handleConnection(false, trainer?.id)
+                              }
+                            >
+                              <CloseIcon />
+                            </IconButton>
                           </Grid>
                         </Grid>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-                ))}
-            </Grid>
+                      </Grid>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
-          <Grid paddingY={2}>
+          <Grid container justifyContent={"center"} paddingY={2} xs={12}>
             <Pagination
               count={Math.ceil(trainers?.length / 3)}
               page={currentPage}
               onChange={(_, value) => setCurrentPage(value)}
             />
           </Grid>
-        </Fragment>
+        </Grid>
       ) : (
-        <Typography>Nincsenek megjeleníthető edzők</Typography>
+        <Grid container justifyContent={"center"} xs={12}>
+          <Typography>Nincsenek megjeleníthető edzők</Typography>
+        </Grid>
       )}
-    </Grid>
+    </Fragment>
   );
 }
