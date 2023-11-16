@@ -31,8 +31,7 @@ def get_recommended_users(user):
     cosine_sim = cosine_similarity(merged_pivot_df_standard)
     sim_dataframe = pd.DataFrame(cosine_sim, index=merged_pivot_df_standard.index, columns=merged_pivot_df_standard.index)
 
-    stress_value = random.randint(1, 5)
-    similar_score = sim_dataframe[user.athleteprofile.id] * (stress_value - 2.5)
+    similar_score = sim_dataframe[user.athleteprofile.id]
     similar_score = similar_score.sort_values(ascending=False)
 
     users = similar_score.index.values.tolist()
