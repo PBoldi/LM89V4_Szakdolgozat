@@ -24,7 +24,10 @@ export default function TrainerAthletes() {
             <TableCell></TableCell>
             <TableCell>Név vagy e-mail</TableCell>
             <TableCell align={"center"}>Születési idő</TableCell>
+            <TableCell align={"center"}>Lakhely</TableCell>
             <TableCell align={"center"}>Neme</TableCell>
+            <TableCell align={"center"}>Magasság</TableCell>
+            <TableCell align={"center"}>Testsúly</TableCell>
             <TableCell align={"right"}>Bemutatkozás</TableCell>
           </TableRow>
         </TableHead>
@@ -52,9 +55,24 @@ export default function TrainerAthletes() {
                 {athlete?.user?.birth_date ?? "Nincs születési dátum megadva"}
               </TableCell>
               <TableCell align={"center"}>
+                {athlete?.user?.city?.length
+                  ? athlete?.user?.city
+                  : "Nincs lakhely megadva"}
+              </TableCell>
+              <TableCell align={"center"}>
                 {athlete?.user?.sex ? <MaleIcon /> : <FemaleIcon />}
               </TableCell>
-              <TableCell align={"right"}>{athlete?.biography}</TableCell>
+              <TableCell align={"center"}>
+                {athlete?.height ?? "Nincs magasság megadva"}
+              </TableCell>
+              <TableCell align={"center"}>
+                {athlete?.weight ?? "Nincs testsúly megadva"}
+              </TableCell>
+              <TableCell align={"right"}>
+                {athlete?.biography?.length
+                  ? athlete?.biography
+                  : "Nincs bemutatkozás megadva"}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

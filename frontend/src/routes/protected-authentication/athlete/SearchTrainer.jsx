@@ -144,32 +144,52 @@ export default function SearchTrainer() {
                         unmountOnExit
                       >
                         <CardContent>
-                          <Typography>
-                            {"Bemutatkozás: " + trainer?.biography}
-                          </Typography>
-                          <Typography>
-                            {"Egy óra edzés ára: " +
-                              trainer?.price_per_hour +
-                              " Ft"}
-                          </Typography>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={trainer?.is_available_online}
+                          <Grid container spacing={1} xs={12}>
+                            <Grid xs={12}>
+                              <i>Bemutatkozás: </i>
+                              <Typography>
+                                {trainer?.biography?.length
+                                  ? trainer?.biography
+                                  : "Nincs bemutatkozás megadva"}
+                              </Typography>
+                            </Grid>
+                            <Grid xs={12}>
+                              <Typography>
+                                <i>Lakhely: </i>
+                                {trainer?.user?.city?.length
+                                  ? trainer?.user?.city
+                                  : "Nincs lakhely megadva"}
+                              </Typography>
+                            </Grid>
+                            <Grid xs={12}>
+                              <Typography>
+                                <i>Egy óra edzés ára: </i>
+                                {trainer?.price_per_hour + " Ft"}
+                              </Typography>
+                            </Grid>
+                            <Grid xs={12}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    checked={trainer?.is_available_online}
+                                  />
+                                }
+                                disabled
+                                label={"Online is elérhető az edzés anyag"}
+                                sx={{ pl: 1 }}
                               />
-                            }
-                            disabled
-                            label={"Online is elérhető az edzés anyag"}
-                            sx={{ pl: 1 }}
-                          />
-                          <FormControlLabel
-                            control={
-                              <Checkbox checked={trainer?.is_dietician} />
-                            }
-                            disabled
-                            label={"Dietetikus"}
-                            sx={{ pl: 1 }}
-                          />
+                            </Grid>
+                            <Grid xs={12}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox checked={trainer?.is_dietician} />
+                                }
+                                disabled
+                                label={"Dietetikus"}
+                                sx={{ pl: 1 }}
+                              />
+                            </Grid>
+                          </Grid>
                         </CardContent>
                       </Collapse>
                       <CardActions>

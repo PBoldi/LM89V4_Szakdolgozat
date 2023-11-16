@@ -144,7 +144,37 @@ export default function AthletesToBePartner() {
                         unmountOnExit
                       >
                         <CardContent>
-                          <Typography>{athlete?.biography}</Typography>
+                          <Grid container spacing={1} xs={12}>
+                            <Grid xs={12}>
+                              <Typography>
+                                <i>Bemutatkozás: </i>
+                                <br />
+                                {athlete?.biography?.length
+                                  ? athlete?.biography
+                                  : "Nincs bemutatkozás megadva"}
+                              </Typography>
+                            </Grid>
+                            <Grid xs={12}>
+                              <Typography>
+                                <i>Lakhely: </i>
+                                {athlete?.user?.city?.length
+                                  ? athlete?.user?.city
+                                  : "Nincs lakhely megadva"}
+                              </Typography>
+                            </Grid>
+                            <Grid xs={12}>
+                              <Typography>
+                                <i>Magasság: </i>
+                                {athlete?.height ?? "Nincs magasság megadva"}
+                              </Typography>
+                            </Grid>
+                            <Grid xs={12}>
+                              <Typography>
+                                <i>Testsúly: </i>
+                                {athlete?.weight ?? "Nincs testsúly megadva"}
+                              </Typography>
+                            </Grid>
+                          </Grid>
                         </CardContent>
                       </Collapse>
                       <CardActions disableSpacing>
@@ -153,6 +183,7 @@ export default function AthletesToBePartner() {
                             <Typography>
                               {athlete?.user?.sex ? "Férfi" : "Nő"}
                             </Typography>
+
                             <Box sx={{ flexGrow: 1 }} />
                             <IconButton
                               aria-label={"Show more"}

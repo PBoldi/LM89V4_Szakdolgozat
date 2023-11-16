@@ -114,7 +114,16 @@ export default function AthleteTrainers() {
               <TableCell>
                 {trainer?.user?.full_name ?? trainer?.user?.email}
               </TableCell>
-              <TableCell>{trainer?.biography}</TableCell>
+              <TableCell>
+                {trainer?.biography?.length
+                  ? trainer?.biography
+                  : "Nincs bemutatkozás megadva"}
+              </TableCell>
+              <TableCell>
+                {trainer?.user?.city?.length
+                  ? trainer?.user?.city
+                  : "Nincs lakhely megadva"}
+              </TableCell>
               <TableCell align={"center"}>
                 {trainer?.user?.birth_date ?? "Nincs születési dátum megadva"}
               </TableCell>
