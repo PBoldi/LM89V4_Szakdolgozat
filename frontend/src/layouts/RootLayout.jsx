@@ -8,6 +8,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import SportBackground from "../assets/images/SportBackground.jpg";
 
 export default function RootLayout() {
   const user = useLoaderData();
@@ -22,33 +23,43 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <CssBaseline />
-      <Navbar user={user} />
-      <Container
-        maxWidth={"lg"}
-        style={{
-          display: "flex",
-          flex: 1,
-          flexDirection: "column",
-          minHeight: "100vh",
-        }}
-      >
-        <Grid
+    <div
+      style={{
+        backgroundImage: `url(${SportBackground})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <CssBaseline />
+        <Navbar user={user} />
+        <Container
+          maxWidth={"lg"}
           style={{
-            alignItems: "center",
             display: "flex",
             flex: 1,
             flexDirection: "column",
-            justifyContent: "center",
-            overflowY: "auto",
+            minHeight: "100vh",
           }}
-          paddingY={10}
         >
-          <Outlet context={{ user }} />
-        </Grid>
-      </Container>
-      <Footer />
-    </LocalizationProvider>
+          <Grid
+            style={{
+              alignItems: "center",
+              display: "flex",
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "center",
+              overflowY: "auto",
+              opacity: 0.9,
+            }}
+            paddingY={10}
+          >
+            <Outlet context={{ user }} />
+          </Grid>
+        </Container>
+        <Footer />
+      </LocalizationProvider>
+    </div>
   );
 }
