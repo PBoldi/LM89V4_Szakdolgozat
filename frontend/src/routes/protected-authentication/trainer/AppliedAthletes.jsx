@@ -16,6 +16,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Unstable_Grid2";
 import IconButton from "@mui/material/IconButton";
 import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
 import Typography from "@mui/material/Typography";
 
 import NoProfilePicture from "../../../assets/images/NoProfilePicture.png";
@@ -237,6 +238,16 @@ export default function AppliedAthletes() {
               count={Math.ceil(athletes?.length / 3)}
               page={currentPage}
               onChange={(_, value) => setCurrentPage(value)}
+              renderItem={(item) => (
+                <PaginationItem
+                  {...item}
+                  style={{
+                    color: "#FFFFFF",
+                    backgroundColor: item.page === currentPage ? "#357ABE" : "",
+                  }}
+                />
+              )}
+              size={"large"}
             />
           </Grid>
         </Grid>
