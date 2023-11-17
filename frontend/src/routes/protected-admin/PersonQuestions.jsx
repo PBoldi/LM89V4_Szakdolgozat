@@ -2,7 +2,9 @@ import { Fragment } from "react";
 import { Link, Outlet, useLoaderData } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Divider from "@mui/material/Divider";
 import EditIcon from "@mui/icons-material/Edit";
+import Grid from "@mui/material/Unstable_Grid2";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -17,20 +19,16 @@ export default function PersonQuestions() {
   const personQuestions = useLoaderData();
 
   return (
-    <Fragment>
-      <List
-        sx={{
-          width: "60%",
-        }}
-      >
+    <Paper style={{ animation: "fadeIn 1.5s", width: "50vw" }}>
+      <List style={{ padding: 15 }}>
         <ListItemButton component={Link} to={"create"}>
           <ListItemIcon>
             <AddIcon />
           </ListItemIcon>
           <ListItemText primary={"Új kérdés felvétele"} />
         </ListItemButton>
-        <Paper
-          elevation={0}
+        <Divider />
+        <Grid
           sx={{
             overflow: "auto",
             maxHeight: 550,
@@ -70,9 +68,9 @@ export default function PersonQuestions() {
               />
             </ListItem>
           ))}
-        </Paper>
+        </Grid>
       </List>
       <Outlet />
-    </Fragment>
+    </Paper>
   );
 }
