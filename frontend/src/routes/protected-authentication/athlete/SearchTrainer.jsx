@@ -21,6 +21,8 @@ import Pagination from "@mui/material/Pagination";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 
+import NoProfilePicture from "../../../assets/images/NoProfilePicture.png";
+
 export default function SearchTrainer() {
   const trainersLoader = useLoaderData();
   const { user } = useOutletContext();
@@ -113,8 +115,8 @@ export default function SearchTrainer() {
                     <CardMedia
                       alt={"certificate"}
                       component={"img"}
-                      height={"194"}
-                      src={trainer?.certificate}
+                      height={"240"}
+                      src={trainer?.certificate ?? NoProfilePicture}
                     />
                     <CardContent>
                       <Grid alignItems={"center"} container spacing={1} xs={12}>

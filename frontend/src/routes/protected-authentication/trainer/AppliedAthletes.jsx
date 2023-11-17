@@ -18,6 +18,8 @@ import IconButton from "@mui/material/IconButton";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 
+import NoProfilePicture from "../../../assets/images/NoProfilePicture.png";
+
 export default function AppliedAthletes() {
   const appliedAthletesLoader = useLoaderData();
   const { user } = useOutletContext();
@@ -111,8 +113,8 @@ export default function AppliedAthletes() {
                     <CardMedia
                       alt={"profile_picture"}
                       component={"img"}
-                      height={"150"}
-                      src={athlete?.user?.profile_picture}
+                      height={"240"}
+                      src={athlete?.user?.profile_picture ?? NoProfilePicture}
                     />
 
                     <CardContent>

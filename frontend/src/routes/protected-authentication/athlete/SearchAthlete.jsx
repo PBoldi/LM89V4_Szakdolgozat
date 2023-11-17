@@ -18,6 +18,8 @@ import IconButton from "@mui/material/IconButton";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 
+import NoProfilePicture from "../../../assets/images/NoProfilePicture.png";
+
 export default function SearchTrainer() {
   const athletesLoader = useLoaderData();
   const { user } = useOutletContext();
@@ -110,8 +112,8 @@ export default function SearchTrainer() {
                     <CardMedia
                       alt={"profile_picture"}
                       component={"img"}
-                      height={"150"}
-                      src={athlete?.user?.profile_picture}
+                      height={"240"}
+                      src={athlete?.user?.profile_picture ?? NoProfilePicture}
                     />
                     <CardContent>
                       <Grid
