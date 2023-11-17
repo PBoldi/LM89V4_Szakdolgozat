@@ -53,7 +53,7 @@ export default function RootLayout() {
               flexDirection: "column",
               justifyContent: "center",
               overflowY: "auto",
-              opacity: 0.9,
+              opacity: 0.97,
             }}
             paddingY={10}
           >

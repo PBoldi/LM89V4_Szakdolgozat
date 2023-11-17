@@ -9,9 +9,10 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Unstable_Grid2";
+import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Input from "@mui/material/Input";
+import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 
 import UserSportCreateOrDeleteDialog from "../../../components/UserSportCreateOrDeleteDialog";
@@ -40,7 +41,11 @@ export default function UserProfileEdit() {
   }
 
   return (
-    <Fragment>
+    <Paper
+      style={{
+        animation: "fadeIn 1.5s",
+      }}
+    >
       <UserSportCreateOrDeleteDialog
         open={open}
         setOpen={setOpen}
@@ -48,7 +53,12 @@ export default function UserProfileEdit() {
         user={user}
         userSports={userSports}
       />
-      <Form action={pathname} encType={"multipart/form-data"} method={"post"}>
+      <Form
+        action={pathname}
+        encType={"multipart/form-data"}
+        method={"post"}
+        style={{ padding: 15 }}
+      >
         <Grid container spacing={1} xs={12}>
           <Grid xs={12}>
             <FormControlLabel
@@ -133,6 +143,6 @@ export default function UserProfileEdit() {
           </Grid>
         </Grid>
       </Form>
-    </Fragment>
+    </Paper>
   );
 }

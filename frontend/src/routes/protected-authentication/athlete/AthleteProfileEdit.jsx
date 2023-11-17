@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import {
   Form,
   Outlet,
@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Unstable_Grid2";
 import InputAdornment from "@mui/material/InputAdornment";
 import LoadingButton from "@mui/lab/LoadingButton";
+import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import UserSportCreateOrDeleteDialog from "../../../components/UserSportCreateOrDeleteDialog";
 
@@ -26,7 +27,11 @@ export default function AthleteProfileEdit() {
   const [weight, setWeight] = useState(athleteProfile?.weight);
 
   return (
-    <Fragment>
+    <Paper
+      style={{
+        animation: "fadeIn 1.5s",
+      }}
+    >
       <UserSportCreateOrDeleteDialog
         open={open}
         setOpen={setOpen}
@@ -34,7 +39,12 @@ export default function AthleteProfileEdit() {
         user={user}
         userSports={userSports}
       />
-      <Form action={pathname} encType={"multipart/form-data"} method={"post"}>
+      <Form
+        action={pathname}
+        encType={"multipart/form-data"}
+        method={"post"}
+        style={{ padding: 15 }}
+      >
         <input defaultValue={user?.id} hidden name={"user"} />
         <Grid container spacing={2} xs={12}>
           <Grid xs={12}>
@@ -102,6 +112,6 @@ export default function AthleteProfileEdit() {
         </Grid>
       </Form>
       <Outlet context={{ user }} />
-    </Fragment>
+    </Paper>
   );
 }

@@ -14,6 +14,7 @@ import InputLabel from "@mui/material/InputLabel";
 import LoadingButton from "@mui/lab/LoadingButton";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import Paper from "@mui/material/Paper";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 
@@ -46,77 +47,94 @@ export default function UserProfileEdit() {
   }
 
   return (
-    <Grid container justifyContent={"center"}>
+    <Grid
+      container
+      justifyContent={"center"}
+      style={{
+        animation: "fadeIn 1.5s",
+      }}
+    >
       <Grid md={6} xs={12}>
-        <Form action={pathname} encType={"multipart/form-data"} method={"post"}>
-          {!isNaN(Date.parse(birthDate)) ? (
-            <input
-              defaultValue={birthDate ? format(birthDate, "yyyy-MM-dd") : null}
-              name={"birth_date"}
-              type={"hidden"}
+        <Paper>
+          <Form
+            action={pathname}
+            encType={"multipart/form-data"}
+            method={"post"}
+            style={{ padding: 15 }}
+          >
+            {!isNaN(Date.parse(birthDate)) ? (
+              <input
+                defaultValue={
+                  birthDate ? format(birthDate, "yyyy-MM-dd") : null
+                }
+                name={"birth_date"}
+                type={"hidden"}
+              />
+            ) : null}
+            <input defaultValue={user?.id} name={"id"} type={"hidden"} />
+            <Grid container justifyContent={"center"} xs={12}>
+              <Avatar
+                alt={user?.email}
+                src={profilePicturePreview}
+                sx={{ height: 256, width: 256 }}
+              >
+                {user?.email?.[0]}
+              </Avatar>
+            </Grid>
+            <FormControl>
+              <OutlinedInput
+                inputProps={{ accept: "image/png, image/jpeg" }}
+                name={"profile_picture"}
+                onChange={handleChange}
+                type={"file"}
+              />
+            </FormControl>
+            <TextField defaultValue={user?.email} disabled label={"E-mail"} />
+            <TextField
+              label={"Vezetéknév"}
+              name={"last_name"}
+              onChange={(event) => setLastName(event.target.value)}
+              value={lastName}
             />
-          ) : null}
-          <input defaultValue={user?.id} name={"id"} type={"hidden"} />
-          <Grid container justifyContent={"center"} xs={12}>
-            <Avatar
-              alt={user?.email}
-              src={profilePicturePreview}
-              sx={{ height: 256, width: 256 }}
-            >
-              {user?.email?.[0]}
-            </Avatar>
-          </Grid>
-          <FormControl>
-            <OutlinedInput
-              inputProps={{ accept: "image/png, image/jpeg" }}
-              name={"profile_picture"}
-              onChange={handleChange}
-              type={"file"}
+            <TextField
+              label={"Keresztnév"}
+              name={"first_name"}
+              onChange={(event) => setFirstName(event.target.value)}
+              value={firstName}
             />
-          </FormControl>
-          <TextField defaultValue={user?.email} disabled label={"E-mail"} />
-          <TextField
-            label={"Vezetéknév"}
-            name={"last_name"}
-            onChange={(event) => setLastName(event.target.value)}
-            value={lastName}
-          />
-          <TextField
-            label={"Keresztnév"}
-            name={"first_name"}
-            onChange={(event) => setFirstName(event.target.value)}
-            value={firstName}
-          />
-          <TextField
-            label={"Lakhely"}
-            name={"city"}
-            onChange={(event) => setCity(event.target.value)}
-            value={city}
-          />
-          <FormControl>
-            <InputLabel>{"Neme"}</InputLabel>
-            <Select
-              label={"Neme"}
-              name={"sex"}
-              onChange={(event) => setSex(event.target.value)}
-              value={sex}
-            >
-              <MenuItem value={true}>{"Férfi"}</MenuItem>
-              <MenuItem value={false}>{"Nő"}</MenuItem>
-            </Select>
-          </FormControl>
-          <DatePicker
-            disableFuture
-            label={"Születési dátum"}
-            onChange={(value) => setBirthDate(value)}
-            value={birthDate}
-          />
-          <Grid paddingY={1} xs={12}>
-            <LoadingButton loading={["loading", "submitting"].includes(state)}>
-              {"Mentés"}
-            </LoadingButton>
-          </Grid>
-        </Form>
+            <TextField
+              label={"Lakhely"}
+              name={"city"}
+              onChange={(event) => setCity(event.target.value)}
+              value={city}
+            />
+            <FormControl>
+              <InputLabel>{"Neme"}</InputLabel>
+              <Select
+                label={"Neme"}
+                name={"sex"}
+                onChange={(event) => setSex(event.target.value)}
+                value={sex}
+              >
+                <MenuItem value={true}>{"Férfi"}</MenuItem>
+                <MenuItem value={false}>{"Nő"}</MenuItem>
+              </Select>
+            </FormControl>
+            <DatePicker
+              disableFuture
+              label={"Születési dátum"}
+              onChange={(value) => setBirthDate(value)}
+              value={birthDate}
+            />
+            <Grid paddingY={1} xs={12}>
+              <LoadingButton
+                loading={["loading", "submitting"].includes(state)}
+              >
+                {"Mentés"}
+              </LoadingButton>
+            </Grid>
+          </Form>
+        </Paper>
       </Grid>
     </Grid>
   );
