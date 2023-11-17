@@ -124,7 +124,7 @@ export default function SearchTrainer() {
                       alt={"certificate"}
                       component={"img"}
                       height={"240"}
-                      src={trainer?.certificate ?? NoProfilePicture}
+                      src={trainer?.user?.profile_picture ?? NoProfilePicture}
                     />
                     <CardContent>
                       <Grid alignItems={"center"} container spacing={1} xs={12}>
