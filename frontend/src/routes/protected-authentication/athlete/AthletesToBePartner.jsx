@@ -61,7 +61,15 @@ export default function AthletesToBePartner() {
   return (
     <Fragment>
       {athletes?.length ? (
-        <Grid container justifyContent={"center"} spacing={2} xs={12}>
+        <Grid
+          container
+          justifyContent={"center"}
+          spacing={2}
+          xs={12}
+          style={{
+            animation: "fadeIn 1.5s",
+          }}
+        >
           <Grid container justifyContent={"center"} xs={12}>
             {athletes
               ?.slice(indexOfFirstCard, indexOfLastCard)

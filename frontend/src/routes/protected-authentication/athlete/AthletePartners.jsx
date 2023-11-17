@@ -17,7 +17,12 @@ export default function TrainerAthletes() {
   const [athletes, setAthletes] = useState(athletesLoader);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      component={Paper}
+      style={{
+        animation: "fadeIn 1.5s",
+      }}
+    >
       <Table sx={{ minWidth: 650 }} aria-label={"Trainers table"}>
         <TableHead>
           <TableRow>

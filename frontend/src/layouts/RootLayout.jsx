@@ -10,6 +10,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SportBackground from "../assets/images/SportBackground.jpg";
 
+import "../styles.scss";
+
 export default function RootLayout() {
   const user = useLoaderData();
 

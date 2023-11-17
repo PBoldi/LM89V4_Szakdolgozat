@@ -64,7 +64,15 @@ export default function SearchTrainer() {
   return (
     <Fragment>
       {trainers?.length ? (
-        <Grid container justifyContent={"center"} spacing={2} xs={12}>
+        <Grid
+          container
+          justifyContent={"center"}
+          spacing={2}
+          style={{
+            animation: "fadeIn 1.5s",
+          }}
+          xs={12}
+        >
           <Grid container justifyContent={"center"} xs={12}>
             {trainers
               ?.slice(indexOfFirstCard, indexOfLastCard)

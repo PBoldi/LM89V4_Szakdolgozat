@@ -79,7 +79,12 @@ export default function AthleteTrainers() {
   }, [JSON.stringify(data)]);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      component={Paper}
+      style={{
+        animation: "fadeIn 1.5s",
+      }}
+    >
       <Table sx={{ minWidth: 650 }} aria-label={"Trainers table"}>
         <TableHead>
           <TableRow>

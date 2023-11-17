@@ -25,6 +25,9 @@ export default function ProfileChoose() {
       container
       justifyContent={"center"}
       p={1}
+      style={{
+        animation: "fadeIn 1.5s",
+      }}
       xs={12}
     >
       <Paper sx={{ minHeight: 300 }}>

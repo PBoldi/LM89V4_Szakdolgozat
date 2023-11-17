@@ -62,7 +62,15 @@ export default function AppliedAthletes() {
   return (
     <Fragment>
       {athletes?.length ? (
-        <Grid container justifyContent={"center"} spacing={2} xs={12}>
+        <Grid
+          container
+          justifyContent={"center"}
+          spacing={2}
+          style={{
+            animation: "fadeIn 1.5s",
+          }}
+          xs={12}
+        >
           <Grid container justifyContent={"center"} xs={12}>
             {athletes
               ?.slice(indexOfFirstCard, indexOfLastCard)

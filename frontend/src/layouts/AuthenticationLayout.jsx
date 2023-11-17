@@ -21,7 +21,15 @@ export default function AuthenticationLayout() {
   return user?.id ? (
     <Navigate replace to={"/home"} />
   ) : (
-    <Grid container justifyContent={"center"} p={1} xs={12}>
+    <Grid
+      container
+      justifyContent={"center"}
+      p={1}
+      style={{
+        animation: "fadeIn 1.5s",
+      }}
+      xs={12}
+    >
       <Grid xs={12} md={8}>
         <Paper elevation={10} sx={{ height: 300 }}>
           <Grid p={1} xs={12}>
