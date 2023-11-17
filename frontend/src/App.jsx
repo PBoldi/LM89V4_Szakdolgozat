@@ -90,6 +90,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     loader: rootLayoutLoader,
     children: [
+      { path: "home", element: <Home /> },
       {
         path: "authentication",
         element: <AuthenticationLayout />,
@@ -102,7 +103,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: "home", element: <Home /> },
       {
         element: <ProtectedAuthenticationLayout />,
         children: [
@@ -282,6 +282,7 @@ const router = createBrowserRouter([
         ],
       },
       { path: "logout", action: logOutAction },
+      { path: "*", element: <Home /> },
     ],
   },
 ]);
