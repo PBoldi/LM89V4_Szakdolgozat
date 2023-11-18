@@ -91,7 +91,7 @@ export default function UserProfileEdit() {
               >
                 {user?.email?.[0]}
               </Avatar>
-              <Grid>
+              <Grid xs={12}>
                 <FormControl>
                   <OutlinedInput
                     inputProps={{ accept: "image/png, image/jpeg" }}

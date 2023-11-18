@@ -33,7 +33,9 @@ export default function TrainerAthletes() {
             <TableCell align={"center"}>Neme</TableCell>
             <TableCell align={"center"}>Magasság</TableCell>
             <TableCell align={"center"}>Testsúly</TableCell>
-            <TableCell align={"right"}>Bemutatkozás</TableCell>
+            <TableCell align={"center"}>Bemutatkozás</TableCell>
+            <TableCell align={"center"}>Telefonszám</TableCell>
+            <TableCell align={"right"}>Elérhetőségek</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -62,7 +64,7 @@ export default function TrainerAthletes() {
               <TableCell align={"center"}>
                 {athlete?.user?.city?.length
                   ? athlete?.user?.city
-                  : "Nincs megadva lakhely"}
+                  : "Nincs lakhely megadva"}
               </TableCell>
               <TableCell align={"center"}>
                 {athlete?.user?.sex ? <MaleIcon /> : <FemaleIcon />}
@@ -73,10 +75,57 @@ export default function TrainerAthletes() {
               <TableCell align={"center"}>
                 {athlete?.weight ?? "Nincs testsúly megadva"}
               </TableCell>
-              <TableCell align={"right"}>
+              <TableCell align={"center"}>
                 {athlete?.biography?.length
                   ? athlete?.biography
                   : "Nincs bemutatkozás megadva"}
+              </TableCell>
+              <TableCell align={"center"}>
+                {athlete?.user?.phone_number?.length
+                  ? athlete?.user?.phone_number
+                  : "Nincs telefonszám megadva"}
+              </TableCell>
+              <TableCell align={"right"}>
+                {athlete?.user?.facebook_contact ? (
+                  <IconButton
+                    component={"a"}
+                    href={athlete?.user?.facebook_contact}
+                    rel={"noreferrer"}
+                    target={"_blank"}
+                  >
+                    <FacebookIcon />
+                  </IconButton>
+                ) : null}
+                {athlete?.user?.instagram_contact ? (
+                  <IconButton
+                    component={"a"}
+                    href={athlete?.user?.instagram_contact}
+                    rel={"noreferrer"}
+                    target={"_blank"}
+                  >
+                    <InstagramIcon />
+                  </IconButton>
+                ) : null}
+                {athlete?.user?.linkedin_contact ? (
+                  <IconButton
+                    component={"a"}
+                    href={athlete?.user?.linkedin_contact}
+                    rel={"noreferrer"}
+                    target={"_blank"}
+                  >
+                    <LinkedInIcon />
+                  </IconButton>
+                ) : null}
+                {athlete?.user?.other_contact ? (
+                  <IconButton
+                    component={"a"}
+                    href={athlete?.user?.other_contact}
+                    rel={"noreferrer"}
+                    target={"_blank"}
+                  >
+                    <ContactSupportIcon />
+                  </IconButton>
+                ) : null}
               </TableCell>
             </TableRow>
           ))}

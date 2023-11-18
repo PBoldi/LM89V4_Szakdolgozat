@@ -63,16 +63,17 @@ export default function AppliedAthletes() {
   return (
     <Fragment>
       {athletes?.length ? (
-        <Grid
-          container
-          justifyContent={"center"}
-          spacing={2}
-          style={{
-            animation: "fadeIn 1.5s",
-          }}
-          xs={12}
-        >
-          <Grid container justifyContent={"center"} xs={12}>
+        <Fragment>
+          <Grid
+            alignItems={"center"}
+            container
+            justifyContent={"center"}
+            spacing={2}
+            style={{
+              animation: "fadeIn 1.5s",
+            }}
+            xs={8}
+          >
             {athletes
               ?.slice(indexOfFirstCard, indexOfLastCard)
               ?.map((athlete) => (
@@ -250,10 +251,10 @@ export default function AppliedAthletes() {
               size={"large"}
             />
           </Grid>
-        </Grid>
+        </Fragment>
       ) : (
         <Grid container justifyContent={"center"} xs={12}>
-          <Typography>
+          <Typography color={"white"} variant={"h3"}>
             Nincsenek megjeleníthető jelentkezett sportolók
           </Typography>
         </Grid>
