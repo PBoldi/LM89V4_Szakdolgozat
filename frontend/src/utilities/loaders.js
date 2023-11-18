@@ -129,7 +129,11 @@ export async function searchAthletesLoader() {
 export async function searchTrainersLoader() {
   try {
     const response = await getTrainers();
-    return response?.data;
+    return response?.data?.sort(
+      (trainer1, trainer2) =>
+        trainer2?.trainer_aggregated_rating -
+        trainer1?.trainer_aggregated_rating
+    );
   } catch (error) {
     console.log(error);
     return null;
