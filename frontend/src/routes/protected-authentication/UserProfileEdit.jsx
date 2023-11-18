@@ -28,8 +28,19 @@ export default function UserProfileEdit() {
   );
 
   const [city, setCity] = useState(user?.city ?? "");
+  const [facebookContact, setFacebookContact] = useState(
+    user?.facebook_contact
+  );
   const [firstName, setFirstName] = useState(user?.first_name ?? "");
+  const [instagramContact, setInstagramContact] = useState(
+    user?.instagram_contact
+  );
   const [lastName, setLastName] = useState(user?.last_name ?? "");
+  const [linkedinContact, setLinkedinContact] = useState(
+    user?.linkedin_contact
+  );
+  const [otherContact, setOtherContact] = useState(user?.other_contact);
+  const [phoneNumber, setPhoneNumber] = useState(user?.phone_number);
   const [profilePicture, setProfilePicture] = useState("");
   const [sex, setSex] = useState(user?.sex ?? "");
 
@@ -72,7 +83,7 @@ export default function UserProfileEdit() {
               />
             ) : null}
             <input defaultValue={user?.id} name={"id"} type={"hidden"} />
-            <Grid container justifyContent={"center"} xs={12}>
+            <Grid container justifyContent={"center"} spacing={1} xs={12}>
               <Avatar
                 alt={user?.email}
                 src={profilePicturePreview}
@@ -80,58 +91,116 @@ export default function UserProfileEdit() {
               >
                 {user?.email?.[0]}
               </Avatar>
-            </Grid>
-            <FormControl>
-              <OutlinedInput
-                inputProps={{ accept: "image/png, image/jpeg" }}
-                name={"profile_picture"}
-                onChange={handleChange}
-                type={"file"}
-              />
-            </FormControl>
-            <TextField defaultValue={user?.email} disabled label={"E-mail"} />
-            <TextField
-              label={"Vezetéknév"}
-              name={"last_name"}
-              onChange={(event) => setLastName(event.target.value)}
-              value={lastName}
-            />
-            <TextField
-              label={"Keresztnév"}
-              name={"first_name"}
-              onChange={(event) => setFirstName(event.target.value)}
-              value={firstName}
-            />
-            <TextField
-              label={"Lakhely"}
-              name={"city"}
-              onChange={(event) => setCity(event.target.value)}
-              value={city}
-            />
-            <FormControl>
-              <InputLabel>{"Neme"}</InputLabel>
-              <Select
-                label={"Neme"}
-                name={"sex"}
-                onChange={(event) => setSex(event.target.value)}
-                value={sex}
-              >
-                <MenuItem value={true}>{"Férfi"}</MenuItem>
-                <MenuItem value={false}>{"Nő"}</MenuItem>
-              </Select>
-            </FormControl>
-            <DatePicker
-              disableFuture
-              label={"Születési dátum"}
-              onChange={(value) => setBirthDate(value)}
-              value={birthDate}
-            />
-            <Grid paddingY={1} xs={12}>
-              <LoadingButton
-                loading={["loading", "submitting"].includes(state)}
-              >
-                {"Mentés"}
-              </LoadingButton>
+              <Grid>
+                <FormControl>
+                  <OutlinedInput
+                    inputProps={{ accept: "image/png, image/jpeg" }}
+                    name={"profile_picture"}
+                    onChange={handleChange}
+                    type={"file"}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid xs={12}>
+                <TextField
+                  defaultValue={user?.email}
+                  disabled
+                  label={"E-mail"}
+                />
+              </Grid>
+              <Grid xs={6}>
+                <TextField
+                  label={"Vezetéknév"}
+                  name={"last_name"}
+                  onChange={(event) => setLastName(event.target.value)}
+                  value={lastName}
+                />
+              </Grid>
+              <Grid xs={6}>
+                <TextField
+                  label={"Keresztnév"}
+                  name={"first_name"}
+                  onChange={(event) => setFirstName(event.target.value)}
+                  value={firstName}
+                />
+              </Grid>
+              <Grid xs={6}>
+                <TextField
+                  label={"Lakhely"}
+                  name={"city"}
+                  onChange={(event) => setCity(event.target.value)}
+                  value={city}
+                />
+              </Grid>
+              <Grid xs={6}>
+                <FormControl>
+                  <InputLabel>{"Neme"}</InputLabel>
+                  <Select
+                    label={"Neme"}
+                    name={"sex"}
+                    onChange={(event) => setSex(event.target.value)}
+                    value={sex}
+                  >
+                    <MenuItem value={true}>{"Férfi"}</MenuItem>
+                    <MenuItem value={false}>{"Nő"}</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid xs={6}>
+                <DatePicker
+                  disableFuture
+                  label={"Születési dátum"}
+                  onChange={(value) => setBirthDate(value)}
+                  value={birthDate}
+                />
+              </Grid>
+              <Grid xs={6}>
+                <TextField
+                  label={"Telefonszám"}
+                  name={"phone_number"}
+                  onChange={(event) => setPhoneNumber(event.target.value)}
+                  value={phoneNumber}
+                />
+              </Grid>
+              <Grid xs={6}>
+                <TextField
+                  label={"Facebook link"}
+                  name={"facebook_contact"}
+                  onChange={(event) => setFacebookContact(event.target.value)}
+                  value={facebookContact}
+                />
+              </Grid>
+              <Grid xs={6}>
+                <TextField
+                  label={"Instagram link"}
+                  name={"instagram_contact"}
+                  onChange={(event) => setInstagramContact(event.target.value)}
+                  value={instagramContact}
+                />
+              </Grid>
+              <Grid xs={6}>
+                <TextField
+                  label={"Linkedin link"}
+                  name={"linkedin_contact"}
+                  onChange={(event) => setLinkedinContact(event.target.value)}
+                  value={linkedinContact}
+                />
+              </Grid>
+              <Grid xs={6}>
+                <TextField
+                  label={"Egyéb elérhetőség (link)"}
+                  name={"other_contact"}
+                  onChange={(event) => setOtherContact(event.target.value)}
+                  value={otherContact}
+                />
+              </Grid>
+              <Grid paddingY={1} xs={12}>
+                <LoadingButton
+                  loading={["loading", "submitting"].includes(state)}
+                >
+                  {"Mentés"}
+                </LoadingButton>
+              </Grid>
             </Grid>
           </Form>
         </Paper>
