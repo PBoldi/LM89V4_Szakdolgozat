@@ -62,16 +62,17 @@ export default function SearchTrainer() {
   return (
     <Fragment>
       {athletes?.length ? (
-        <Grid
-          container
-          justifyContent={"center"}
-          spacing={2}
-          style={{
-            animation: "fadeIn 1.5s",
-          }}
-          xs={12}
-        >
-          <Grid container justifyContent={"center"} xs={12}>
+        <Fragment>
+          <Grid
+            alignItems={"center"}
+            container
+            justifyContent={"center"}
+            spacing={2}
+            style={{
+              animation: "fadeIn 1.5s",
+            }}
+            xs={8}
+          >
             {athletes
               ?.slice(indexOfFirstCard, indexOfLastCard)
               ?.map((athlete) => (
@@ -248,10 +249,12 @@ export default function SearchTrainer() {
               size={"large"}
             />
           </Grid>
-        </Grid>
+        </Fragment>
       ) : (
         <Grid container justifyContent={"center"} xs={12}>
-          <Typography>Nincsenek megjeleníthető sportolók</Typography>
+          <Typography color={"white"} variant={"h3"}>
+            Nincsenek megjeleníthető sportolók
+          </Typography>
         </Grid>
       )}
     </Fragment>

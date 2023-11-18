@@ -36,30 +36,21 @@ export default function RootLayout() {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <CssBaseline />
         <Navbar user={user} />
-        <Container
-          maxWidth={"lg"}
-          style={{
-            display: "flex",
-            flex: 1,
-            flexDirection: "column",
+        <Grid
+          container
+          alignItems={"center"}
+          justifyContent={"center"}
+          sx={{
+            overflowY: "auto",
+            opacity: 0.97,
             minHeight: "100vh",
           }}
+          paddingY={10}
         >
-          <Grid
-            style={{
-              alignItems: "center",
-              display: "flex",
-              flex: 1,
-              flexDirection: "column",
-              justifyContent: "center",
-              overflowY: "auto",
-              opacity: 0.97,
-            }}
-            paddingY={10}
-          >
+          <Grid container justifyContent={"center"} xs={10}>
             <Outlet context={{ user }} />
           </Grid>
-        </Container>
+        </Grid>
         <Footer />
       </LocalizationProvider>
     </div>

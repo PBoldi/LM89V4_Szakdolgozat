@@ -62,16 +62,17 @@ export default function AthletesToBePartner() {
   return (
     <Fragment>
       {athletes?.length ? (
-        <Grid
-          container
-          justifyContent={"center"}
-          spacing={2}
-          xs={12}
-          style={{
-            animation: "fadeIn 1.5s",
-          }}
-        >
-          <Grid container justifyContent={"center"} xs={12}>
+        <Fragment>
+          <Grid
+            alignItems={"center"}
+            container
+            justifyContent={"center"}
+            spacing={2}
+            style={{
+              animation: "fadeIn 1.5s",
+            }}
+            xs={8}
+          >
             {athletes
               ?.slice(indexOfFirstCard, indexOfLastCard)
               ?.map((athlete) => (
@@ -249,10 +250,10 @@ export default function AthletesToBePartner() {
               size={"large"}
             />
           </Grid>
-        </Grid>
+        </Fragment>
       ) : (
         <Grid container justifyContent={"center"} xs={12}>
-          <Typography>
+          <Typography color={"white"} variant={"h3"}>
             Nincsenek megjeleníthető emberek, akik partnernek jelöltek
           </Typography>
         </Grid>

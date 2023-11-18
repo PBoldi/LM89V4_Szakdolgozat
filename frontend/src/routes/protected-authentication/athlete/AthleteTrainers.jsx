@@ -104,8 +104,8 @@ export default function AthleteTrainers() {
             <TableCell align={"center"}>Dietetikus</TableCell>
             <TableCell align={"center"}>Egy óra edzés ára</TableCell>
             <TableCell align={"center"}>Telefonszám</TableCell>
-            <TableCell align={"center"}>Elérhetőségek</TableCell>
-            <TableCell align={"right"}>Értékelésem</TableCell>
+            <TableCell align={"center"}>Értékelésem</TableCell>
+            <TableCell align={"right"}>Elérhetőségek</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -166,6 +166,19 @@ export default function AthleteTrainers() {
                   : "Nincs telefonszám megadva"}
               </TableCell>
               <TableCell align={"center"}>
+                <Rating
+                  value={trainer?.trainer_user_rating?.rating}
+                  onChange={(_, value) => {
+                    handleRatingChange(
+                      trainer?.id,
+                      value,
+                      trainer?.trainer_user_rating?.id
+                    );
+                  }}
+                />
+              </TableCell>
+
+              <TableCell align={"right"}>
                 {trainer?.user?.facebook_contact ? (
                   <IconButton
                     component={"a"}
@@ -183,8 +196,7 @@ export default function AthleteTrainers() {
                     rel={"noreferrer"}
                     target={"_blank"}
                   >
-                    {" "}
-                    <InstagramIcon />{" "}
+                    <InstagramIcon />
                   </IconButton>
                 ) : null}
                 {trainer?.user?.linkedin_contact ? (
@@ -194,7 +206,7 @@ export default function AthleteTrainers() {
                     rel={"noreferrer"}
                     target={"_blank"}
                   >
-                    <LinkedInIcon />{" "}
+                    <LinkedInIcon />
                   </IconButton>
                 ) : null}
                 {trainer?.user?.other_contact ? (
@@ -204,21 +216,9 @@ export default function AthleteTrainers() {
                     rel={"noreferrer"}
                     target={"_blank"}
                   >
-                    <ContactSupportIcon />{" "}
+                    <ContactSupportIcon />
                   </IconButton>
                 ) : null}
-              </TableCell>
-              <TableCell align={"right"}>
-                <Rating
-                  value={trainer?.trainer_user_rating?.rating}
-                  onChange={(_, value) => {
-                    handleRatingChange(
-                      trainer?.id,
-                      value,
-                      trainer?.trainer_user_rating?.id
-                    );
-                  }}
-                />
               </TableCell>
             </TableRow>
           ))}
