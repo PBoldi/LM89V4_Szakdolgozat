@@ -8,8 +8,14 @@ import {
 } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import CloseIcon from "@mui/icons-material/Close";
+import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import FemaleIcon from "@mui/icons-material/Female";
+import Grid from "@mui/material/Unstable_Grid2";
+import IconButton from "@mui/material/IconButton";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import MaleIcon from "@mui/icons-material/Male";
 import Paper from "@mui/material/Paper";
 import Rating from "@mui/material/Rating";
@@ -85,7 +91,7 @@ export default function AthleteTrainers() {
         animation: "fadeIn 1.5s",
       }}
     >
-      <Table sx={{ minWidth: 650 }} aria-label={"Trainers table"}>
+      <Table aria-label={"Trainers table"} sx={{ minWidth: 650 }}>
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
@@ -97,6 +103,8 @@ export default function AthleteTrainers() {
             <TableCell align={"center"}>Online edzés anyag</TableCell>
             <TableCell align={"center"}>Dietetikus</TableCell>
             <TableCell align={"center"}>Egy óra edzés ára</TableCell>
+            <TableCell align={"center"}>Telefonszám</TableCell>
+            <TableCell align={"center"}>Elérhetőségek</TableCell>
             <TableCell align={"right"}>Értékelésem</TableCell>
           </TableRow>
         </TableHead>
@@ -152,6 +160,54 @@ export default function AthleteTrainers() {
                 )}
               </TableCell>
               <TableCell align={"center"}>{trainer?.price_per_hour}</TableCell>
+              <TableCell align={"center"}>
+                {trainer?.user?.phone_number?.length
+                  ? trainer?.user?.phone_number
+                  : "Nincs telefonszám megadva"}
+              </TableCell>
+              <TableCell align={"center"}>
+                {trainer?.user?.facebook_contact ? (
+                  <IconButton
+                    component={"a"}
+                    href={trainer?.user?.facebook_contact}
+                    rel={"noreferrer"}
+                    target={"_blank"}
+                  >
+                    <FacebookIcon />
+                  </IconButton>
+                ) : null}
+                {trainer?.user?.instagram_contact ? (
+                  <IconButton
+                    component={"a"}
+                    href={trainer?.user?.instagram_contact}
+                    rel={"noreferrer"}
+                    target={"_blank"}
+                  >
+                    {" "}
+                    <InstagramIcon />{" "}
+                  </IconButton>
+                ) : null}
+                {trainer?.user?.linkedin_contact ? (
+                  <IconButton
+                    component={"a"}
+                    href={trainer?.user?.linkedin_contact}
+                    rel={"noreferrer"}
+                    target={"_blank"}
+                  >
+                    <LinkedInIcon />{" "}
+                  </IconButton>
+                ) : null}
+                {trainer?.user?.other_contact ? (
+                  <IconButton
+                    component={"a"}
+                    href={trainer?.user?.other_contact}
+                    rel={"noreferrer"}
+                    target={"_blank"}
+                  >
+                    <ContactSupportIcon />{" "}
+                  </IconButton>
+                ) : null}
+              </TableCell>
               <TableCell align={"right"}>
                 <Rating
                   value={trainer?.trainer_user_rating?.rating}
