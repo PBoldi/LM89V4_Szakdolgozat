@@ -24,19 +24,22 @@ def get_recommended_users(user):
     try:
         athlete_profiles_df = read_frame(AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(athlete_profile=user.athleteprofile).values_list('athlete_profile_liked')))
         person_question_weighing_df = pd.DataFrame.from_records(PersonQuestionWeighing.objects.all().values( 'athlete_profile__id', 'weight', 'person_question__question'))
-        merged_df = athlete_profiles_df.merge(person_question_weighing_df, left_on="id", right_on="athlete_profile__id")
-        merged_pivot_df = merged_df.pivot(index="id", columns="person_question__question", values="weight_y").fillna(0)
+        athlete_question_merged_df = athlete_profiles_df.merge(person_question_weighing_df, left_on="id", right_on="athlete_profile__id")
+        athlete_question_pivot_df = athlete_question_merged_df.pivot(index="id", columns="person_question__question", values="weight_y").fillna(0)
 
-        merged_pivot_df_standard = merged_pivot_df.apply(standardize).fillna(0)
+        merged_final = athlete_question_pivot_df.merge( athlete_profiles_df[["id", "height", "weight"]], on="id")
+        merged_final.set_index('id', inplace=True)
 
-        cosine_sim = cosine_similarity(merged_pivot_df_standard)
-        sim_dataframe = pd.DataFrame(cosine_sim, index=merged_pivot_df_standard.index, columns=merged_pivot_df_standard.index)
+        merged_final_df_standard = merged_final.apply(standardize).fillna(0)
 
-        similar_score = sim_dataframe[user.athleteprofile.id]
-        similar_score = similar_score.sort_values(ascending=False)
+        cosine_sim = cosine_similarity(merged_final_df_standard)
+        similarity_df= pd.DataFrame(cosine_sim, index=merged_final_df_standard.index, columns=merged_final_df_standard.index)
 
-        users = similar_score.index.values.tolist()
-        return users
+        user_similarity_score = similarity_df[user.athleteprofile.id]
+        user_similarity_score_ordered = user_similarity_score.sort_values(ascending=False)
+
+        recommended_user_ids = user_similarity_score_ordered.index.values.tolist()
+        return recommended_user_ids
     except:
         print(traceback.format_exc())
 

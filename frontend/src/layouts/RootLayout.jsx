@@ -27,6 +27,7 @@ export default function RootLayout() {
   return (
     <div
       style={{
+        backgroundAttachment: "fixed",
         backgroundImage: `url(${SportBackground})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
