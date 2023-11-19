@@ -233,6 +233,9 @@ class UserConnectionsTestCase(APITestCase):
         response = self.client.get('http://localhost:8000/auth/applied-athletes/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_trainer), format='json')
         self.assertEqual(len(response.data), 1)
 
+        response = self.client.get('http://localhost:8000/auth/trainer-profile/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_athlete), format='json')
+        self.assertEqual(len(response.data), 0)
+
     def test_athlete_connect_false_to_trainer(self):
         data = {"athlete_profile": UserConnectionsTestCase.athlete["id"], "trainer_profile": UserConnectionsTestCase.trainer["id"], "connect": False}
         response = self.client.post('http://localhost:8000/auth/user-trainer-connection/', data, HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_athlete), format='json')
@@ -240,6 +243,9 @@ class UserConnectionsTestCase(APITestCase):
         self.assertEqual(response.data["connect"], False)
 
         response = self.client.get('http://localhost:8000/auth/applied-athletes/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_trainer), format='json')
+        self.assertEqual(len(response.data), 0)
+
+        response = self.client.get('http://localhost:8000/auth/trainer-profile/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_athlete), format='json')
         self.assertEqual(len(response.data), 0)
 
     def test_trainer_connect_to_athlete(self):
