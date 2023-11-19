@@ -34,22 +34,48 @@ class AuthenticatedUserTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['email'], "test@test.test")
 
+    def test_authenticated_user_401(self):
+        response = self.client.get(
+            'http://localhost:8000/auth/users/authenticated/', 
+        )
+        self.assertEqual(response.status_code, 401)
+
+    def test_user_update(self):
+        data = {"first_name": "Test", "last_name": "Elek", "sex": True, "city": "Budapest", }
+        response = self.client.patch('http://localhost:8000/auth/users/1', data, HTTP_AUTHORIZATION='Bearer {}'.format(AuthenticatedUserTestCase.access_token), format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["first_name"], "Test")
+        self.assertEqual(response.data["last_name"], "Elek")
+        self.assertEqual(response.data["sex"], True)
+        self.assertEqual(response.data["city"], "Budapest")
+
+    def test_user_update_not_found(self):
+        data = {"first_name": "Test", "last_name": "Elek", "sex": True, "city": "Budapest", }
+        response = self.client.patch('http://localhost:8000/auth/users/2', data, HTTP_AUTHORIZATION='Bearer {}'.format(AuthenticatedUserTestCase.access_token), format='json')
+        self.assertEqual(response.status_code, 404)
+
 
 class AthleteProfileTestCase(APITestCase):
     def setUp(self):
         AthleteProfileTestCase.access = create_user(self)
 
-        data = {"user": 1, "biography": "Test biography"}
+        data = {"user": 1, "biography": "Test biography", "height": 180, "weight": 80}
         response = self.client.post('http://localhost:8000/auth/athlete-profile/', data, HTTP_AUTHORIZATION='Bearer {}'.format(AthleteProfileTestCase.access), format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_athlete_profile_no_height(self):
+
+        data = {"user": 1, "biography": "Test biography",  "weight": 80}
+        response = self.client.post('http://localhost:8000/auth/athlete-profile/', data, HTTP_AUTHORIZATION='Bearer {}'.format(AthleteProfileTestCase.access), format='json')
+        self.assertEqual(response.status_code, 400)
 
     def test_get_athlete_profile(self):
         response = self.client.get(f'http://localhost:8000/auth/athlete-profile/{1}', HTTP_AUTHORIZATION='Bearer {}'.format(AthleteProfileTestCase.access), format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["biography"], "Test biography")
+        self.assertEqual(response.data, {"id": 1, "user": 1, "biography": "Test biography", "height": 180, "weight": 80})
     
     def test_update_athlete_profile(self):
-        data = { "biography": "Test biography!"}
+        data = {"biography": "Test biography!"}
         response = self.client.patch(f'http://localhost:8000/auth/athlete-profile/{1}', data, HTTP_AUTHORIZATION='Bearer {}'.format(AthleteProfileTestCase.access), format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["biography"], "Test biography!")
@@ -188,7 +214,7 @@ class UserConnectionsTestCase(APITestCase):
         UserConnectionsTestCase.access_athlete = create_user(self)
         UserConnectionsTestCase.access_trainer = create_user(self)
 
-        data = {"user": 1, "biography": "Test biography"}
+        data = {"user": 1, "biography": "Test biography", "height": 180, "weight": 80}
         response = self.client.post('http://localhost:8000/auth/athlete-profile/', data, HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_athlete), format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         UserConnectionsTestCase.athlete = response.data

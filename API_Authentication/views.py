@@ -130,8 +130,10 @@ class CreateTestAthleteProfilesView(generics.GenericAPIView):
                 return Response(status=status.HTTP_200_OK)
             for i in range(1000):
                 sex = True if random.randint(0, 1) == 0 else False
+                height = random.randint(150, 200)
+                weight = random.randint(50, 105)
                 user = User.objects.create(email=f'test.athlete{i}@testathlete.com', first_name="TEST", last_name=f'Athlete {i}', password="123", sex=sex)
-                athlete_profile = AthleteProfile.objects.create(biography=f'Test Athlete biography {i}', user=user)
+                athlete_profile = AthleteProfile.objects.create(biography=f'Test Athlete biography {i}', height=height, user=user, weight=weight)
                 for person_question in PersonQuestion.objects.all():
                     weight_random = random.randint(1, 5)
                     PersonQuestionWeighing.objects.create(athlete_profile=athlete_profile, person_question=person_question, weight=weight_random)
