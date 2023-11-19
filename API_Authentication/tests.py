@@ -85,7 +85,7 @@ class TrainerProfileTestCase(APITestCase):
     def setUp(self):
         AthleteProfileTestCase.access = create_user(self)
 
-        data = {"user": 1, "biography": "Test biography", "is_available_online": True, "is_dietician": True, "price_per_hour": 50}
+        data = {"user": 1, "biography": "Test biography", "is_available_online": True, "price_per_hour": 50}
         response = self.client.post('http://localhost:8000/auth/trainer-profile/', data, HTTP_AUTHORIZATION='Bearer {}'.format(AthleteProfileTestCase.access), format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -94,7 +94,7 @@ class TrainerProfileTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["biography"], "Test biography")
         self.assertEqual(response.data["is_available_online"], True)       
-        self.assertEqual(response.data["is_dietician"], True)       
+        self.assertEqual(response.data["is_dietician"], False)       
         self.assertEqual(response.data["price_per_hour"], 50)     
     
     def test_update_trainer_profile(self):
