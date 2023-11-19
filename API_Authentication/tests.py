@@ -191,6 +191,12 @@ class CreateTestAthleteUsersTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(User.objects.count(), 1002)
         self.assertEqual(AthleteProfile.objects.count(), 1000)
+        
+        #2nd running, nothing happens
+        response = self.client.post(f'http://localhost:8000/auth/create-test-athlete-profile/', HTTP_AUTHORIZATION='Bearer {}'.format(CreateTestAthleteUsersTestCase.access_admin), format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(User.objects.count(), 1002)
+        self.assertEqual(AthleteProfile.objects.count(), 1000)
 
 
 class CreateTestTrainerUsersTestCase(APITestCase):
@@ -203,6 +209,12 @@ class CreateTestTrainerUsersTestCase(APITestCase):
         self.assertEqual(response.status_code, 403)
 
     def test_create_test_athletes(self):
+        response = self.client.post(f'http://localhost:8000/auth/create-test-trainer-profile/', HTTP_AUTHORIZATION='Bearer {}'.format(CreateTestTrainerUsersTestCase.access_admin), format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(User.objects.count(), 502)
+        self.assertEqual(TrainerProfile.objects.count(), 500)
+
+        #2nd running, nothing happens
         response = self.client.post(f'http://localhost:8000/auth/create-test-trainer-profile/', HTTP_AUTHORIZATION='Bearer {}'.format(CreateTestTrainerUsersTestCase.access_admin), format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(User.objects.count(), 502)
@@ -259,7 +271,6 @@ class UserConnectionsTestCase(APITestCase):
 
         response = self.client.get('http://localhost:8000/auth/trainer-athletes/', HTTP_AUTHORIZATION='Bearer {}'.format(UserConnectionsTestCase.access_trainer), format='json')
         self.assertEqual(len(response.data), 1)
-
 
     def test_trainer_connect_false_to_athlete(self):
         data = {"athlete_profile": UserConnectionsTestCase.athlete["id"], "trainer_profile": UserConnectionsTestCase.trainer["id"], "connect": False}
