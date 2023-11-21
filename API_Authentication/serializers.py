@@ -142,7 +142,8 @@ class UserSerializerRUD(ModelSerializer):
         return f'{"http://localhost:8000/media/"}{instance.profile_picture}' if instance.profile_picture else None
     
     def get_questions_filled(self, instance):
-        return PersonQuestionWeighing.objects.filter(athlete_profile=instance.athleteprofile).exists()
+        return PersonQuestionWeighing.objects.filter(athlete_profile=instance.athleteprofile).exists() if AthleteProfile.objects.filter(user=instance).exists() else False
+    
     
 class UserSerializerU(ModelSerializer):
     class Meta:

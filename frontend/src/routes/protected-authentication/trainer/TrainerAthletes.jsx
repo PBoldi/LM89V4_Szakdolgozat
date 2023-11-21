@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import FemaleIcon from "@mui/icons-material/Female";
+import IconButton from "@mui/material/IconButton";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import MaleIcon from "@mui/icons-material/Male";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
