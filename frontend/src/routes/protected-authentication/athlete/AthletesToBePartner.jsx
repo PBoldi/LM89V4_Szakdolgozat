@@ -243,7 +243,7 @@ export default function AthletesToBePartner() {
                   {...item}
                   style={{
                     color: "#FFFFFF",
-                    backgroundColor: item.page === currentPage ? "#357ABE" : "",
+                    backgroundColor: item.page === currentPage ? "#92817A" : "",
                   }}
                 />
               )}

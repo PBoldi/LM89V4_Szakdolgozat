@@ -37,8 +37,8 @@ const theme = createTheme(
       },
     },
     palette: {
-      primary: { main: "#242943" },
-      secondary: { main: "#50ADC9" },
+      primary: { main: "#92817A" },
+      secondary: { main: "#F1DABF" },
       error: { main: "#AC112B" },
       warning: { main: "#EEC344" },
       info: { main: "#357ABE" },
