@@ -131,6 +131,7 @@ class UserSerializerRUD(ModelSerializer):
     trainerprofile = TrainerProfileSerializer()
     full_name = ReadOnlyField()
     profile_picture = SerializerMethodField()
+    questions_filled = SerializerMethodField()
 
     class Meta:
         exclude = ('last_login', 'password')
@@ -139,6 +140,9 @@ class UserSerializerRUD(ModelSerializer):
 
     def get_profile_picture(self, instance):
         return f'{"http://localhost:8000/media/"}{instance.profile_picture}' if instance.profile_picture else None
+    
+    def get_questions_filled(self, instance):
+        return PersonQuestionWeighing.objects.filter(athlete_profile=instance.athleteprofile).exists()
     
 class UserSerializerU(ModelSerializer):
     class Meta:

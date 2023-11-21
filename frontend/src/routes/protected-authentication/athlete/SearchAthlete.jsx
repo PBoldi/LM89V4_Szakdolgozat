@@ -1,6 +1,12 @@
 import { Fragment, useState } from "react";
-import { useLoaderData, useOutletContext, useSubmit } from "react-router-dom";
+import {
+  Link,
+  useLoaderData,
+  useOutletContext,
+  useSubmit,
+} from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -73,6 +79,16 @@ export default function SearchTrainer() {
             }}
             xs={8}
           >
+            <Grid xs={12}>
+              <Button
+                component={Link}
+                to={`/athlete/${user?.athleteprofile.id}/athlete-profile/person-question-weighings`}
+              >
+                {user?.questions_filled
+                  ? "Kérdések újboli kitöltése"
+                  : "Kérdések kitöltése pontosabb ajánlásokhoz"}
+              </Button>
+            </Grid>
             {athletes
               ?.slice(indexOfFirstCard, indexOfLastCard)
               ?.map((athlete) => (
