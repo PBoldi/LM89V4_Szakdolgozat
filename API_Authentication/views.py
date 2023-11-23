@@ -4,6 +4,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.db import transaction
+from django.db.models import Q
 from django_pandas.io import read_frame
 import pandas as pd
 import random
@@ -19,33 +20,53 @@ def standardize(column):
     new_column = (column - column.mean()) / (column.max() - column.min())
     return new_column
 
+def get_recommended_user_list(athlete_profiles_df):
+    person_question_weighing_df = pd.DataFrame.from_records(
+            PersonQuestionWeighing.objects.all().values( 'athlete_profile__id', 'weight', 'person_question__question'))
+    
+    athlete_question_merged_df = athlete_profiles_df.merge(
+            person_question_weighing_df, left_on="id", right_on="athlete_profile__id")
+        
+    athlete_question_pivot_df = athlete_question_merged_df.pivot(
+            index="id", columns="person_question__question", values="weight_y").fillna(0)
+
+    merged_final = athlete_question_pivot_df.merge(athlete_profiles_df[["id", "height", "weight"]], on="id")
+    merged_final.set_index('id', inplace=True)
+
+    merged_final_df_standard = merged_final.apply(standardize).fillna(0)
+
+    cosine_sim = cosine_similarity(merged_final_df_standard)
+    similarity_df = pd.DataFrame(cosine_sim, index=merged_final_df_standard.index, columns=merged_final_df_standard.index)
+    
+    return similarity_df
+
 
 def get_recommended_users(user):
     try:
-        athlete_profiles_df = read_frame(AthleteProfile.objects.exclude(
-            pk__in=UserAthleteConnection.objects.filter(athlete_profile=user.athleteprofile).values_list('athlete_profile_liked')))
-        
-        person_question_weighing_df = pd.DataFrame.from_records(
-            PersonQuestionWeighing.objects.all().values( 'athlete_profile__id', 'weight', 'person_question__question'))
-        
-        athlete_question_merged_df = athlete_profiles_df.merge(
-            person_question_weighing_df, left_on="id", right_on="athlete_profile__id")
-        
-        athlete_question_pivot_df = athlete_question_merged_df.pivot(
-            index="id", columns="person_question__question", values="weight_y").fillna(0)
+        athlete_profile_id = user.athleteprofile.id
 
-        merged_final = athlete_question_pivot_df.merge( athlete_profiles_df[["id", "height", "weight"]], on="id")
-        merged_final.set_index('id', inplace=True)
+        if AthleteProfile.objects.filter(id__in=UserAthleteConnection.objects.filter(
+            athlete_profile=user.athleteprofile, connect=True).values_list("athlete_profile_liked")).exists():
+            athlete_profiles_connected_df = read_frame(AthleteProfile.objects.filter(
+                Q (id__in=UserAthleteConnection.objects.filter(athlete_profile=user.athleteprofile, connect=True).values_list("athlete_profile_liked"))
+                | Q (id=user.athleteprofile.id)))
 
-        merged_final_df_standard = merged_final.apply(standardize).fillna(0)
+            connected_similarity_df = get_recommended_user_list(athlete_profiles_connected_df)
 
-        cosine_sim = cosine_similarity(merged_final_df_standard)
-        similarity_df= pd.DataFrame(cosine_sim, index=merged_final_df_standard.index, columns=merged_final_df_standard.index)
+            connected_user_similarity_score = connected_similarity_df[athlete_profile_id]
+            connected_user_similarity_score_ordered = connected_user_similarity_score.sort_values(ascending=False)
 
-        user_similarity_score = similarity_df[user.athleteprofile.id]
+            random_connected_user = random.randint(1, len(connected_user_similarity_score_ordered)-1 if len(connected_user_similarity_score_ordered) < 11 else 10)
+            athlete_profile_id = connected_user_similarity_score_ordered.index.values.tolist()[random_connected_user]
+
+        athlete_profiles_df = read_frame(AthleteProfile.objects.all())
+
+        similarity_df = get_recommended_user_list(athlete_profiles_df)
+
+        user_similarity_score = similarity_df[athlete_profile_id]
         user_similarity_score_ordered = user_similarity_score.sort_values(ascending=False)
-
         recommended_user_ids = user_similarity_score_ordered.index.values.tolist()
+
         return recommended_user_ids
     except:
         print(traceback.format_exc())
@@ -77,7 +98,8 @@ class AthleteProfileLC(generics.ListCreateAPIView):
         
         athlete_profile_pks = get_recommended_users(self.request.user)
 
-        athlete_profiles = AthleteProfile.objects.filter(pk__in=athlete_profile_pks).exclude(pk=self.request.user.athleteprofile.id)
+        athlete_profiles = AthleteProfile.objects.filter(pk__in=athlete_profile_pks).exclude(pk=self.request.user.athleteprofile.id).exclude(
+            pk__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile).values_list('athlete_profile_liked'))
 
         athlete_profiles = sorted(athlete_profiles, key=lambda obj: athlete_profile_pks.index(obj.pk))
 
