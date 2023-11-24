@@ -20,7 +20,7 @@ def standardize(column):
     new_column = (column - column.mean()) / (column.max() - column.min())
     return new_column
 
-def get_recommended_user_list(athlete_profiles_df):
+def get_user_similarities(athlete_profiles_df):
     person_question_weighing_df = pd.DataFrame.from_records(
             PersonQuestionWeighing.objects.all().values( 'athlete_profile__id', 'weight', 'person_question__question'))
     
@@ -51,7 +51,7 @@ def get_recommended_users(user):
                 Q (id__in=UserAthleteConnection.objects.filter(athlete_profile=user.athleteprofile, connect=True).values_list("athlete_profile_liked"))
                 | Q (id=user.athleteprofile.id)))
 
-            connected_similarity_df = get_recommended_user_list(athlete_profiles_connected_df)
+            connected_similarity_df = get_user_similarities(athlete_profiles_connected_df)
 
             connected_user_similarity_score = connected_similarity_df[athlete_profile_id]
             connected_user_similarity_score_ordered = connected_user_similarity_score.sort_values(ascending=False)
@@ -61,7 +61,7 @@ def get_recommended_users(user):
 
         athlete_profiles_df = read_frame(AthleteProfile.objects.all())
 
-        similarity_df = get_recommended_user_list(athlete_profiles_df)
+        similarity_df = get_user_similarities(athlete_profiles_df)
 
         user_similarity_score = similarity_df[athlete_profile_id]
         user_similarity_score_ordered = user_similarity_score.sort_values(ascending=False)
