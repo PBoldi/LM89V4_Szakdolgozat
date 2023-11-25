@@ -43,34 +43,32 @@ def get_user_similarities(athlete_profiles_df):
 
 
 def get_recommended_users(user):
-    try:
-        athlete_profile_id = user.athleteprofile.id
+    athlete_profile_id = user.athleteprofile.id
 
-        if AthleteProfile.objects.filter(id__in=UserAthleteConnection.objects.filter(
-            athlete_profile=user.athleteprofile, connect=True).values_list("athlete_profile_liked")).exists():
-            athlete_profiles_connected_df = read_frame(AthleteProfile.objects.filter(
-                Q (id__in=UserAthleteConnection.objects.filter(athlete_profile=user.athleteprofile, connect=True).values_list("athlete_profile_liked"))
-                | Q (id=user.athleteprofile.id)))
+    if AthleteProfile.objects.filter(id__in=UserAthleteConnection.objects.filter(
+        athlete_profile=user.athleteprofile, connect=True).values_list("athlete_profile_liked")).exists():
+        athlete_profiles_connected_df = read_frame(AthleteProfile.objects.filter(
+            Q (id__in=UserAthleteConnection.objects.filter(athlete_profile=user.athleteprofile, connect=True).values_list("athlete_profile_liked"))
+            | Q (id=user.athleteprofile.id)))
 
-            connected_similarity_df = get_user_similarities(athlete_profiles_connected_df)
+        connected_similarity_df = get_user_similarities(athlete_profiles_connected_df)
 
-            connected_user_similarity_score = connected_similarity_df[athlete_profile_id]
-            connected_user_similarity_score_ordered = connected_user_similarity_score.sort_values(ascending=False)
+        connected_user_similarity_score = connected_similarity_df[athlete_profile_id]
+        connected_user_similarity_score_ordered = connected_user_similarity_score.sort_values(ascending=False)
 
-            random_connected_user = min(random.randint(1, len(connected_user_similarity_score_ordered)-1), random.randint(1, len(connected_user_similarity_score_ordered)-1))
-            athlete_profile_id = connected_user_similarity_score_ordered.index.values.tolist()[random_connected_user]
+        random_connected_user = min(random.randint(1, len(connected_user_similarity_score_ordered)-1), random.randint(1, len(connected_user_similarity_score_ordered)-1))
+        athlete_profile_id = connected_user_similarity_score_ordered.index.values.tolist()[random_connected_user]
 
-        athlete_profiles_df = read_frame(AthleteProfile.objects.all())
+    athlete_profiles_df = read_frame(AthleteProfile.objects.all())
 
-        similarity_df = get_user_similarities(athlete_profiles_df)
+    similarity_df = get_user_similarities(athlete_profiles_df)
 
-        user_similarity_score = similarity_df[athlete_profile_id]
-        user_similarity_score_ordered = user_similarity_score.sort_values(ascending=False)
-        recommended_user_ids = user_similarity_score_ordered.index.values.tolist()
+    user_similarity_score = similarity_df[athlete_profile_id]
+    user_similarity_score_ordered = user_similarity_score.sort_values(ascending=False)
+    recommended_user_ids = user_similarity_score_ordered.index.values.tolist()
 
-        return recommended_user_ids
-    except:
-        print(traceback.format_exc())
+    return recommended_user_ids
+    
 
 
 class AppliedAthletesL(generics.ListAPIView):
@@ -94,17 +92,20 @@ class AthleteProfileLC(generics.ListCreateAPIView):
     queryset = AthleteProfile.objects.all()
 
     def get_queryset(self):
-        if not PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athleteprofile):
-            return AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile))
-        
-        athlete_profile_pks = get_recommended_users(self.request.user)
+        try:
+            if not PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athleteprofile):
+                return AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile))
+            
+            athlete_profile_pks = get_recommended_users(self.request.user)
 
-        athlete_profiles = AthleteProfile.objects.filter(pk__in=athlete_profile_pks).exclude(pk=self.request.user.athleteprofile.id).exclude(
-            pk__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile).values_list('athlete_profile_liked'))
+            athlete_profiles = AthleteProfile.objects.filter(pk__in=athlete_profile_pks).exclude(pk=self.request.user.athleteprofile.id).exclude(
+                pk__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile).values_list('athlete_profile_liked'))
 
-        athlete_profiles = sorted(athlete_profiles, key=lambda obj: athlete_profile_pks.index(obj.pk))
+            athlete_profiles = sorted(athlete_profiles, key=lambda obj: athlete_profile_pks.index(obj.pk))
 
-        return athlete_profiles
+            return athlete_profiles
+        except:
+            print(traceback.format_exc())
 
     def get_serializer_class(self):
         return AthleteProfileSerializerL if self.request.method in SAFE_METHODS else AthleteProfileSerializer
