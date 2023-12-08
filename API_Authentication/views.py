@@ -96,7 +96,7 @@ class AthleteProfileLC(generics.ListCreateAPIView):
     def get_queryset(self):
         try:
             if not PersonQuestionWeighing.objects.filter(athlete_profile=self.request.user.athleteprofile):
-                return AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile))
+                return AthleteProfile.objects.exclude(pk__in=UserAthleteConnection.objects.filter(athlete_profile=self.request.user.athleteprofile)).exclude(pk=self.request.user.athleteprofile.id)
             
             athlete_profile_pks = get_recommended_users(self.request.user)
 
