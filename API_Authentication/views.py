@@ -56,7 +56,9 @@ def get_recommended_users(user):
         connected_user_similarity_score = connected_similarity_df[athlete_profile_id]
         connected_user_similarity_score_ordered = connected_user_similarity_score.sort_values(ascending=False)
 
-        random_connected_user = min(random.randint(1, len(connected_user_similarity_score_ordered)-1), random.randint(1, len(connected_user_similarity_score_ordered)-1))
+        random_connected_user = min(
+            random.randint(1, len(connected_user_similarity_score_ordered)-1), 
+            random.randint(1, len(connected_user_similarity_score_ordered)-1))
         athlete_profile_id = connected_user_similarity_score_ordered.index.values.tolist()[random_connected_user]
 
     athlete_profiles_df = read_frame(AthleteProfile.objects.all())
